@@ -7,22 +7,47 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml;
 
+//Thank you Unity for the best defines ever 
+#define UNITY_3_PLUS
+#define UNITY_4_PLUS
+#define UNITY_5_PLUS
+#if UNITY_2_6
+#define UNITY_2_X
+#undef UNITY_3_PLUS
+#undef UNITY_4_PLUS
+#undef UNITY_5_PLUS
+#elif UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
+#define UNITY_3_X
+#undef UNITY_4_PLUS
+#undef UNITY_5_PLUS
+#elif UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_4_8 || UNITY_4_9
+#define UNITY_4_X
+#undef UNITY_5_PLUS
+#elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9
+#define UNITY_5_X
+#endif
+
 public class PushwooshBuildManager : MonoBehaviour 
 {
 	[PostProcessBuild]
 	private static void onPostProcessBuildPlayer(BuildTarget target, string pathToBuiltProject) {
-		if (target == BuildTarget.iOS || target == BuildTarget.iOS) {
+#if UNITY_4_X
+		if (target == BuildTarget.iPhone) {
+#else
+		if (target == BuildTarget.iOS) {
+#endif
 			var scriptPath = Path.Combine (Application.dataPath, "Editor/PushwooshPostProcessoriOS.py");
 			var args = string.Format ("\"{0}\" \"{1}\" \"{2}\" \"{3}\"", scriptPath, pathToBuiltProject, target.ToString (), Pushwoosh.APP_CODE);
 			runScript(scriptPath, args, "python");
 		}
+		
 		if (target == BuildTarget.WP8Player) {
 			postProcessWP8Build(pathToBuiltProject);
 		}
 	}
 
 	private static void postProcessWP8Build(string pathToBuiltProject) {
-		string manifestFilePath = Path.Combine( Path.Combine (pathToBuiltProject, Application.productName), "Properties/WMAppManifest.xml");
+		string manifestFilePath = Path.Combine( Path.Combine (pathToBuiltProject, PlayerSettings.productName), "Properties/WMAppManifest.xml");
 
 		if (!File.Exists (manifestFilePath)) {
 			UnityEngine.Debug.LogError ("Windows Phone manifest not found: " + manifestFilePath);
