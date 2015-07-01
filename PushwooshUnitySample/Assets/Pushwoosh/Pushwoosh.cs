@@ -9,9 +9,9 @@ public delegate void PushNotificationsReceivedHandler(string payload);
 
 public class Pushwoosh : SingletonBase<Pushwoosh> {
 
-	public const string APP_CODE = "EA75E-CE4BD";
+	public const string APP_CODE = "ENTER_PUSHWOOSH_APP_ID_HERE";
 
-	public const string GCM_PROJECT_NUMBER = "611761906259";
+	public const string GCM_PROJECT_NUMBER = "ENTER_GOOGLE_PROJECT_NUMBER_HERE";
 
 
 	public event RegisteredForPushNotificationsHandler OnRegisteredForPushNotifications = delegate {};
