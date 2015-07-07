@@ -126,14 +126,19 @@ public class PushNotificationsAndroid : MonoBehaviour {
 		pushwoosh.Call("clearNotificationCenter");
 	}
 
-	public void scheduleLocalNotification(string message, int seconds)
+	public int scheduleLocalNotification(string message, int seconds)
 	{
-		pushwoosh.Call("scheduleLocalNotification", message, seconds);
+		return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds);
 	}
 
-	public void scheduleLocalNotification(string message, int seconds, string userdata)
+	public int scheduleLocalNotification(string message, int seconds, string userdata)
 	{
-		pushwoosh.Call("scheduleLocalNotification", message, seconds, userdata);
+		return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, userdata);
+	}
+
+	public void clearLocalNotification(int id)
+	{
+		pushwoosh.Call("clearLocalNotification", id);
 	}
 	
 	public void setMultiNotificationMode()

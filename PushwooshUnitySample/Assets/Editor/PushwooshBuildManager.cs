@@ -1,12 +1,4 @@
-﻿using UnityEngine;
-using UnityEditor;
-using UnityEditor.Callbacks;
-using System.Collections;
-using System.IO;
-using System.Diagnostics;
-using System.Text.RegularExpressions;
-using System.Xml;
-
+﻿
 //Thank you Unity for the best defines ever 
 #define UNITY_3_PLUS
 #define UNITY_4_PLUS
@@ -26,6 +18,15 @@ using System.Xml;
 #elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9
 #define UNITY_5_X
 #endif
+
+using UnityEngine;
+using UnityEditor;
+using UnityEditor.Callbacks;
+using System.Collections;
+using System.IO;
+using System.Diagnostics;
+using System.Text.RegularExpressions;
+using System.Xml;
 
 public class PushwooshBuildManager : MonoBehaviour 
 {
