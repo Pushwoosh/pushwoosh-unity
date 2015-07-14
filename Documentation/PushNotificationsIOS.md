@@ -4,8 +4,8 @@ Provides specific features for iOS platform.
 
 ## Methods
 
-[public void registerForPushNotifications()](#registerforpushnotifications)  
-[public void unregisterForPushNotifications()](#unregisterforpushnotifications)  
+[public void registerForPushNotifications()](#registerforremotenotifications)  
+[public void unregisterForPushNotifications()](#unregisterforremotenotifications)  
 [public void setIntTag(string tagName, int tagValue)](#setinttag)  
 [public void setStringTag(string tagName, string tagValue)](#setstringtag)  
 [public void setListTag(string tagName, List<object> tagValues)](#setlisttag)  
