@@ -3,14 +3,14 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PushNotificationsAndroid : MonoBehaviour {
-
+public class PushNotificationsAndroid : MonoBehaviour 
+{
 #if UNITY_ANDROID && !UNITY_EDITOR
-	public event RegisteredForPushNotificationsHandler OnRegisteredForPushNotifications = delegate {};
+	public event Pushwoosh.RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
 	
-	public event FailedToRegisteredForPushNotificationsHandler OnFailedToRegisteredForPushNotifications = delegate {};
+	public event Pushwoosh.RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
 	
-	public event PushNotificationsReceivedHandler OnPushNotificationsReceived = delegate {};
+	public event Pushwoosh.NotificationHandler OnPushNotificationsReceived = delegate {};
 
 	// Use this for initialization
 	void Start () {

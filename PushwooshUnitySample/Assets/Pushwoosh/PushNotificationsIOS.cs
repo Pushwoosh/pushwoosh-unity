@@ -53,11 +53,11 @@ public class PushNotificationsIOS : MonoBehaviour
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public void addBadgeNumber(int deltaBadge);
 
-	public event RegisteredForPushNotificationsHandler OnRegisteredForPushNotifications = delegate {};
+	public event Pushwoosh.RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
 	
-	public event FailedToRegisteredForPushNotificationsHandler OnFailedToRegisteredForPushNotifications = delegate {};
+	public event Pushwoosh.RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
 	
-	public event PushNotificationsReceivedHandler OnPushNotificationsReceived = delegate {};
+	public event Pushwoosh.NotificationHandler OnPushNotificationsReceived = delegate {};
 
 	static public void setListTag(string tagName, List<object> tagValues)
 	{

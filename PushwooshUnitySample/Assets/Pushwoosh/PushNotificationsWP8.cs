@@ -4,11 +4,11 @@ using System.Collections;
 public class PushNotificationsWP8: MonoBehaviour {
 
 #if (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
-	public event RegisteredForPushNotificationsHandler OnRegisteredForPushNotifications = delegate {};
+	public event Pushwoosh.RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
 	
-	public event FailedToRegisteredForPushNotificationsHandler OnFailedToRegisteredForPushNotifications = delegate {};
+	public event Pushwoosh.RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
 	
-	public event PushNotificationsReceivedHandler OnPushNotificationsReceived = delegate {};
+	public event Pushwoosh.NotificationHandler OnPushNotificationsReceived = delegate {};
 
 	private PushwooshForWindowsPhone.Pushwoosh pushwoosh = null;
 
