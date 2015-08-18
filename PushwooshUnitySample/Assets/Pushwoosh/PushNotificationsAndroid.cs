@@ -27,7 +27,7 @@ public class PushNotificationsAndroid : MonoBehaviour
 		if(pushwoosh != null)
 			return;
 		
-		using(var pluginClass = new AndroidJavaClass("com.arellomobile.android.push.PushwooshProxy")) {
+		using(var pluginClass = new AndroidJavaClass("com.pushwoosh.PushwooshProxy")) {
 			pluginClass.CallStatic("initialize", Pushwoosh.APP_CODE, Pushwoosh.GCM_PROJECT_NUMBER);
 			pushwoosh = pluginClass.CallStatic<AndroidJavaObject>("instance");
 		}
@@ -84,11 +84,6 @@ public class PushNotificationsAndroid : MonoBehaviour
 	public void clearPushHistory()
 	{
 		pushwoosh.Call("clearPushHistory");
-	}
-
-	public void sendLocation(double lat, double lon)
-	{
-		pushwoosh.Call("sendLocation", lat, lon);
 	}
 
 	public void startTrackingGeoPushes()
