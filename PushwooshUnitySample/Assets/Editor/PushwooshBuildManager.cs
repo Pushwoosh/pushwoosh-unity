@@ -37,7 +37,7 @@ public class PushwooshBuildManager : MonoBehaviour
 #else
 		if (target == BuildTarget.iOS) {
 #endif
-			var scriptPath = Path.Combine (Application.dataPath, "Editor/PushwooshPostProcessoriOS.py");
+			var scriptPath = System.IO.Path.Combine (Application.dataPath, "Editor/PushwooshPostProcessoriOS.py");
 			var args = string.Format ("\"{0}\" \"{1}\" \"{2}\" \"{3}\"", scriptPath, pathToBuiltProject, target.ToString (), Pushwoosh.APP_CODE);
 			runScript(scriptPath, args, "python");
 		}
