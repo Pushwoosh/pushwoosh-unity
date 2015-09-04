@@ -3,22 +3,16 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PushNotificationsAndroid : MonoBehaviour 
+public class PushNotificationsAndroid : Pushwoosh 
 {
 #if UNITY_ANDROID && !UNITY_EDITOR
-	public event Pushwoosh.RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
-	
-	public event Pushwoosh.RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
-	
-	public event Pushwoosh.NotificationHandler OnPushNotificationsReceived = delegate {};
-
 	// Use this for initialization
 	void Start () {
 		InitPushwoosh();
 		registerForPushNotifications();
 		
 		Debug.Log(this.gameObject.name);
-		Debug.Log(getPushToken());
+		Debug.Log(PushToken);
 	}
 
 	private static AndroidJavaObject pushwoosh = null;
@@ -86,12 +80,12 @@ public class PushNotificationsAndroid : MonoBehaviour
 		pushwoosh.Call("clearPushHistory");
 	}
 
-	public void startTrackingGeoPushes()
+	public override void startTrackingGeoPushes()
 	{
 		pushwoosh.Call("startTrackingGeoPushes");
 	}
 
-	public void stopTrackingGeoPushes()
+	public override void stopTrackingGeoPushes()
 	{
 		pushwoosh.Call("stopTrackingGeoPushes");
 	}
@@ -177,30 +171,30 @@ public class PushNotificationsAndroid : MonoBehaviour
 	{
 		pushwoosh.Call("setEnableLED", ledOn);
 	}
-	
-	public string getPushToken()
+
+	public override string HWID
 	{
-		return pushwoosh.Call<string>("getPushToken");
+		get { return pushwoosh.Call<string>("getPushwooshHWID"); }
 	}
 
-	public string getPushwooshHWID()
+	public override string PushToken
 	{
-		return pushwoosh.Call<string>("getPushwooshHWID");
+		get { return pushwoosh.Call<string>("getPushToken"); }
 	}
 
 	void onRegisteredForPushNotifications(string token)
 	{
-		OnRegisteredForPushNotifications (token);
+		RegisteredForPushNotifications (token);
 	}
 
 	void onFailedToRegisteredForPushNotifications(string error)
 	{
-		OnFailedToRegisteredForPushNotifications (error);
+		FailedToRegisteredForPushNotifications (error);
 	}
 
 	void onPushNotificationsReceived(string payload)
 	{
-		OnPushNotificationsReceived (payload);
+		PushNotificationsReceived (payload);
 	}
 
 	void OnApplicationPause(bool paused)

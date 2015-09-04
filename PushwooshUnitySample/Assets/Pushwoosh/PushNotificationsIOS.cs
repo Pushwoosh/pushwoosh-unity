@@ -3,7 +3,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
-public class PushNotificationsIOS : MonoBehaviour 
+public class PushNotificationsIOS : Pushwoosh 
 {
 #if UNITY_IPHONE && !UNITY_EDITOR
 	//
@@ -53,12 +53,6 @@ public class PushNotificationsIOS : MonoBehaviour
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public void addBadgeNumber(int deltaBadge);
 
-	public event Pushwoosh.RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
-	
-	public event Pushwoosh.RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
-	
-	public event Pushwoosh.NotificationHandler OnPushNotificationsReceived = delegate {};
-
 	static public void setListTag(string tagName, List<object> tagValues)
 	{
 		List <string> stringTags = new List<string>();
@@ -79,18 +73,27 @@ public class PushNotificationsIOS : MonoBehaviour
 	void Start () {
 		registerForRemoteNotifications();
 		setListenerName(this.gameObject.name);
-		Debug.Log(getPushToken());
+		Debug.Log(PushToken);
 	}
 
-	
-	static public string getPushToken()
+	public override string HWID
 	{
-		return Marshal.PtrToStringAnsi(_getPushToken());
+		get { return Marshal.PtrToStringAnsi(_getPushwooshHWID()); }
 	}
 
-	static public string getPushwooshHWID()
+	public override string PushToken
 	{
-		return Marshal.PtrToStringAnsi(_getPushwooshHWID());
+		get { return Marshal.PtrToStringAnsi(_getPushToken()); }
+	}
+
+	public override void startTrackingGeoPushes()
+	{
+		startLocationTracking();
+	}
+
+	public override void stopTrackingGeoPushes()
+	{
+		stopLocationTracking();
 	}
 
 	static public void setBadge(int number)
@@ -105,17 +108,17 @@ public class PushNotificationsIOS : MonoBehaviour
 
 	void onRegisteredForPushNotifications(string token)
 	{
-		OnRegisteredForPushNotifications (token);
+		RegisteredForPushNotifications (token);
 	}
 
 	void onFailedToRegisteredForPushNotifications(string error)
 	{
-		OnFailedToRegisteredForPushNotifications (error);
+		FailedToRegisteredForPushNotifications (error);
 	}
 
 	void onPushNotificationsReceived(string payload)
 	{
-		OnPushNotificationsReceived (payload);
+		PushNotificationsReceived (payload);
 	}
 #endif
 }

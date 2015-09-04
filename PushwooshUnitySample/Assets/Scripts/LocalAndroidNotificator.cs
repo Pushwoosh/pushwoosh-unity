@@ -19,7 +19,7 @@ public class LocalAndroidNotificator : MonoBehaviour
 		Pushwoosh.Instance.OnPushNotificationsReceived += onPushNotificationsReceived;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-		androidPushManager = Pushwoosh.Instance.AndroidPushNotificationsManager;
+		androidPushManager = Pushwoosh.Instance as PushNotificationsAndroid;
 #endif
 	}
 	

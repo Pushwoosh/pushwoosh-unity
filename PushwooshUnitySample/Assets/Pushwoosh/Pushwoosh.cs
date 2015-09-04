@@ -1,17 +1,22 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-[RequireComponent (typeof (PushNotificationsAndroid))]
-[RequireComponent (typeof (PushNotificationsIOS))]
-[RequireComponent (typeof (PushNotificationsWP8))]
+#if UNITY_IPHONE && !UNITY_EDITOR
+public class Pushwoosh : SingletonBase<PushNotificationsIOS> 
+#elif UNITY_ANDROID && !UNITY_EDITOR
+public class Pushwoosh : SingletonBase<PushNotificationsAndroid> 
+#elif (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
+public class Pushwoosh : SingletonBase<PushNotificationsWP8> 
+#else 
 public class Pushwoosh : SingletonBase<Pushwoosh> 
+#endif
 {
 	public const string APP_CODE = "ENTER_PUSHWOOSH_APP_ID_HERE";
-
+ 
 	public const string GCM_PROJECT_NUMBER = "ENTER_GOOGLE_PROJECT_NUMBER_HERE";
 
 
-	public delegate void RegistrationSuccessHandler(string payload);
+	public delegate void RegistrationSuccessHandler(string token);
 	
 	public delegate void RegistrationErrorHandler(string error);
 	
@@ -24,69 +29,49 @@ public class Pushwoosh : SingletonBase<Pushwoosh>
 	
 	public event NotificationHandler OnPushNotificationsReceived = delegate {};
 
+	public virtual string HWID
+	{
+		get 
+		{
+			Debug.Log("Error: Pushwoosh.HWID is not supported on this platform");
+			return "Unsupported platform"; 
+		}
+	}
+
+	public virtual string PushToken
+	{
+		get 
+		{ 
+			Debug.Log("Error: Pushwoosh.PushToken is not supported on this platform");
+			return "Unsupported platform"; 
+		}
+	}
+
+	public virtual void startTrackingGeoPushes()
+	{
+		Debug.Log("Error: Pushwoosh.startTrackingGeoPushes() is not supported on this platform");
+	}
+
+	public virtual void stopTrackingGeoPushes()
+	{
+		Debug.Log("Error: Pushwoosh.stopTrackingGeoPushes() is not supported on this platform");
+	}
 
 	// singleton
 	protected Pushwoosh() {}
 
-#if UNITY_IPHONE && !UNITY_EDITOR
-	public PushNotificationsIOS IOSPushNotificationsManager 
+	protected void RegisteredForPushNotifications(string token)
 	{
-		get { return gameObject.GetComponent<PushNotificationsIOS>(); } 
+		OnRegisteredForPushNotifications(token);
 	}
 
-#elif UNITY_ANDROID && !UNITY_EDITOR
-	public PushNotificationsAndroid AndroidPushNotificationsManager {
-		get { return gameObject.GetComponent<PushNotificationsAndroid>(); } 
+	protected void FailedToRegisteredForPushNotifications(string error)
+	{
+		OnFailedToRegisteredForPushNotifications(error);
 	}
 
-#elif (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
-	public PushNotificationsWP8 WP8PushNotificationsManager {
-		get { return gameObject.GetComponent<PushNotificationsWP8>(); } 
-	}
-#endif
-
-	void Start () 
+	protected void PushNotificationsReceived(string payload)
 	{
-#if UNITY_IPHONE && !UNITY_EDITOR
-		PushNotificationsIOS pushNotificationsIOS = IOSPushNotificationsManager;
-		pushNotificationsIOS.OnRegisteredForPushNotifications += onRegisteredForPushNotifications;
-		pushNotificationsIOS.OnFailedToRegisteredForPushNotifications += onFailedToRegisteredForPushNotifications;
-		pushNotificationsIOS.OnPushNotificationsReceived += onPushNotificationsReceived;
-#elif UNITY_ANDROID && !UNITY_EDITOR
-		PushNotificationsAndroid pushNotificationsAndroid = AndroidPushNotificationsManager;
-		pushNotificationsAndroid.OnRegisteredForPushNotifications += onRegisteredForPushNotifications;
-		pushNotificationsAndroid.OnFailedToRegisteredForPushNotifications += onFailedToRegisteredForPushNotifications;
-		pushNotificationsAndroid.OnPushNotificationsReceived += onPushNotificationsReceived;
-#elif (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
-		PushNotificationsWP8 pushNotificationsWP8 = WP8PushNotificationsManager;
-		pushNotificationsWP8.OnRegisteredForPushNotifications += onRegisteredForPushNotifications;
-		pushNotificationsWP8.OnFailedToRegisteredForPushNotifications += onFailedToRegisteredForPushNotifications;
-		pushNotificationsWP8.OnPushNotificationsReceived += onPushNotificationsReceived;
-#endif
-	}
-	
-	// propagate events
-	void onRegisteredForPushNotifications(string token)
-	{
-		OnRegisteredForPushNotifications (token);
-
-		// dispatch only once
-#if UNITY_IPHONE && !UNITY_EDITOR
-		IOSPushNotificationsManager.OnRegisteredForPushNotifications -= onRegisteredForPushNotifications;
-#elif UNITY_ANDROID && !UNITY_EDITOR
-		AndroidPushNotificationsManager.OnRegisteredForPushNotifications -= onRegisteredForPushNotifications;
-#elif (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
-		WP8PushNotificationsManager.OnRegisteredForPushNotifications -= onRegisteredForPushNotifications;
-#endif
-	}
-	
-	void onFailedToRegisteredForPushNotifications(string error)
-	{
-		OnFailedToRegisteredForPushNotifications (error);
-	}
-	
-	void onPushNotificationsReceived(string payload)
-	{
-		OnPushNotificationsReceived (payload);
+		OnPushNotificationsReceived(payload);
 	}
 }

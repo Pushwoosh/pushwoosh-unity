@@ -1,30 +1,24 @@
 ﻿using UnityEngine;
 using System.Collections;
 
-public class PushNotificationsWP8: MonoBehaviour {
-
+public class PushNotificationsWP8: Pushwoosh 
+{
 #if (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
-	public event Pushwoosh.RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
-	
-	public event Pushwoosh.RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
-	
-	public event Pushwoosh.NotificationHandler OnPushNotificationsReceived = delegate {};
-
 	private PushwooshForWindowsPhone.Pushwoosh pushwoosh = null;
 
 	void TokenReceived(object sender, PushwooshForWindowsPhone.TokenEventArgs events)
 	{
-		OnRegisteredForPushNotifications (events.Token);
+		RegisteredForPushNotifications (events.Token);
 	}
 
 	void TokenError(object sender, PushwooshForWindowsPhone.TokenErrorEventArgs events)
 	{
-		OnFailedToRegisteredForPushNotifications (events.ErrorMessage);
+		FailedToRegisteredForPushNotifications (events.ErrorMessage);
 	}
 
 	void PushReceived(object sender, PushwooshForWindowsPhone.PushEventArgs events)
 	{
-		OnPushNotificationsReceived (events.PushPayload);
+		PushNotificationsReceived (events.PushPayload);
 	}
 
 	// Use this for initialization
@@ -36,5 +30,27 @@ public class PushNotificationsWP8: MonoBehaviour {
 
 		pushwoosh.SubscribeForPushNotifications ();
 	}
+
+	public override string HWID
+	{
+		get { return pushwoosh.HWID; }
+	}
+
+	public override string PushToken
+	{
+		get { return pushwoosh.PushToken; }
+	}
+
+	public override void startTrackingGeoPushes()
+	{
+		pushwoosh.StartGeoLocation();
+	}
+
+	public override void stopTrackingGeoPushes()
+	{
+		pushwoosh.StopGeoLocation();
+	}
+
+
 #endif
 }
