@@ -53,27 +53,13 @@ public class PushNotificationsIOS : Pushwoosh
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public void addBadgeNumber(int deltaBadge);
 
-	static public void setListTag(string tagName, List<object> tagValues)
-	{
-		List <string> stringTags = new List<string>();
-
-		foreach (object tagValue in tagValues) {
-			string stringTag = tagValue.ToString();
-
-			if (stringTag != null)
-				stringTags.Add(stringTag);
-		}
-
-		string[] array = stringTags.ToArray();
-
-		internalSendStringTags (tagName, array);
-	}
-
 	// Use this for initialization
 	void Start () {
 		registerForRemoteNotifications();
 		setListenerName(this.gameObject.name);
 		Debug.Log(PushToken);
+
+		Initialized ();
 	}
 
 	public override string HWID
@@ -86,22 +72,53 @@ public class PushNotificationsIOS : Pushwoosh
 		get { return Marshal.PtrToStringAnsi(_getPushToken()); }
 	}
 
-	public override void startTrackingGeoPushes()
+	public override void StartTrackingGeoPushes()
 	{
 		startLocationTracking();
 	}
 
-	public override void stopTrackingGeoPushes()
+	public override void StopTrackingGeoPushes()
 	{
 		stopLocationTracking();
 	}
 
-	static public void setBadge(int number)
+	public override void SetListTag(string tagName, List<object> tagValues)
+	{
+		List <string> stringTags = new List<string>();
+		
+		foreach (object tagValue in tagValues) {
+			string stringTag = tagValue.ToString();
+			
+			if (stringTag != null)
+				stringTags.Add(stringTag);
+		}
+		
+		string[] array = stringTags.ToArray();
+		
+		internalSendStringTags (tagName, array);
+	}
+
+	public override void SetIntTag(string tagName, int tagValue)
+	{
+		setIntTag(tagName, tagValue);
+	}
+	
+	public override void SetStringTag(string tagName, string tagValue)
+	{
+		setStringTag(tagName, tagValue);
+	}
+
+	public override void ClearNotificationCenter()
+	{
+		clearNotificationCenter ();
+	}
+
+	public override void SetBadgeNumber(int number)
 	{
 		setBadgeNumber (number);
 	}
 
-	static public void addBadge(int deltaBadge)
+	public override void AddBadgeNumber(int deltaBadge)
 	{
 		addBadgeNumber (deltaBadge);
 	}

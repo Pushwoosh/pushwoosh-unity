@@ -37,20 +37,20 @@ public class LocalAndroidNotificator : MonoBehaviour
 		Debug.Log(notificationText);
 
 #if UNITY_ANDROID && !UNITY_EDITOR
-		localNotifications[0] = androidPushManager.scheduleLocalNotification ("test1 failed", 1);
-		localNotifications[1] = androidPushManager.scheduleLocalNotification ("test2 failed", 2);
-		localNotifications[2] = androidPushManager.scheduleLocalNotification ("test3 failed", 3);
-		localNotifications[3] = androidPushManager.scheduleLocalNotification ("test4 failed", 4);
-		localNotifications[4] = androidPushManager.scheduleLocalNotification ("test5 failed", 5);
+		localNotifications[0] = androidPushManager.ScheduleLocalNotification ("test1 failed", 1);
+		localNotifications[1] = androidPushManager.ScheduleLocalNotification ("test2 failed", 2);
+		localNotifications[2] = androidPushManager.ScheduleLocalNotification ("test3 failed", 3);
+		localNotifications[3] = androidPushManager.ScheduleLocalNotification ("test4 failed", 4);
+		localNotifications[4] = androidPushManager.ScheduleLocalNotification ("test5 failed", 5);
 		
-		androidPushManager.clearLocalNotifications();
+		androidPushManager.ClearLocalNotifications();
 		
-		localNotifications[5] = androidPushManager.scheduleLocalNotification ("test6 passed", 4);
-		localNotifications[6] = androidPushManager.scheduleLocalNotification ("test7 failed", 5);
-		localNotifications[7] = androidPushManager.scheduleLocalNotification ("test8 failed", 6);
+		localNotifications[5] = androidPushManager.ScheduleLocalNotification ("test6 passed", 4);
+		localNotifications[6] = androidPushManager.ScheduleLocalNotification ("test7 failed", 5);
+		localNotifications[7] = androidPushManager.ScheduleLocalNotification ("test8 failed", 6);
 		
-		androidPushManager.clearLocalNotification (localNotifications[6]);
-		androidPushManager.clearLocalNotification (localNotifications[7]);
+		androidPushManager.ClearLocalNotification (localNotifications[6]);
+		androidPushManager.ClearLocalNotification (localNotifications[7]);
 #endif
 	}
 	

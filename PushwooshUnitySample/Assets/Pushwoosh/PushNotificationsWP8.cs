@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 public class PushNotificationsWP8: Pushwoosh 
 {
@@ -29,6 +29,8 @@ public class PushNotificationsWP8: Pushwoosh
 		pushwoosh.OnPushAccepted += PushReceived;
 
 		pushwoosh.SubscribeForPushNotifications ();
+
+		Initialized ();
 	}
 
 	public override string HWID
@@ -41,16 +43,35 @@ public class PushNotificationsWP8: Pushwoosh
 		get { return pushwoosh.PushToken; }
 	}
 
-	public override void startTrackingGeoPushes()
+	public override void StartTrackingGeoPushes()
 	{
 		pushwoosh.StartGeoLocation();
 	}
 
-	public override void stopTrackingGeoPushes()
+	public override void StopTrackingGeoPushes()
 	{
 		pushwoosh.StopGeoLocation();
 	}
 
-
+	public override void SetIntTag(string tagName, int tagValue)
+	{
+		var tags = new List<KeyValuePair<string, object>>();
+		tags.Add (new KeyValuePair<string, object>(tagName, tagValue));
+		pushwoosh.SetTags (tags);
+	}
+	
+	public override void SetStringTag(string tagName, string tagValue)
+	{
+		var tags = new List<KeyValuePair<string, object>>();
+		tags.Add (new KeyValuePair<string, object>(tagName, tagValue));
+		pushwoosh.SetTags (tags);
+	}
+	
+	public override void SetListTag(string tagName, List<object> tagValues)
+	{
+		var tags = new List<KeyValuePair<string, object>>();
+		tags.Add (new KeyValuePair<string, object>(tagName, tagValues));
+		pushwoosh.SetTags (tags);
+	}
 #endif
 }

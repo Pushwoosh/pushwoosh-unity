@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 /// <summary>
 ///  Pushwoosh sample class
@@ -13,9 +13,10 @@ public class PushNotificator : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		Pushwoosh.Instance.OnRegisteredForPushNotifications += onRegisteredForPushNotifications;
-		Pushwoosh.Instance.OnFailedToRegisteredForPushNotifications += onFailedToRegisteredForPushNotifications;
-		Pushwoosh.Instance.OnPushNotificationsReceived += onPushNotificationsReceived;
+		Pushwoosh.Instance.OnRegisteredForPushNotifications += OnRegisteredForPushNotifications;
+		Pushwoosh.Instance.OnFailedToRegisteredForPushNotifications += OnFailedToRegisteredForPushNotifications;
+		Pushwoosh.Instance.OnPushNotificationsReceived += OnPushNotificationsReceived;
+		Pushwoosh.Instance.OnInitialized += OnPushwooshInitialized;
 	}
 
 	void Update()
@@ -24,15 +25,26 @@ public class PushNotificator : MonoBehaviour
 		uiText.text = notificationText;
 	}
 
-	void onRegisteredForPushNotifications(string token)
+	void OnPushwooshInitialized()
+	{
+		Pushwoosh.Instance.SetStringTag ("UserName", "Alex");
+		Pushwoosh.Instance.SetIntTag ("Age", 42);
+		Pushwoosh.Instance.SetListTag ("Hobbies", new List<object> (new[] { "Football", "Tennis", "Fishing" }));
+
+		Pushwoosh.Instance.AddBadgeNumber (1);
+	}
+
+	void OnRegisteredForPushNotifications(string token)
 	{
 		notificationText = "Received token: \n" + token;
 		
 		//do handling here
 		Debug.Log(notificationText);
+		Debug.Log ("HWID: " + Pushwoosh.Instance.HWID);
+		Debug.Log ("PushToken: " + Pushwoosh.Instance.PushToken);
 	}
 	
-	void onFailedToRegisteredForPushNotifications(string error)
+	void OnFailedToRegisteredForPushNotifications(string error)
 	{
 		notificationText = "Error ocurred while registering to push notifications: \n" + error;
 		
@@ -40,7 +52,7 @@ public class PushNotificator : MonoBehaviour
 		Debug.Log(notificationText);
 	}
 	
-	void onPushNotificationsReceived(string payload)
+	void OnPushNotificationsReceived(string payload)
 	{
 		notificationText = "Received push notificaiton: \n" + payload;
 		

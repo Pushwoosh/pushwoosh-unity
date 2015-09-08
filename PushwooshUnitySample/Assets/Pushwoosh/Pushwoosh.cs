@@ -1,5 +1,5 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
 #if UNITY_IPHONE && !UNITY_EDITOR
 public class Pushwoosh : SingletonBase<PushNotificationsIOS> 
@@ -12,7 +12,7 @@ public class Pushwoosh : SingletonBase<Pushwoosh>
 #endif
 {
 	public const string APP_CODE = "ENTER_PUSHWOOSH_APP_ID_HERE";
- 
+	
 	public const string GCM_PROJECT_NUMBER = "ENTER_GOOGLE_PROJECT_NUMBER_HERE";
 
 
@@ -22,6 +22,8 @@ public class Pushwoosh : SingletonBase<Pushwoosh>
 	
 	public delegate void NotificationHandler(string payload);
 
+	public delegate void InitializationHandler();
+
 
 	public event RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
 	
@@ -29,11 +31,14 @@ public class Pushwoosh : SingletonBase<Pushwoosh>
 	
 	public event NotificationHandler OnPushNotificationsReceived = delegate {};
 
+	public event InitializationHandler OnInitialized = delegate {};
+
+
 	public virtual string HWID
 	{
 		get 
 		{
-			Debug.Log("Error: Pushwoosh.HWID is not supported on this platform");
+			UnsupportedPlatform ();
 			return "Unsupported platform"; 
 		}
 	}
@@ -42,19 +47,49 @@ public class Pushwoosh : SingletonBase<Pushwoosh>
 	{
 		get 
 		{ 
-			Debug.Log("Error: Pushwoosh.PushToken is not supported on this platform");
+			UnsupportedPlatform ();
 			return "Unsupported platform"; 
 		}
 	}
 
-	public virtual void startTrackingGeoPushes()
+	public virtual void StartTrackingGeoPushes()
 	{
-		Debug.Log("Error: Pushwoosh.startTrackingGeoPushes() is not supported on this platform");
+		UnsupportedPlatform ();
 	}
 
-	public virtual void stopTrackingGeoPushes()
+	public virtual void StopTrackingGeoPushes()
 	{
-		Debug.Log("Error: Pushwoosh.stopTrackingGeoPushes() is not supported on this platform");
+		UnsupportedPlatform ();
+	}
+
+	public virtual void SetIntTag(string tagName, int tagValue)
+	{
+		UnsupportedPlatform ();
+	}
+	
+	public virtual void SetStringTag(string tagName, string tagValue)
+	{
+		UnsupportedPlatform ();
+	}
+	
+	public virtual void SetListTag(string tagName, List<object> tagValues)
+	{
+		UnsupportedPlatform ();
+	}
+
+	public virtual void ClearNotificationCenter()
+	{
+		UnsupportedPlatform ();
+	}
+
+	public virtual void SetBadgeNumber(int number)
+	{
+		UnsupportedPlatform ();
+	}
+	
+	public virtual void AddBadgeNumber(int deltaBadge)
+	{
+		UnsupportedPlatform ();
 	}
 
 	// singleton
@@ -73,5 +108,18 @@ public class Pushwoosh : SingletonBase<Pushwoosh>
 	protected void PushNotificationsReceived(string payload)
 	{
 		OnPushNotificationsReceived(payload);
+	}
+
+	protected void Initialized()
+	{
+		OnInitialized ();
+	}
+
+	private void UnsupportedPlatform()
+	{
+		var frame = new System.Diagnostics.StackFrame(1);
+		var method = frame.GetMethod();
+		string methodName = method.Name;
+		Debug.Log ("[Pushwoosh] Error: " + methodName + " is not supported on this platform");
 	}
 }
