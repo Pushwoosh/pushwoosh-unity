@@ -2,19 +2,21 @@
 using System.Collections.Generic;
 
 #if UNITY_IPHONE && !UNITY_EDITOR
-public class Pushwoosh : SingletonBase<PushNotificationsIOS> 
+using PushwooshInstanceType = PushNotificationsIOS;
 #elif UNITY_ANDROID && !UNITY_EDITOR
-public class Pushwoosh : SingletonBase<PushNotificationsAndroid> 
+using PushwooshInstanceType = PushNotificationsAndroid;
 #elif (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
-public class Pushwoosh : SingletonBase<PushNotificationsWP8> 
+using PushwooshInstanceType = PushNotificationsWP8; 
 #else 
-public class Pushwoosh : SingletonBase<Pushwoosh> 
+using PushwooshInstanceType = Pushwoosh;
 #endif
+
+public class Pushwoosh : MonoBehaviour
 {
 	public const string APP_CODE = "ENTER_PUSHWOOSH_APP_ID_HERE";
 	
 	public const string GCM_PROJECT_NUMBER = "ENTER_GOOGLE_PROJECT_NUMBER_HERE";
-
+	
 
 	public delegate void RegistrationSuccessHandler(string token);
 	
@@ -92,9 +94,6 @@ public class Pushwoosh : SingletonBase<Pushwoosh>
 		UnsupportedPlatform ();
 	}
 
-	// singleton
-	protected Pushwoosh() {}
-
 	protected void RegisteredForPushNotifications(string token)
 	{
 		OnRegisteredForPushNotifications(token);
@@ -121,5 +120,72 @@ public class Pushwoosh : SingletonBase<Pushwoosh>
 		var method = frame.GetMethod();
 		string methodName = method.Name;
 		Debug.Log ("[Pushwoosh] Error: " + methodName + " is not supported on this platform");
+	}
+
+	// Singleton
+	private static PushwooshInstanceType _instance;
+	
+	private static object _lock = new object();
+
+	protected Pushwoosh() {}
+	
+	public static PushwooshInstanceType Instance
+	{
+		get
+		{
+			if (applicationIsQuitting) {
+				Debug.LogWarning("[Singleton] Instance '"+ typeof(PushwooshInstanceType) +
+				                 "' already destroyed on application quit." +
+				                 " Won't create again - returning null.");
+				return null;
+			}
+			
+			lock(_lock)
+			{
+				if (_instance == null)
+				{
+					_instance = (PushwooshInstanceType) FindObjectOfType(typeof(PushwooshInstanceType));
+					
+					if ( FindObjectsOfType(typeof(PushwooshInstanceType)).Length > 1 )
+					{
+						Debug.LogError("[Singleton] Something went really wrong " +
+						               " - there should never be more than 1 singleton!" +
+						               " Reopening the scene might fix it.");
+						return _instance;
+					}
+					
+					if (_instance == null)
+					{
+						GameObject singleton = new GameObject();
+						_instance = singleton.AddComponent<PushwooshInstanceType>();
+						singleton.name = "(singleton) "+ typeof(PushwooshInstanceType).ToString();
+						
+						DontDestroyOnLoad(singleton);
+						
+						Debug.Log("[Singleton] An instance of " + typeof(PushwooshInstanceType) + 
+						          " is needed in the scene, so '" + singleton +
+						          "' was created with DontDestroyOnLoad.");
+					} else {
+						Debug.Log("[Singleton] Using instance already created: " +
+						          _instance.gameObject.name);
+					}
+				}
+				
+				return _instance;
+			}
+		}
+	}
+	
+	private static bool applicationIsQuitting = false;
+	/// <summary>
+	/// When Unity quits, it destroys objects in a random order.
+	/// In principle, a Singleton is only destroyed when application quits.
+	/// If any script calls Instance after it have been destroyed, 
+	///   it will create a buggy ghost object that will stay on the Editor scene
+	///   even after stopping playing the Application. Really bad!
+	/// So, this was made to be sure we're not creating that buggy ghost object.
+	/// </summary>
+	public void OnDestroy () {
+		applicationIsQuitting = true;
 	}
 }
