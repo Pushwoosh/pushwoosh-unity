@@ -4,7 +4,7 @@ Provides push notifications registration and handling and uniform access to the 
 Access it by calling `Pushwoosh.Instance` method.
 
 ```csharp
-public class Pushwoosh : SingletonBase<Pushwoosh>
+public class Pushwoosh : MonoBehaviour
 ```
 
 Example:
@@ -33,6 +33,24 @@ Set this variable to your Google Project Id For Android.
 public const string GCM_PROJECT_NUMBER = "ENTER_GOOGLE_PROJECT_NUMBER_HERE";
 ```
 
+---
+### HWID
+
+Returns Device Unique Identifier.
+
+```csharp
+public virtual string HWID
+```
+
+---
+### PushToken
+
+Returns push notifications token. Could be empty if push notifications token has not been received yet.
+
+```csharp
+public virtual string PushToken
+```
+
 ## Events
 
 ### OnRegisteredForPushNotifications
@@ -40,7 +58,7 @@ public const string GCM_PROJECT_NUMBER = "ENTER_GOOGLE_PROJECT_NUMBER_HERE";
 Push registration success delegate.
 
 ```csharp
-public event RegisteredForPushNotificationsHandler OnRegisteredForPushNotifications = delegate {};
+public event RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
 ```
 
 ---
@@ -49,7 +67,7 @@ public event RegisteredForPushNotificationsHandler OnRegisteredForPushNotificati
 Push registration error delegate.
 
 ```csharp
-public event FailedToRegisteredForPushNotificationsHandler OnFailedToRegisteredForPushNotifications = delegate {};
+public event RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
 ```
 
 ---
@@ -58,33 +76,87 @@ public event FailedToRegisteredForPushNotificationsHandler OnFailedToRegisteredF
 Push notification handler delegate.
 
 ```csharp
-public event PushNotificationsReceivedHandler OnPushNotificationsReceived = delegate {};
+public event NotificationHandler OnPushNotificationsReceived = delegate {};
+```
+
+---
+### OnInitialized
+
+Push initialization handler delegate.
+
+```csharp
+public event InitializationHandler OnInitialized = delegate {};
 ```
 
 ## Methods
 
-### IOSPushNotificationsManager
+### SetIntTag
 
-Returns iOS push notifications manager. Works on iOS only.
+Sets Integer Tag for the device.
 
 ```csharp
-public PushNotificationsIOS IOSPushNotificationsManager
+public virtual void SetIntTag(string tagName, int tagValue)
 ```
 
---
-### AndroidPushNotificationsManager
+---
+### SetStringTag
 
-Returns Android push notifications manager. Works on Android only.
+Sets String Tag for the device.
 
 ```csharp
-public PushNotificationsAndroid AndroidPushNotificationsManager
+public virtual void SetStringTag(string tagName, string tagValue)
 ```
 
---
-### WP8PushNotificationsManager
+---
+### SetListTag
 
-Returns Windows Phone push notifications manager. Works on Windows Phone only.
+Sets List Tag for the device.
 
 ```csharp
-public PushNotificationsWP8 WP8PushNotificationsManager
+public virtual void SetListTag(string tagName, List<object> tagValues)
+```
+
+---
+### StartTrackingGeoPushes
+
+Starts tracking Geo Push notifications.
+
+```csharp
+public virtual void StartTrackingGeoPushes()
+```
+
+---
+### StopTrackingGeoPushes
+
+Stops tracking Geo Push notifications.
+
+```csharp
+public virtual void StartTrackingGeoPushes()
+```
+
+---
+### ClearNotificationCenter
+
+Clears all notifications from the system tray. iOS and Android only.
+
+```csharp
+public virtual void ClearNotificationCenter()
+```
+
+---
+### SetBadgeNumber
+
+Sets application icon badge number. iOS and Android only.
+
+```csharp
+public virtual void SetBadgeNumber(int number)
+```
+
+---
+### AddBadgeNumber
+
+Increments application icon badge number. iOS and Android only.
+
+```csharp
+public virtual void AddBadgeNumber(int deltaBadge)
 ```

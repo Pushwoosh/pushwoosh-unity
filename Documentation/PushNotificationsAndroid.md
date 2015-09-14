@@ -2,157 +2,109 @@
 
 Provides specific features for Android platform.
 
+## Base class methods
+
+[public string PushToken](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#pushtoken)  
+[public string HWID](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#hwid)   
+[public void SetIntTag(string tagName, int tagValue)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setinttag)  
+[public void SetStringTag(string tagName, string tagValue)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setstringtag)  
+[public void SetListTag(string tagName, List<object> tagValues)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setlisttag)  
+[public void StartTrackingGeoPushes()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#starttrackinggeopushes)  
+[public void StopTrackingGeoPushes()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#stoptrackinggeopushes)  
+[public void ClearNotificationCenter()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#clearnotificationcenter)  
+[static public void SetBadgeNumber(int number)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setbadgenumber)  
+[static public void AddBadgeNumber(int deltaBadge)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#addbadgenumber)  
+
+
 ## Methods
 
-[public void registerForPushNotifications()](#registerforpushnotifications)  
-[public void unregisterForPushNotifications()](#unregisterforpushnotifications)  
-[public void setIntTag(string tagName, int tagValue)](#setinttag)  
-[public void setStringTag(string tagName, string tagValue)](#setstringtag)  
-[public void setListTag(string tagName, List<object> tagValues)](#setlisttag)  
-[public String[] getPushHistory()](#getpushhistory)  
-[public void clearPushHistory()](#clearpushhistory)  
-[public void startTrackingGeoPushes()](#starttrackinggeopushes)  
-[public void stopTrackingGeoPushes()](#stoptrackinggeopushes)  
-[public void startTrackingBeaconPushes()](#starttrackingbeaconpushes)  
-[public void stopTrackingBeaconPushes()](#stoptrackingbeaconpushes)  
-[public void clearLocalNotifications()](#clearlocalnotifications)  
-[public void clearNotificationCenter()](#clearnotificationcenter)  
-[public int scheduleLocalNotification(string message, int seconds)](#schedulelocalnotification)  
-[public void clearLocalNotification(int id)](#clearlocalnotification)  
-[public void setMultiNotificationMode()](#setmultinotificationmode)  
-[public void setSimpleNotificationMode()](#setsimplenotificationmode)  
-[public void setSoundNotificationType(int soundNotificationType)](#setsoundnotificationtype)  
-[public void setVibrateNotificationType(int vibrateNotificationType)](#setsoundnotificationtype)  
-[public void setLightScreenOnNotification(bool lightsOn)](#setlightscreenonnotification)  
-[public void setEnableLED(bool ledOn)](#setenableled)  
-[public string getPushToken()](#getpushtoken)  
-[public string getPushwooshHWID()](#getpushwooshhwid)  
+[public void RegisterForPushNotifications()](#registerforpushnotifications)  
+[public void UnregisterForPushNotifications()](#unregisterforpushnotifications)  
+[public String[] GetPushHistory()](#getpushhistory)  
+[public void ClearPushHistory()](#clearpushhistory)  
+[public void StartTrackingBeaconPushes()](#starttrackingbeaconpushes)  
+[public void StopTrackingBeaconPushes()](#stoptrackingbeaconpushes)  
+[public void ClearLocalNotifications()](#clearlocalnotifications)  
+[public int ScheduleLocalNotification(string message, int seconds)](#schedulelocalnotification)  
+[public void ClearLocalNotification(int id)](#clearlocalnotification)  
+[public void SetMultiNotificationMode()](#setmultinotificationmode)  
+[public void SetSimpleNotificationMode()](#setsimplenotificationmode)  
+[public void SetSoundNotificationType(int soundNotificationType)](#setsoundnotificationtype)  
+[public void SetVibrateNotificationType(int vibrateNotificationType)](#setsoundnotificationtype)  
+[public void SetLightScreenOnNotification(bool lightsOn)](#setlightscreenonnotification)  
+[public void SetEnableLED(bool ledOn)](#setenableled)  
 
 
-### registerForPushNotifications
+### RegisterForPushNotifications
 
 Registers for push notifications. Called automatically in `Start` function.
 
 ```csharp
-public void registerForPushNotifications()
+public void RegisterForPushNotifications()
 ```
 
 ---
-### unregisterForPushNotifications
+### UnregisterForPushNotifications
 
 Unregisters from push notifications.
 
 ```csharp
-public void unregisterForPushNotifications()
-```
-
----
-### setIntTag
-
-Sets Integer Tag for the device.
-
-```csharp
-public void setIntTag(string tagName, int tagValue)
+public void UnregisterForPushNotifications()
 ```
 
 --
-### setStringTag
-
-Sets String Tag for the device.
-
-```csharp
-public void setStringTag(string tagName, string tagValue)
-```
-
---
-### setListTag
-
-Sets List Tag for the device.
-
-```csharp
-public void setListTag(string tagName, List<object> tagValues)
-```
-
---
-### getPushHistory
+### GetPushHistory
 
 Gets push history for the device (since the last `clearPushHistory` call).
 
 ```csharp
-public String[] getPushHistory()
+public String[] GetPushHistory()
 ```
 
 --
-### clearPushHistory
+### ClearPushHistory
 
 Clears push history for the device.
 
 ```csharp
-public void clearPushHistory()
+public void ClearPushHistory()
 ```
 
 --
-### startTrackingGeoPushes
-
-Starts tracking Geo Push notifications
-
-```csharp
-public void startTrackingGeoPushes()
-```
-
---
-### stopTrackingGeoPushes
-
-Stops tracking Geo Push notifications
-
-```csharp
-public void stopTrackingGeoPushes()
-```
-
---
-### startTrackingBeaconPushes
+### StartTrackingBeaconPushes
 
 Starts tracking iBeacon Push notifications
 
 ```csharp
-public void startTrackingBeaconPushes()
+public void StartTrackingBeaconPushes()
 ```
 
 --
-### stopTrackingBeaconPushes
+### StopTrackingBeaconPushes
 
 Stops tracking iBeacon Push notifications
 
 ```csharp
-public void stopTrackingBeaconPushes()
+public void StopTrackingBeaconPushes()
 ```
 
 --
-### clearLocalNotifications
+### ClearLocalNotifications
 
 Clears all scheduled local notifications.
 
 ```csharp
-public void clearLocalNotifications()
+public void ClearLocalNotifications()
 ```
 
 --
-### clearNotificationCenter
-
-Clears all notifications from the system tray.
-
-```csharp
-public void clearNotificationCenter()
-```
-
---
-### scheduleLocalNotification
+### ScheduleLocalNotification
 
 Schedules local notification.
 
 ```csharp
-public int scheduleLocalNotification(string message, int seconds)
-public int scheduleLocalNotification(string message, int seconds, string userdata)
+public int ScheduleLocalNotification(string message, int seconds)
+public int ScheduleLocalNotification(string message, int seconds, string userdata)
 ```
 
 * **message** - notification title
@@ -160,36 +112,36 @@ public int scheduleLocalNotification(string message, int seconds, string userdat
 * **userdata** - optional
 
 --
-### clearLocalNotification
+### ClearLocalNotification
 
 Clears specific local notification
 
 ```csharp
-public void clearLocalNotification(int id)
+public void ClearLocalNotification(int id)
 ```
 
 * **id** - notification id returned from `scheduleLocalNotification` function
 
 --
-### setMultiNotificationMode
+### SetMultiNotificationMode
 
 Allows multiple notifications in the tray.
 
 ```csharp
-public void setMultiNotificationMode()
+public void SetMultiNotificationMode()
 ```
 
 --
-### setSimpleNotificationMode
+### SetSimpleNotificationMode
 
 Allows single notifications in the tray.
 
 ```csharp
-public void setSimpleNotificationMode()
+public void SetSimpleNotificationMode()
 ```
 
 --
-### setSoundNotificationType
+### SetSoundNotificationType
 
 Sets default sound notification type. Could be overriden from Pushwoosh Control Panel.
 * 0 - default mode
@@ -197,11 +149,11 @@ Sets default sound notification type. Could be overriden from Pushwoosh Control 
 * 2 - always
 
 ```csharp
-public void setSoundNotificationType(int soundNotificationType)
+public void SetSoundNotificationType(int soundNotificationType)
 ```
 
 --
-### setVibrateNotificationType
+### SetVibrateNotificationType
 
 Sets default vibration notification type. Could be overriden from Pushwoosh Control Panel.
 * 0 - default mode
@@ -209,41 +161,23 @@ Sets default vibration notification type. Could be overriden from Pushwoosh Cont
 * 2 - always
 
 ```csharp
-public void setVibrateNotificationType(int vibrateNotificationType)
+public void SetVibrateNotificationType(int vibrateNotificationType)
 ```
 
 --
-### setLightScreenOnNotification
+### SetLightScreenOnNotification
 
 Should the screen lit up itself when push notification arrives. Could be overriden from Pushwoosh Control Panel.
 
 ```csharp
-public void setLightScreenOnNotification(bool lightsOn)
+public void SetLightScreenOnNotification(bool lightsOn)
 ```
 
 --
-### setEnableLED
+### SetEnableLED
 
 Enables LED blinking. Could be overriden from Pushwoosh Control Panel.
 
 ```csharp
-public void setEnableLED(bool ledOn)
-```
-
---
-### getPushToken
-
-Gets push notifications token. Could be empty if no push notifications token has been received.
-
-```csharp
-public string getPushToken()
-```
-
---
-### getPushwooshHWID
-
-Gets device unique identifier.
-
-```csharp
-public string getPushwooshHWID()
+public void SetEnableLED(bool ledOn)
 ```

@@ -1,6 +1,6 @@
-# class PushNotificationsIOS #
+# class PushNotificationsWP8 #
 
-Provides specific features for iOS platform.
+Provides specific features for Windows Phone 8 platform.
 
 ## Base class methods
 
@@ -11,29 +11,4 @@ Provides specific features for iOS platform.
 [public void SetListTag(string tagName, List<object> tagValues)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setlisttag)  
 [public void StartTrackingGeoPushes()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#starttrackinggeopushes)  
 [public void StopTrackingGeoPushes()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#stoptrackinggeopushes)  
-[public void ClearNotificationCenter()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#clearnotificationcenter)  
-[static public void SetBadgeNumber(int number)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setbadgenumber)  
-[static public void AddBadgeNumber(int deltaBadge)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#addbadgenumber)  
 
-## Methods
-
-[public void registerForPushNotifications()](#registerforremotenotifications)  
-[public void unregisterForPushNotifications()](#unregisterforremotenotifications)  
-
-
-### registerForRemoteNotifications
-
-Registers for push notifications. Called automatically in `Start` function.
-
-```csharp
-public void registerForRemoteNotifications()
-```
-
----
-### unregisterForRemoteNotifications
-
-Unregisters from push notifications.
-
-```csharp
-public void unregisterForRemoteNotifications()
-```
