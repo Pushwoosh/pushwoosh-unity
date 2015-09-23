@@ -17,11 +17,24 @@ public class LocalAndroidNotificator : MonoBehaviour
 		Pushwoosh.Instance.OnRegisteredForPushNotifications += onRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnFailedToRegisteredForPushNotifications += onFailedToRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnPushNotificationsReceived += onPushNotificationsReceived;
+		Pushwoosh.Instance.OnInitialized += OnPushwooshInitialized;
 
 #if UNITY_ANDROID && !UNITY_EDITOR
 		androidPushManager = Pushwoosh.Instance as PushNotificationsAndroid;
 #endif
 	}
+
+	void OnPushwooshInitialized()
+	{
+#if UNITY_ANDROID && !UNITY_EDITOR
+		string launchNotification = Pushwoosh.Instance.getLaunchNotification();
+		if (launchNotification == null)
+			Debug.Log("No launch notification");
+		else
+			Debug.Log("Launch notification = " + launchNotification);
+#endif
+	}
+
 	
 	void Update()
 	{

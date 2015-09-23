@@ -63,6 +63,11 @@ public class PushNotificationsAndroid : Pushwoosh
 		pushwoosh.Call ("setListTag", tagName, tags);
 	}
 
+	public string getLaunchNotification()
+	{
+		return pushwoosh.Call<string>("getLaunchNotification");
+	}
+
 	public String[] GetPushHistory()
 	{
 		AndroidJavaObject history = pushwoosh.Call<AndroidJavaObject>("getPushHistory");

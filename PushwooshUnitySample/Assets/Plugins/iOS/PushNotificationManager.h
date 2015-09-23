@@ -127,8 +127,22 @@ typedef void(^PushwooshErrorHandler)(NSError *error);
  @param error An NSError object that encapsulates information why receiving tags did not succeed.
  */
 - (void) onTagsFailedToReceive:(NSError *)error;
-@end
 
+/**
+ Tells the delegate that In-App with specified code has been closed
+ 
+ @param code In-App code
+ */
+- (void) onInAppClosed:(NSString*)code;
+
+/**
+ Tells the delegate that In-App with specified code has been displayed
+ 
+ @param code In-App code
+ */
+- (void) onInAppDisplayed:(NSString*)code;
+
+@end
 
 /**
   `PWTags` class encapsulates the methods for creating tags parameters for sending them to the server.
@@ -450,5 +464,30 @@ typedef void(^PushwooshErrorHandler)(NSError *error);
  Clears the notifications from the notification center.
  */
 + (void) clearNotificationCenter;
+
+/**
+ Set User indentifier. This could be Facebook ID, username or email, or any other user ID.
+ This allows data and events to be matched across multiple user devices.
+ */
+- (void) setUserId: (NSString*) userId; 
+
+/**
+ Post events for In-App Messages. This can trigger In-App message display as specified in Pushwoosh Control Panel.
+ 
+ Example:
+ 
+	 [[PushNotificationManager pushManager] setUserId:@"96da2f590cd7246bbde0051047b0d6f7"];
+	 [[PushNotificationManager pushManager] postEvent:@"buttonPressed" withAttributes:@{ @"buttonNumber" : @"4", @"buttonLabel" : @"Banner" } completion:nil];
+
+ @param event name of the event
+ @param attributes NSDictionary of event attributes
+ @param completion function to call after posting event
+ */
+- (void) postEvent: (NSString*) event withAttributes: (NSDictionary*) attributes completion: (void(^)(NSError* error)) completion;
+
+/**
+ See `postEvent:withAttributes:completion:`
+ */
+- (void) postEvent: (NSString*) event withAttributes: (NSDictionary*) attributes;
 
 @end
