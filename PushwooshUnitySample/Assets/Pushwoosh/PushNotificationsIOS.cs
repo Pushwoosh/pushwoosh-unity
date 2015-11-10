@@ -18,6 +18,9 @@ public class PushNotificationsIOS : Pushwoosh
 	//
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static public void initializePushManager(string appCode, string appName);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public void registerForRemoteNotifications();
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]

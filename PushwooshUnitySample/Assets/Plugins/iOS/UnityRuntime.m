@@ -11,6 +11,12 @@ void registerForRemoteNotifications() {
 	[[PushNotificationManager pushManager] registerForPushNotifications];
 }
 
+void initializePushManager(char *appId, char *appName) {
+	NSString *appCodeStr = [[NSString alloc] initWithUTF8String:appId];
+	NSString *appNameStr = [[NSString alloc] initWithUTF8String:appName];
+	[PushNotificationManager initializeWithAppCode:appCodeStr appName:appNameStr];
+}
+
 void unregisterForRemoteNotifications() {
 	[[PushNotificationManager pushManager] unregisterForPushNotifications];
 }

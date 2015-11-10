@@ -27,7 +27,7 @@ public class LocalAndroidNotificator : MonoBehaviour
 	void OnPushwooshInitialized()
 	{
 #if UNITY_ANDROID && !UNITY_EDITOR
-		string launchNotification = Pushwoosh.Instance.getLaunchNotification();
+		string launchNotification = Pushwoosh.Instance.GetLaunchNotification();
 		if (launchNotification == null)
 			Debug.Log("No launch notification");
 		else
