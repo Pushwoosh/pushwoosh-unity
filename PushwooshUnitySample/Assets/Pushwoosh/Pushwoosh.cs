@@ -13,9 +13,9 @@ using PushwooshInstanceType = Pushwoosh;
 
 public class Pushwoosh : MonoBehaviour
 {
-	public const string APP_CODE = "ENTER_PUSHWOOSH_APP_ID_HERE";
+	public const string APP_CODE = "4FC89B6D14A655.46488481";
 	
-	public const string GCM_PROJECT_NUMBER = "ENTER_GOOGLE_PROJECT_NUMBER_HERE";
+	public const string GCM_PROJECT_NUMBER = "60756016005";
 	
 
 	public delegate void RegistrationSuccessHandler(string token);
