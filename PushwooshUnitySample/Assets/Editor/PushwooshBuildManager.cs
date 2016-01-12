@@ -40,6 +40,22 @@ public class PushwooshBuildManager : MonoBehaviour
 			var scriptPath = System.IO.Path.Combine (Application.dataPath, "Editor/PushwooshPostProcessoriOS.py");
 			var args = string.Format ("\"{0}\" \"{1}\" \"{2}\" \"{3}\"", scriptPath, pathToBuiltProject, target.ToString (), Pushwoosh.APP_CODE);
 			runScript(scriptPath, args, "python");
+
+			UnityEngine.Debug.LogError ("Path to built project: " + pathToBuiltProject);
+
+			string projPath = pathToBuiltProject + "/Unity-iPhone.xcodeproj/project.pbxproj";
+			UnityEngine.Debug.LogError ("Project Path: " + projPath);
+
+			PBXProject proj = new PBXProject();
+			proj.ReadFromString(File.ReadAllText(projPath));
+			string projTarget = proj.TargetGuidByName("Unity-iPhone");
+			UnityEngine.Debug.LogError ("Project Target: " + projTarget);
+
+			proj.AddFrameworkToProject(projTarget, "Security.framework", false);
+			proj.AddBuildProperty(projTarget, "OTHER_LDFLAGS", "-ObjC -all_load");
+			proj.AddBuildProperty(projTarget, "ENABLE_BITCODE", "NO");
+
+			File.WriteAllText(projPath, proj.WriteToString());
 		}
 		
 		if (target == BuildTarget.WP8Player) {
