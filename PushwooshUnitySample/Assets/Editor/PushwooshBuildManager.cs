@@ -27,6 +27,7 @@ using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml;
+using UnityEditor.iOS.Xcode;
 
 public class PushwooshBuildManager : MonoBehaviour 
 {
