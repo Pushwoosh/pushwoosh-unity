@@ -40,7 +40,7 @@ public class Pushwoosh : MonoBehaviour
 	{
 		get 
 		{
-			UnsupportedPlatform ();
+			Debug.Log ("[Pushwoosh] Error: HWID is not supported on this platform");
 			return "Unsupported platform"; 
 		}
 	}
@@ -49,49 +49,49 @@ public class Pushwoosh : MonoBehaviour
 	{
 		get 
 		{ 
-			UnsupportedPlatform ();
+			Debug.Log ("[Pushwoosh] Error: PushToken is not supported on this platform");
 			return "Unsupported platform"; 
 		}
 	}
 
 	public virtual void StartTrackingGeoPushes()
 	{
-		UnsupportedPlatform ();
+		Debug.Log ("[Pushwoosh] Error: StartTrackingGeoPushes is not supported on this platform");
 	}
 
 	public virtual void StopTrackingGeoPushes()
 	{
-		UnsupportedPlatform ();
+		Debug.Log ("[Pushwoosh] Error: StopTrackingGeoPushes is not supported on this platform");
 	}
 
 	public virtual void SetIntTag(string tagName, int tagValue)
 	{
-		UnsupportedPlatform ();
+		Debug.Log ("[Pushwoosh] Error: SetIntTag is not supported on this platform");
 	}
 	
 	public virtual void SetStringTag(string tagName, string tagValue)
 	{
-		UnsupportedPlatform ();
+		Debug.Log ("[Pushwoosh] Error: SetStringTag is not supported on this platform");
 	}
 	
 	public virtual void SetListTag(string tagName, List<object> tagValues)
 	{
-		UnsupportedPlatform ();
+		Debug.Log ("[Pushwoosh] Error: SetListTag is not supported on this platform");
 	}
 
 	public virtual void ClearNotificationCenter()
 	{
-		UnsupportedPlatform ();
+		Debug.Log ("[Pushwoosh] Error: ClearNotificationCenter is not supported on this platform");
 	}
 
 	public virtual void SetBadgeNumber(int number)
 	{
-		UnsupportedPlatform ();
+		Debug.Log ("[Pushwoosh] Error: SetBadgeNumber is not supported on this platform");
 	}
 	
 	public virtual void AddBadgeNumber(int deltaBadge)
 	{
-		UnsupportedPlatform ();
+		Debug.Log ("[Pushwoosh] Error: AddBadgeNumber is not supported on this platform");
 	}
 
 	protected void RegisteredForPushNotifications(string token)
@@ -112,14 +112,6 @@ public class Pushwoosh : MonoBehaviour
 	protected void Initialized()
 	{
 		OnInitialized ();
-	}
-
-	private void UnsupportedPlatform()
-	{
-		var frame = new System.Diagnostics.StackFrame(1);
-		var method = frame.GetMethod();
-		string methodName = method.Name;
-		Debug.Log ("[Pushwoosh] Error: " + methodName + " is not supported on this platform");
 	}
 
 	// Singleton

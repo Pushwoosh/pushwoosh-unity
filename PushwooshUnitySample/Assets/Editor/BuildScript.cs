@@ -23,10 +23,22 @@ class BuildScript {
 		GenericBuild(SCENES, buildPath + "/" + target_dir, BuildTarget.Android, BuildOptions.None);
 	}
 
+	[MenuItem("Custom/Build/Build Windows Phone 8.1")]
+	static void PerformWPBuild() {
+		string buildPath = System.IO.Directory.GetCurrentDirectory() + "/build-wp";
+		CreateDirectory(buildPath);
+
+		EditorUserBuildSettings.wsaSDK = WSASDK.PhoneSDK81;
+
+		GenericBuild(SCENES, buildPath, BuildTarget.WSAPlayer, BuildOptions.None);
+	}
+
 	private static string[] FindEnabledEditorScenes() {
 		List<string> EditorScenes = new List<string>();
 		foreach(EditorBuildSettingsScene scene in EditorBuildSettings.scenes) {
-			if(!scene.enabled) continue;
+			if(!scene.enabled)
+				continue;
+
 			EditorScenes.Add(scene.path);
 		}
 		return EditorScenes.ToArray();

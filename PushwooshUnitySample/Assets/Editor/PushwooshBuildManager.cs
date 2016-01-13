@@ -27,7 +27,10 @@ using System.IO;
 using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml;
+
+#if UNITY_EDITOR_OSX
 using UnityEditor.iOS.Xcode;
+#endif
 
 public class PushwooshBuildManager : MonoBehaviour 
 {
@@ -38,6 +41,8 @@ public class PushwooshBuildManager : MonoBehaviour
 #else
 		if (target == BuildTarget.iOS) {
 #endif
+
+#if UNITY_EDITOR_OSX
 			var scriptPath = System.IO.Path.Combine (Application.dataPath, "Editor/PushwooshPostProcessoriOS.py");
 			var args = string.Format ("\"{0}\" \"{1}\" \"{2}\" \"{3}\"", scriptPath, pathToBuiltProject, target.ToString (), Pushwoosh.APP_CODE);
 			runScript(scriptPath, args, "python");
@@ -57,6 +62,7 @@ public class PushwooshBuildManager : MonoBehaviour
 			proj.AddBuildProperty(projTarget, "ENABLE_BITCODE", "NO");
 
 			File.WriteAllText(projPath, proj.WriteToString());
+#endif
 		}
 		
 		if (target == BuildTarget.WP8Player) {
