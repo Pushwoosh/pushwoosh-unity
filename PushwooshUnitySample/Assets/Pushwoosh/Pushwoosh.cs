@@ -5,8 +5,8 @@ using System.Collections.Generic;
 using PushwooshInstanceType = PushNotificationsIOS;
 #elif UNITY_ANDROID && !UNITY_EDITOR
 using PushwooshInstanceType = PushNotificationsAndroid;
-#elif (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
-using PushwooshInstanceType = PushNotificationsWP8; 
+#elif (UNITY_WP8 || UNITY_WP8_1 || UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0) && !UNITY_EDITOR
+using PushwooshInstanceType = PushNotificationsWindows; 
 #else 
 using PushwooshInstanceType = Pushwoosh;
 #endif
@@ -155,8 +155,7 @@ public class Pushwoosh : MonoBehaviour
 						DontDestroyOnLoad(singleton);
 						
 						Debug.Log("[Singleton] An instance of " + typeof(PushwooshInstanceType) + 
-						          " is needed in the scene, so '" + singleton +
-						          "' was created with DontDestroyOnLoad.");
+						          " has been created with DontDestroyOnLoad.");
 					} else {
 						Debug.Log("[Singleton] Using instance already created: " +
 						          _instance.gameObject.name);

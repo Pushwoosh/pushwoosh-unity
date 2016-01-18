@@ -1,29 +1,29 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-public class PushNotificationsWP8: Pushwoosh 
+public class PushNotificationsWindows: Pushwoosh 
 {
-#if (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
-	private PushwooshForWindowsPhone.Pushwoosh pushwoosh = null;
+#if (UNITY_WP8 || UNITY_WP8_1 || UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0) && !UNITY_EDITOR
+	private PushwooshForWindows.Pushwoosh pushwoosh = null;
 
-	void TokenReceived(object sender, PushwooshForWindowsPhone.TokenEventArgs events)
+	void TokenReceived(object sender, PushwooshForWindows.TokenEventArgs events)
 	{
 		RegisteredForPushNotifications (events.Token);
 	}
 
-	void TokenError(object sender, PushwooshForWindowsPhone.TokenErrorEventArgs events)
+	void TokenError(object sender, PushwooshForWindows.TokenErrorEventArgs events)
 	{
 		FailedToRegisteredForPushNotifications (events.ErrorMessage);
 	}
 
-	void PushReceived(object sender, PushwooshForWindowsPhone.PushEventArgs events)
+	void PushReceived(object sender, PushwooshForWindows.PushEventArgs events)
 	{
 		PushNotificationsReceived (events.PushPayload);
 	}
 
 	// Use this for initialization
 	void Start () {
-		pushwoosh = new PushwooshForWindowsPhone.Pushwoosh(Pushwoosh.APP_CODE);
+		pushwoosh = new PushwooshForWindows.Pushwoosh(Pushwoosh.APP_CODE);
 		pushwoosh.OnPushTokenReceived += TokenReceived;
 		pushwoosh.OnPushTokenFailed += TokenError;
 		pushwoosh.OnPushAccepted += PushReceived;
