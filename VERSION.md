@@ -1,3 +1,6 @@
+Current version: 1.1.1
+=========================
+UnityPushwoosh.jar update
 Current version: 1.1.0
 =========================
 Removed OnInitialized event
