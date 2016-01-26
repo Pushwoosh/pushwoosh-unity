@@ -1,10 +1,10 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-#if UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0 && !UNITY_EDITOR
+#if (UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0) && !UNITY_EDITOR
 using PushwooshPlugin = PushwooshForWindows;
-#elif UNITY_WP8 || UNITY_WP8_1 && !UNITY_EDITOR
-using PushwooshPlugin = PushwooshForWindowsPhone
+#elif (UNITY_WP8 || UNITY_WP8_1) && !UNITY_EDITOR
+using PushwooshPlugin = PushwooshForWindowsPhone;
 #endif
 
 public class PushNotificationsWindows: Pushwoosh 
@@ -42,7 +42,7 @@ public class PushNotificationsWindows: Pushwoosh
 
 	public override void UnregisterForPushNotifications()
 	{
-		pushwoosh.UnsubscribeFromPushes (null, null);
+		pushwoosh.UnsubscribeForPushNotifications ();
 	}
 
 	public override string HWID
