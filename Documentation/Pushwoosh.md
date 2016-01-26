@@ -16,21 +16,21 @@ Pushwoosh.Instance.OnPushNotificationsReceived += onPushNotificationsReceived;
 
 ## Properties
 
-### APP_CODE
+### ApplicationCode
 
 Set this variable to your Pushwoosh App Id.
 
 ```csharp
-public const string APP_CODE = "ENTER_PUSHWOOSH_APP_ID_HERE";
+public static string ApplicationCode
 ```
 
 ---
-### GCM_PROJECT_NUMBER
+### GcmProjectNumber
 
 Set this variable to your Google Project Id For Android.
 
 ```csharp
-public const string GCM_PROJECT_NUMBER = "ENTER_GOOGLE_PROJECT_NUMBER_HERE";
+public static string GcmProjectNumber
 ```
 
 ---
@@ -79,17 +79,26 @@ Push notification handler delegate.
 public event NotificationHandler OnPushNotificationsReceived = delegate {};
 ```
 
----
-### OnInitialized
-
-Push initialization handler delegate.
-
-```csharp
-public event InitializationHandler OnInitialized = delegate {};
-```
-
 ## Methods
 
+### RegisterForPushNotifications
+
+Register for remote notifications
+
+```csharp
+public virtual void RegisterForPushNotifications()
+```
+
+---
+### UnregisterForPushNotifications
+
+Unregister from remote notifications
+
+```csharp
+public virtual void UnregisterForPushNotifications()
+```
+
+---
 ### SetIntTag
 
 Sets Integer Tag for the device.

@@ -56,13 +56,20 @@ public class PushNotificationsIOS : Pushwoosh
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public void addBadgeNumber(int deltaBadge);
 
-	// Use this for initialization
-	void Start () {
-		registerForRemoteNotifications();
+	protected override void Initialize () 
+	{
+		initializePushManager(Pushwoosh.ApplicationCode, Application.productName);
 		setListenerName(this.gameObject.name);
-		Debug.Log(PushToken);
+	}
 
-		Initialized ();
+	public override void RegisterForPushNotifications()
+	{
+		registerForRemoteNotifications();
+	}
+
+	public override void UnregisterForPushNotifications()
+	{
+		unregisterForRemoteNotifications();
 	}
 
 	public override string HWID

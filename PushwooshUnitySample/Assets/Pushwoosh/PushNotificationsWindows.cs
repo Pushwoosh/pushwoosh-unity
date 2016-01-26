@@ -1,36 +1,48 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
+#if UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0 && !UNITY_EDITOR
+using PushwooshPlugin = PushwooshForWindows;
+#elif UNITY_WP8 || UNITY_WP8_1 && !UNITY_EDITOR
+using PushwooshPlugin = PushwooshForWindowsPhone
+#endif
+
 public class PushNotificationsWindows: Pushwoosh 
 {
 #if (UNITY_WP8 || UNITY_WP8_1 || UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0) && !UNITY_EDITOR
-	private PushwooshForWindows.Pushwoosh pushwoosh = null;
+	private PushwooshPlugin.Pushwoosh pushwoosh = null;
 
-	void TokenReceived(object sender, PushwooshForWindows.TokenEventArgs events)
+	void TokenReceived(object sender, PushwooshPlugin.TokenEventArgs events)
 	{
 		RegisteredForPushNotifications (events.Token);
 	}
 
-	void TokenError(object sender, PushwooshForWindows.TokenErrorEventArgs events)
+	void TokenError(object sender, PushwooshPlugin.TokenErrorEventArgs events)
 	{
 		FailedToRegisteredForPushNotifications (events.ErrorMessage);
 	}
 
-	void PushReceived(object sender, PushwooshForWindows.PushEventArgs events)
+	void PushReceived(object sender, PushwooshPlugin.PushEventArgs events)
 	{
 		PushNotificationsReceived (events.PushPayload);
 	}
 
-	// Use this for initialization
-	void Start () {
-		pushwoosh = new PushwooshForWindows.Pushwoosh(Pushwoosh.APP_CODE);
+	protected override void Initialize ()
+	{
+		pushwoosh = new PushwooshPlugin.Pushwoosh(Pushwoosh.ApplicationCode);
 		pushwoosh.OnPushTokenReceived += TokenReceived;
 		pushwoosh.OnPushTokenFailed += TokenError;
 		pushwoosh.OnPushAccepted += PushReceived;
+	}
 
+	public override void RegisterForPushNotifications()
+	{
 		pushwoosh.SubscribeForPushNotifications ();
+	}
 
-		Initialized ();
+	public override void UnregisterForPushNotifications()
+	{
+		pushwoosh.UnsubscribeFromPushes (null, null);
 	}
 
 	public override string HWID

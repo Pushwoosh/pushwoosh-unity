@@ -6,37 +6,27 @@ using System.Collections.Generic;
 public class PushNotificationsAndroid : Pushwoosh 
 {
 #if UNITY_ANDROID && !UNITY_EDITOR
-	// Use this for initialization
-	void Start () {
-		InitPushwoosh();
-		RegisterForPushNotifications();
-		
-		Debug.Log(this.gameObject.name);
-		Debug.Log(PushToken);
-
-		Initialized ();
-	}
-
 	private static AndroidJavaObject pushwoosh = null;
 	
-	void InitPushwoosh() {
+	protected override void Initialize() 
+	{
 		if(pushwoosh != null)
 			return;
 		
 		using(var pluginClass = new AndroidJavaClass("com.pushwoosh.PushwooshProxy")) {
-			pluginClass.CallStatic("initialize", Pushwoosh.APP_CODE, Pushwoosh.GCM_PROJECT_NUMBER);
+		pluginClass.CallStatic("initialize", Pushwoosh.ApplicationCode, Pushwoosh.GcmProjectNumber);
 			pushwoosh = pluginClass.CallStatic<AndroidJavaObject>("instance");
 		}
 		
 		pushwoosh.Call("setListenerName", this.gameObject.name);
 	}
  
-	public void RegisterForPushNotifications()
+	public override void RegisterForPushNotifications()
 	{
 		pushwoosh.Call("registerForPushNotifications");
 	}
 
-	public void UnregisterForPushNotifications()
+	public override void UnregisterForPushNotifications()
 	{
 		pushwoosh.Call("unregisterFromPushNotifications");
 	}
@@ -218,7 +208,7 @@ public class PushNotificationsAndroid : Pushwoosh
 	{
 		//make sure everything runs smoothly even if pushwoosh is not initialized yet
 		if (pushwoosh == null)
-			InitPushwoosh();
+			Initialize();
 
 		if(paused)
 		{

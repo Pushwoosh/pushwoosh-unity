@@ -6,6 +6,8 @@ Provides specific features for Android platform.
 
 [public string PushToken](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#pushtoken)  
 [public string HWID](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#hwid)   
+[public void RegisterForPushNotifications()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#registerforpushnotifications)  
+[public void UnregisterForPushNotifications()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#unregisterforpushnotifications)  
 [public void SetIntTag(string tagName, int tagValue)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setinttag)  
 [public void SetStringTag(string tagName, string tagValue)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setstringtag)  
 [public void SetListTag(string tagName, List<object> tagValues)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setlisttag)  
@@ -18,8 +20,6 @@ Provides specific features for Android platform.
 
 ## Methods
 
-[public void RegisterForPushNotifications()](#registerforpushnotifications)  
-[public void UnregisterForPushNotifications()](#unregisterforpushnotifications)  
 [public String[] GetPushHistory()](#getpushhistory)  
 [public void ClearPushHistory()](#clearpushhistory)  
 [public void StartTrackingBeaconPushes()](#starttrackingbeaconpushes)  
@@ -34,25 +34,6 @@ Provides specific features for Android platform.
 [public void SetLightScreenOnNotification(bool lightsOn)](#setlightscreenonnotification)  
 [public void SetEnableLED(bool ledOn)](#setenableled)  
 
-
-### RegisterForPushNotifications
-
-Registers for push notifications. Called automatically in `Start` function.
-
-```csharp
-public void RegisterForPushNotifications()
-```
-
----
-### UnregisterForPushNotifications
-
-Unregisters from push notifications.
-
-```csharp
-public void UnregisterForPushNotifications()
-```
-
---
 ### GetPushHistory
 
 Gets push history for the device (since the last `clearPushHistory` call).
@@ -61,7 +42,7 @@ Gets push history for the device (since the last `clearPushHistory` call).
 public String[] GetPushHistory()
 ```
 
---
+---
 ### ClearPushHistory
 
 Clears push history for the device.
@@ -70,7 +51,7 @@ Clears push history for the device.
 public void ClearPushHistory()
 ```
 
---
+---
 ### StartTrackingBeaconPushes
 
 Starts tracking iBeacon Push notifications
@@ -79,7 +60,7 @@ Starts tracking iBeacon Push notifications
 public void StartTrackingBeaconPushes()
 ```
 
---
+---
 ### StopTrackingBeaconPushes
 
 Stops tracking iBeacon Push notifications
@@ -88,7 +69,7 @@ Stops tracking iBeacon Push notifications
 public void StopTrackingBeaconPushes()
 ```
 
---
+---
 ### ClearLocalNotifications
 
 Clears all scheduled local notifications.
@@ -97,7 +78,7 @@ Clears all scheduled local notifications.
 public void ClearLocalNotifications()
 ```
 
---
+---
 ### ScheduleLocalNotification
 
 Schedules local notification.
@@ -111,7 +92,7 @@ public int ScheduleLocalNotification(string message, int seconds, string userdat
 * **seconds** - timeout in seconds to display the message
 * **userdata** - optional
 
---
+---
 ### ClearLocalNotification
 
 Clears specific local notification
@@ -122,7 +103,7 @@ public void ClearLocalNotification(int id)
 
 * **id** - notification id returned from `scheduleLocalNotification` function
 
---
+---
 ### SetMultiNotificationMode
 
 Allows multiple notifications in the tray.
@@ -131,7 +112,7 @@ Allows multiple notifications in the tray.
 public void SetMultiNotificationMode()
 ```
 
---
+---
 ### SetSimpleNotificationMode
 
 Allows single notifications in the tray.
@@ -140,7 +121,7 @@ Allows single notifications in the tray.
 public void SetSimpleNotificationMode()
 ```
 
---
+---
 ### SetSoundNotificationType
 
 Sets default sound notification type. Could be overriden from Pushwoosh Control Panel.
@@ -152,7 +133,7 @@ Sets default sound notification type. Could be overriden from Pushwoosh Control 
 public void SetSoundNotificationType(int soundNotificationType)
 ```
 
---
+---
 ### SetVibrateNotificationType
 
 Sets default vibration notification type. Could be overriden from Pushwoosh Control Panel.
@@ -164,7 +145,7 @@ Sets default vibration notification type. Could be overriden from Pushwoosh Cont
 public void SetVibrateNotificationType(int vibrateNotificationType)
 ```
 
---
+---
 ### SetLightScreenOnNotification
 
 Should the screen lit up itself when push notification arrives. Could be overriden from Pushwoosh Control Panel.
@@ -173,7 +154,7 @@ Should the screen lit up itself when push notification arrives. Could be overrid
 public void SetLightScreenOnNotification(bool lightsOn)
 ```
 
---
+---
 ### SetEnableLED
 
 Enables LED blinking. Could be overriden from Pushwoosh Control Panel.

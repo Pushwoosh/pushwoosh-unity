@@ -43,22 +43,18 @@ public class PushwooshBuildManager : MonoBehaviour
 #endif
 
 #if UNITY_EDITOR_OSX
-			var scriptPath = System.IO.Path.Combine (Application.dataPath, "Editor/PushwooshPostProcessoriOS.py");
-			var args = string.Format ("\"{0}\" \"{1}\" \"{2}\" \"{3}\"", scriptPath, pathToBuiltProject, target.ToString (), Pushwoosh.APP_CODE);
-			runScript(scriptPath, args, "python");
-
-			UnityEngine.Debug.LogError ("Path to built project: " + pathToBuiltProject);
+			UnityEngine.Debug.Log ("Path to built project: " + pathToBuiltProject);
 
 			string projPath = pathToBuiltProject + "/Unity-iPhone.xcodeproj/project.pbxproj";
-			UnityEngine.Debug.LogError ("Project Path: " + projPath);
+			UnityEngine.Debug.Log ("Project Path: " + projPath);
 
 			PBXProject proj = new PBXProject();
 			proj.ReadFromString(File.ReadAllText(projPath));
 			string projTarget = proj.TargetGuidByName("Unity-iPhone");
-			UnityEngine.Debug.LogError ("Project Target: " + projTarget);
+			UnityEngine.Debug.Log ("Project Target: " + projTarget);
 
 			proj.AddFrameworkToProject(projTarget, "Security.framework", false);
-			proj.AddBuildProperty(projTarget, "OTHER_LDFLAGS", "-ObjC -all_load");
+			proj.AddBuildProperty(projTarget, "OTHER_LDFLAGS", "-ObjC -lz -lstdc++");
 			proj.AddBuildProperty(projTarget, "ENABLE_BITCODE", "NO");
 
 			File.WriteAllText(projPath, proj.WriteToString());
@@ -99,30 +95,5 @@ public class PushwooshBuildManager : MonoBehaviour
 		manifest.Save (manifestFilePath);
 
 		UnityEngine.Debug.Log ("Windows Phone manifest sucessfully patched");
-	}
-
-	private static void runScript(string scriptPath, string args, string executor) {
-		if (!File.Exists (scriptPath)) {
-			UnityEngine.Debug.LogError ("Editor script not found: " + scriptPath + ". Did you accidentally delete it?");
-			return;
-		}
-
-		var proc = new Process
-		{
-			StartInfo = new ProcessStartInfo
-			{
-				FileName = executor,
-				Arguments = args,
-				UseShellExecute = false,
-				RedirectStandardOutput = true
-			}
-		};
-		
-		proc.Start ();
-		
-		string output = proc.StandardOutput.ReadToEnd ();
-		proc.WaitForExit ();
-		
-		UnityEngine.Debug.Log (scriptPath + ": " + output);
 	}
 }

@@ -13,9 +13,9 @@ using PushwooshInstanceType = Pushwoosh;
 
 public class Pushwoosh : MonoBehaviour
 {
-	public const string APP_CODE = "4FC89B6D14A655.46488481";
+	public static string ApplicationCode { get; set; }
 	
-	public const string GCM_PROJECT_NUMBER = "60756016005";
+	public static string GcmProjectNumber { get; set; }
 	
 
 	public delegate void RegistrationSuccessHandler(string token);
@@ -24,17 +24,12 @@ public class Pushwoosh : MonoBehaviour
 	
 	public delegate void NotificationHandler(string payload);
 
-	public delegate void InitializationHandler();
-
 
 	public event RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
 	
 	public event RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
 	
 	public event NotificationHandler OnPushNotificationsReceived = delegate {};
-
-	public event InitializationHandler OnInitialized = delegate {};
-
 
 	public virtual string HWID
 	{
@@ -52,6 +47,16 @@ public class Pushwoosh : MonoBehaviour
 			Debug.Log ("[Pushwoosh] Error: PushToken is not supported on this platform");
 			return "Unsupported platform"; 
 		}
+	}
+
+	public virtual void RegisterForPushNotifications()
+	{
+		Debug.Log ("[Pushwoosh] Error: RegisterForPushNotifications is not supported on this platform");
+	}
+
+	public virtual void UnregisterForPushNotifications()
+	{
+		Debug.Log ("[Pushwoosh] Error: UnregisterForPushNotifications is not supported on this platform");
 	}
 
 	public virtual void StartTrackingGeoPushes()
@@ -109,17 +114,14 @@ public class Pushwoosh : MonoBehaviour
 		OnPushNotificationsReceived(payload);
 	}
 
-	protected void Initialized()
-	{
-		OnInitialized ();
-	}
-
 	// Singleton
 	private static PushwooshInstanceType _instance;
 	
 	private static object _lock = new object();
 
 	protected Pushwoosh() {}
+
+	protected virtual void Initialize() {}
 	
 	public static PushwooshInstanceType Instance
 	{
@@ -149,8 +151,9 @@ public class Pushwoosh : MonoBehaviour
 					if (_instance == null)
 					{
 						GameObject singleton = new GameObject();
-						_instance = singleton.AddComponent<PushwooshInstanceType>();
 						singleton.name = "(singleton) "+ typeof(PushwooshInstanceType).ToString();
+						_instance = singleton.AddComponent<PushwooshInstanceType>();
+						_instance.Initialize ();
 						
 						DontDestroyOnLoad(singleton);
 						
