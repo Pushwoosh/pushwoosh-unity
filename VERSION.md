@@ -1,3 +1,6 @@
+Current version: 1.1.2
+=========================
+Windows build fixes
 Current version: 1.1.1
 =========================
 UnityPushwoosh.jar update
