@@ -55,7 +55,6 @@ public class PushwooshBuildManager : MonoBehaviour
 
 			proj.AddFrameworkToProject(projTarget, "Security.framework", false);
 			proj.AddBuildProperty(projTarget, "OTHER_LDFLAGS", "-ObjC -lz -lstdc++");
-			proj.AddBuildProperty(projTarget, "ENABLE_BITCODE", "NO");
 
 			File.WriteAllText(projPath, proj.WriteToString());
 #endif
