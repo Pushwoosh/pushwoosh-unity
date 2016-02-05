@@ -1,3 +1,6 @@
+Current version: 1.1.3
+=========================
+Publish: Remove ENABLE_BITCODE setting
 Current version: 1.1.2
 =========================
 Windows build fixes
