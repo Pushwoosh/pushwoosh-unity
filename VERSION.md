@@ -1,3 +1,9 @@
+Current version: 1.2.0
+=========================
+Publish:
+Using separate aar's instead of google-play-services.jar on Android
+Android Geofencing
+Pushwoosh.framework update
 Current version: 1.1.3
 =========================
 Publish: Remove ENABLE_BITCODE setting
