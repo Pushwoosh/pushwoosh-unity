@@ -1,3 +1,6 @@
+Current version: 1.2.1
+=========================
+Native libraries update
 Current version: 1.2.0
 =========================
 Publish:
