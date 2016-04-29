@@ -16,10 +16,8 @@ void initializePushManager(char *appId, char *appName) {
 	NSString *appNameStr = [[NSString alloc] initWithUTF8String:appName];
 	[PushNotificationManager initializeWithAppCode:appCodeStr appName:appNameStr];
 
-	[PushNotificationManager pushManager].appCode = appCodeStr;
-	[[NSUserDefaults standardUserDefaults] setObject:appCodeStr forKey:@"Pushwoosh_APPID"];
-	[PushNotificationManager pushManager].appName = appNameStr;
-	[[NSUserDefaults standardUserDefaults] setObject:appNameStr forKey:@"Pushwoosh_APPNAME"];
+	[[PushNotificationManager pushManager] sendAppOpen];
+	[PushNotificationManager pushManager].delegate = (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
 }
 
 void unregisterForRemoteNotifications() {
