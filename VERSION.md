@@ -1,3 +1,6 @@
+Current version: 1.3.0
+=========================
+Publish: [iOS] Rich Media support; fix sending first appOpen
 Current version: 1.2.1
 =========================
 Native libraries update
