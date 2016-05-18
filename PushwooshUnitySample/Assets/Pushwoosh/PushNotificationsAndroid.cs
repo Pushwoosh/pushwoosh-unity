@@ -13,7 +13,7 @@ public class PushNotificationsAndroid : Pushwoosh
 		if(pushwoosh != null)
 			return;
 		
-		using(var pluginClass = new AndroidJavaClass("com.pushwoosh.PushwooshProxy")) {
+		using(var pluginClass = new AndroidJavaClass("com.pushwoosh.unityplugin.PushwooshProxy")) {
 		pluginClass.CallStatic("initialize", Pushwoosh.ApplicationCode, Pushwoosh.GcmProjectNumber);
 			pushwoosh = pluginClass.CallStatic<AndroidJavaObject>("instance");
 		}
