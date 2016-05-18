@@ -1,3 +1,9 @@
+Current version: 1.4.0
+=========================
+Publish: 
+[Android] Rich Media support
+[Android] simplify AndroidManifest.xml changes
+[Android] Fix restarting application on push open
 Current version: 1.3.0
 =========================
 Publish: [iOS] Rich Media support; fix sending first appOpen
