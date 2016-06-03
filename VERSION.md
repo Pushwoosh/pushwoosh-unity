@@ -1,3 +1,6 @@
+Current version: 1.4.1
+=========================
+Pushwoosh SDK update
 Current version: 1.4.0
 =========================
 Publish: 
