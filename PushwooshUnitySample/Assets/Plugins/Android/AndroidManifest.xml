@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="preferExternal" android:theme="@android:style/Theme.NoTitleBar" package="com.pushwoosh.testing" android:versionName="1.0" android:versionCode="1">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:amazon="http://schemas.amazon.com/apk/res/android" android:installLocation="preferExternal" android:theme="@android:style/Theme.NoTitleBar" package="com.pushwoosh.demoapp" android:versionName="1.0" android:versionCode="1">
 	<supports-screens android:smallScreens="true" android:normalScreens="true" android:largeScreens="true" android:xlargeScreens="true" android:anyDensity="true" />
 	<application android:icon="@drawable/app_icon" android:label="@string/app_name" android:debuggable="true">
 		<activity android:name="com.unity3d.player.UnityPlayerProxyActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:screenOrientation="portrait">
@@ -8,9 +8,10 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
+		<!-- intent-filter ${applicationId}.MESSAGE here allows to start Activity directly from push notification without restarting whole application -->
 		<activity android:name="com.unity3d.player.UnityPlayerActivity" android:launchMode="singleTask" android:label="@string/app_name" android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:screenOrientation="portrait">
 			<intent-filter>
-				<action android:name="com.pushwoosh.testing.MESSAGE" />
+				<action android:name="com.pushwoosh.demoapp.MESSAGE" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>
 		</activity>
@@ -19,25 +20,38 @@
 			<meta-data android:name="unityplayer.ForwardNativeEventsToDalvik" android:value="false" />
 		</activity>
 
+		<!-- GCM part -->
 		<receiver
 			android:name="com.google.android.gms.gcm.GcmReceiver"
 			android:exported="true"
 			android:permission="com.google.android.c2dm.permission.SEND" >
 			<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />
-				<category android:name="com.pushwoosh.testing" />
+				<category android:name="com.pushwoosh.demoapp" />
 			</intent-filter>
 		</receiver>
+
+		<!-- Amazon part-->
+		<receiver
+			android:name="com.pushwoosh.MessageAlertReceiver"
+			android:permission="com.amazon.device.messaging.permission.SEND">
+			<intent-filter>
+				<action android:name="com.amazon.device.messaging.intent.REGISTRATION" />
+				<action android:name="com.amazon.device.messaging.intent.RECEIVE" />
+				<category android:name="com.pushwoosh.demoapp" />
+			</intent-filter>
+		</receiver>
+
+		<amazon:enable-feature android:name="com.amazon.device.messaging" android:required="false" />
 	</application>
 	<uses-feature android:glEsVersion="0x00020000" />
 	<uses-sdk android:minSdkVersion="9" android:targetSdkVersion="17" />
 
-	<!--
-	  Creates a custom permission so only this app can receive its messages.
-	 
-	  NOTE: the permission *must* be called PACKAGE.permission.C2D_MESSAGE,
-			where PACKAGE is the application's package name.
-	-->
-	<permission android:name="com.pushwoosh.testing.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-	<uses-permission android:name="com.pushwoosh.testing.permission.C2D_MESSAGE" />
+	<!-- GCM part -->
+	<permission android:name="com.pushwoosh.demoapp.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="com.pushwoosh.demoapp.permission.C2D_MESSAGE" />
+
+	<!-- Amazon part -->
+	<permission android:name="com.pushwoosh.demoapp.permission.RECEIVE_ADM_MESSAGE" android:protectionLevel="signature" />
+	<uses-permission android:name="com.pushwoosh.demoapp.permission.RECEIVE_ADM_MESSAGE" />
 </manifest>
