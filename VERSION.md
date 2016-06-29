@@ -1,3 +1,6 @@
+Current version: 1.5.0
+=========================
+Publish: Unify Amazon and Android integration
 Current version: 1.4.1
 =========================
 Pushwoosh SDK update
