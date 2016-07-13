@@ -1,3 +1,6 @@
+Current version: 1.5.1
+=========================
+Pushwoosh SDK update : { iOS : 4.0.9, Android : 4.5.0, Windows : 2.2.2 }
 Current version: 1.5.0
 =========================
 Publish: Unify Amazon and Android integration
