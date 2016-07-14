@@ -28,7 +28,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-#if UNITY_EDITOR_OSX
+#if UNITY_EDITOR_OSX && UNITY_5_X
 using UnityEditor.iOS.Xcode;
 #endif
 
@@ -36,13 +36,8 @@ public class PushwooshBuildManager : MonoBehaviour
 {
 	[PostProcessBuild]
 	private static void onPostProcessBuildPlayer(BuildTarget target, string pathToBuiltProject) {
-#if UNITY_4_X
-		if (target == BuildTarget.iPhone) {
-#else
+#if UNITY_EDITOR_OSX && UNITY_5_X
 		if (target == BuildTarget.iOS) {
-#endif
-
-#if UNITY_EDITOR_OSX
 			UnityEngine.Debug.Log ("Path to built project: " + pathToBuiltProject);
 
 			string projPath = pathToBuiltProject + "/Unity-iPhone.xcodeproj/project.pbxproj";
@@ -57,9 +52,10 @@ public class PushwooshBuildManager : MonoBehaviour
 			proj.AddBuildProperty(projTarget, "OTHER_LDFLAGS", "-ObjC -lz -lstdc++");
 
 			File.WriteAllText(projPath, proj.WriteToString());
-#endif
+
 		}
-		
+#endif
+
 		if (target == BuildTarget.WP8Player) {
 			postProcessWP8Build(pathToBuiltProject);
 		}

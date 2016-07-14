@@ -3,3 +3,5 @@ PushwooshUnitySample/Temp
 PushwooshUnitySample.userprefs
 *.csproj
 *.sln
+PushwooshUnitySample/build-ios
+PushwooshUnitySample/build-android
