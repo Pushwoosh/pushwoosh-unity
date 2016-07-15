@@ -43,7 +43,7 @@ public class PushNotificationsAndroid : Pushwoosh
 
 	public override void SetListTag(string tagName, List<object> tagValues)
 	{
-		AndroidJavaObject tags = new AndroidJavaObject ("com.pushwoosh.TagValues");
+		AndroidJavaObject tags = new AndroidJavaObject ("com.pushwoosh.unityplugin.TagValues");
 
 		foreach( var tagValue in tagValues )
 		{
