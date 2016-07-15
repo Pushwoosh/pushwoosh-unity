@@ -1,3 +1,7 @@
+Current version: 1.5.3
+=========================
+[Android] Unity4 compatibility fix
+https://github.com/Pushwoosh/pushwoosh-unity/issues/9
 Current version: 1.5.2
 =========================
 Unity4 compatibility fix
