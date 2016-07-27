@@ -32,6 +32,7 @@ public class PushNotificator : MonoBehaviour
 
 		Pushwoosh.Instance.SetBadgeNumber (0);
 
+
 #if UNITY_ANDROID && !UNITY_EDITOR
 		AndroidSpecific.SetActive (true);
 		string launchNotification = Pushwoosh.Instance.GetLaunchNotification();
@@ -40,7 +41,13 @@ public class PushNotificator : MonoBehaviour
 		else
 			launchNotificationString = launchNotification;
 
-		Pushwoosh.Instance.ScheduleLocalNotification ("Hello, Android!", 5);
+		Dictionary<string, string> parameters = new Dictionary<string, string>()
+		{
+			{ "l", "https://www.pushwoosh.com/" },
+			{ "u", "custom data" }
+		};
+
+		Pushwoosh.Instance.ScheduleLocalNotification ("Hello, Android!", 5, parameters);
 #endif
 	}
 
