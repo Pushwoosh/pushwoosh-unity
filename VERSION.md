@@ -1,3 +1,6 @@
+Current version: 1.6.0
+=========================
+Publish: [Android] ScheduleLocalNotification with Bundle parameter
 Current version: 1.5.3
 =========================
 [Android] Unity4 compatibility fix
