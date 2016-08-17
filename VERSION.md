@@ -1,3 +1,7 @@
+Current version: 1.6.1
+=========================
+Separate library for Android badge number permissions
+https://github.com/Pushwoosh/pushwoosh-unity/issues/12
 Current version: 1.6.0
 =========================
 Publish: [Android] ScheduleLocalNotification with Bundle parameter
