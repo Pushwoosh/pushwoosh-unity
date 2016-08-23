@@ -1,3 +1,7 @@
+Current version: 1.7.0
+=========================
+Publish: [GetLaunchNotification](Documentation/PushNotificationsAndroid.md#getlaunchnotification) and [ClearLaunchNotification](Documentation/PushNotificationsAndroid.md#clearlaunchnotification) methods for iOS and Android
+https://github.com/Pushwoosh/pushwoosh-unity/issues/13
 Current version: 1.6.1
 =========================
 Separate library for Android badge number permissions
