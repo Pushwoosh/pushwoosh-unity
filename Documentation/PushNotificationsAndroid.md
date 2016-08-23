@@ -33,6 +33,8 @@ Provides specific features for Android platform.
 [public void SetVibrateNotificationType(int vibrateNotificationType)](#setsoundnotificationtype)  
 [public void SetLightScreenOnNotification(bool lightsOn)](#setlightscreenonnotification)  
 [public void SetEnableLED(bool ledOn)](#setenableled)  
+[public string GetLaunchNotification()](#getlaunchnotification)  
+[public void ClearLaunchNotification()](#clearlaunchnotification)  
 
 ### GetPushHistory
 
@@ -161,4 +163,22 @@ Enables LED blinking. Could be overriden from Pushwoosh Control Panel.
 
 ```csharp
 public void SetEnableLED(bool ledOn)
+```
+
+---
+### GetLaunchNotification
+
+Returns launch notification if the app was started in response to push notification or null otherwise.
+
+```csharp
+public string GetLaunchNotification()
+```
+
+---
+### ClearLaunchNotification
+
+Resets launch notifiation, [GetLaunchNotification()](#getlaunchnotification) will return null after this call.
+
+```csharp
+public void ClearLaunchNotification()
 ```

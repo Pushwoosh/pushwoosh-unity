@@ -58,6 +58,11 @@ public class PushNotificationsAndroid : Pushwoosh
 		return pushwoosh.Call<string>("getLaunchNotification");
 	}
 
+	public void ClearLaunchNotification()
+	{
+		pushwoosh.Call("clearLaunchNotification");
+	}
+
 	public String[] GetPushHistory()
 	{
 		AndroidJavaObject history = pushwoosh.Call<AndroidJavaObject>("getPushHistory");

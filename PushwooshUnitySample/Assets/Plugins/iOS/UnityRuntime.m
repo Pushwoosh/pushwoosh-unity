@@ -7,6 +7,12 @@
 #import "PushNotificationManager.h"
 #import <objc/runtime.h>
 
+char * g_tokenStr = 0;
+char * g_registerErrStr = 0;
+char * g_pushMessageStr = 0;
+char * g_listenerName = 0;
+bool g_launchNotificationCleared = false;
+
 void registerForRemoteNotifications() {
 	[[PushNotificationManager pushManager] registerForPushNotifications];
 }
@@ -34,10 +40,24 @@ void * _getPushwooshHWID()
 	return (void *)[[[PushNotificationManager pushManager] getHWID] UTF8String];
 }
 
-char * g_tokenStr = 0;
-char * g_registerErrStr = 0;
-char * g_pushMessageStr = 0;
-char * g_listenerName = 0;
+void * _getLaunchNotification() {
+	if (g_launchNotificationCleared) {
+		return NULL;
+	}
+
+	NSDictionary *notificationDict = [PushNotificationManager pushManager].launchNotification;
+	if (notificationDict) {
+		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:notificationDict options:0 error:nil];
+		NSString *launchNotification = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+		return (void *)[launchNotification UTF8String];
+	}
+	return NULL;
+}
+
+void _clearLaunchNotification() {
+	g_launchNotificationCleared = true;
+}
+
 void setListenerName(char * listenerName)
 {
 	free(g_listenerName); g_listenerName = 0;

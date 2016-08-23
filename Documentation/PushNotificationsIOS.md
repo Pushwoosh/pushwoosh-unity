@@ -17,3 +17,24 @@ Provides specific features for iOS platform.
 [static public void SetBadgeNumber(int number)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setbadgenumber)  
 [static public void AddBadgeNumber(int deltaBadge)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#addbadgenumber)  
 
+## Methods
+
+[public string GetLaunchNotification()](#getlaunchnotification)  
+[public void ClearLaunchNotification()](#clearlaunchnotification)  
+
+### GetLaunchNotification
+
+Returns launch notification if the app was started in response to push notification or null otherwise.
+
+```csharp
+public string GetLaunchNotification()
+```
+
+---
+### ClearLaunchNotification
+
+Resets launch notifiation, [GetLaunchNotification()](#getlaunchnotification) will return null after this call.
+
+```csharp
+public void ClearLaunchNotification()
+```

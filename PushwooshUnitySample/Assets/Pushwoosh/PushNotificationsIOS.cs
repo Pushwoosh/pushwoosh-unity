@@ -34,6 +34,12 @@ public class PushNotificationsIOS : Pushwoosh
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public System.IntPtr _getPushwooshHWID();
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static public System.IntPtr _getLaunchNotification();
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static public void _clearLaunchNotification();
 	
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public void setIntTag(string tagName, int tagValue);
@@ -80,6 +86,16 @@ public class PushNotificationsIOS : Pushwoosh
 	public override string PushToken
 	{
 		get { return Marshal.PtrToStringAnsi(_getPushToken()); }
+	}
+
+	public string GetLaunchNotification()
+	{
+		return Marshal.PtrToStringAnsi(_getLaunchNotification()); 
+	}
+
+	public void ClearLaunchNotification()
+	{
+		_clearLaunchNotification();
 	}
 
 	public override void StartTrackingGeoPushes()
