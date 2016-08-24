@@ -1,3 +1,6 @@
+Current version: 1.8.0
+=========================
+Publish: [SetUserId](Documentation/Pushwoosh.md#setuserid) and [PostEvent](Documentation/Pushwoosh.md#postevent) methods for [In-App Messages](http://docs.pushwoosh.com/docs/in-app-messages)
 Current version: 1.7.0
 =========================
 Publish: [GetLaunchNotification](Documentation/PushNotificationsAndroid.md#getlaunchnotification) and [ClearLaunchNotification](Documentation/PushNotificationsAndroid.md#clearlaunchnotification) methods for iOS and Android
