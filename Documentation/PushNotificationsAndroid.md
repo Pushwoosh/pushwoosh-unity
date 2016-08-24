@@ -14,9 +14,11 @@ Provides specific features for Android platform.
 [public void StartTrackingGeoPushes()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#starttrackinggeopushes)  
 [public void StopTrackingGeoPushes()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#stoptrackinggeopushes)  
 [public void ClearNotificationCenter()](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#clearnotificationcenter)  
-[static public void SetBadgeNumber(int number)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setbadgenumber)  
-[static public void AddBadgeNumber(int deltaBadge)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#addbadgenumber)  
-
+[public void SetBadgeNumber(int number)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setbadgenumber)  
+[public void AddBadgeNumber(int deltaBadge)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#addbadgenumber)  
+[public void SetBadgeNumber(int number)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setbadgenumber)  
+[public void SetUserId(string userId)](Pushwoosh.md#setuserid)  
+[public void PostEvent(string eventId, IDictionary<string, object> attributes)](Pushwoosh.md#postevent)  
 
 ## Methods
 

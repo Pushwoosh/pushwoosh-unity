@@ -207,6 +207,16 @@ public class PushNotificationsAndroid : Pushwoosh
 		get { return pushwoosh.Call<string>("getPushToken"); }
 	}
 
+	public override void SetUserId(string userId)
+	{
+		pushwoosh.Call("setUserId", userId);
+	}
+
+	protected override void PostEventInternal(string eventId, string attributes)
+	{
+		pushwoosh.Call("postEvent", eventId, attributes);
+	}
+
 	void onRegisteredForPushNotifications(string token)
 	{
 		RegisteredForPushNotifications (token);

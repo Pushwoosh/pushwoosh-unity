@@ -169,3 +169,22 @@ Increments application icon badge number. iOS and Android only.
 ```csharp
 public virtual void AddBadgeNumber(int deltaBadge)
 ```
+
+---
+### SetUserId
+
+Set User indentifier. This could be Facebook ID, username or email, or any other user ID.
+This allows data and events to be matched across multiple user devices.
+
+```csharp
+public virtual void SetUserId(string userId)
+```
+
+---
+### PostEvent
+
+Post events for In-App Messages. This can trigger In-App message display as specified in Pushwoosh Control Panel.
+
+```csharp
+public virtual void PostEvent(string eventId, IDictionary<string, object> attributes)
+```

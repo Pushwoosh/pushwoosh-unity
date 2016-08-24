@@ -58,6 +58,24 @@ void _clearLaunchNotification() {
 	g_launchNotificationCleared = true;
 }
 
+void _setUserId(char *userId) {
+	NSString *userIdStr = [[NSString alloc] initWithUTF8String:userId];
+	[[PushNotificationManager pushManager] setUserId:userIdStr];
+}
+
+void _postEvent(char *event, char *attributes) {
+	NSString *eventStr = [[NSString alloc] initWithUTF8String:event];
+	NSString *attributesStr = [[NSString alloc] initWithUTF8String:attributes];
+
+	NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[attributesStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+	if ([json isKindOfClass:[NSDictionary class]]) {
+		[[PushNotificationManager pushManager] postEvent:eventStr withAttributes:json];
+	}
+	else {
+		NSLog(@"Invalid postEvent attribute argument: %@", json);
+	}
+}
+
 void setListenerName(char * listenerName)
 {
 	free(g_listenerName); g_listenerName = 0;

@@ -62,6 +62,12 @@ public class PushNotificationsIOS : Pushwoosh
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public void addBadgeNumber(int deltaBadge);
 
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static public void _setUserId(string userId);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static public void _postEvent(string eventId, string attributes);
+
 	protected override void Initialize () 
 	{
 		initializePushManager(Pushwoosh.ApplicationCode, Application.productName);
@@ -96,6 +102,16 @@ public class PushNotificationsIOS : Pushwoosh
 	public void ClearLaunchNotification()
 	{
 		_clearLaunchNotification();
+	}
+
+	public override void SetUserId(string userId)
+	{
+		_setUserId(userId);
+	}
+
+	protected override void PostEventInternal(string eventId, string attributes)
+	{
+		_postEvent(eventId, attributes);
 	}
 
 	public override void StartTrackingGeoPushes()

@@ -99,6 +99,37 @@ public class Pushwoosh : MonoBehaviour
 		Debug.Log ("[Pushwoosh] Error: AddBadgeNumber is not supported on this platform");
 	}
 
+	public virtual void SetUserId(string userId)
+	{
+		Debug.Log ("[Pushwoosh] Error: SetUserId is not supported on this platform");
+	}
+
+	public virtual void PostEvent(string eventId, IDictionary<string, object> attributes)
+	{
+		var entries = new List<string>();
+		if (attributes != null) {
+			foreach (var attribute in attributes) {	
+				var key = attribute.Key;
+				var value = attribute.Value;
+				
+				if (value is string) {
+					entries.Add (string.Format("\"{0}\": \"{1}\"", key, value));
+				}
+				else {
+					entries.Add (string.Format("\"{0}\": {1}", key, value));
+				}
+			}
+		}
+		string attributesStr = "{" + string.Join(",", entries.ToArray()) + "}";
+
+		PostEventInternal(eventId, attributesStr);
+	}
+
+	protected virtual void PostEventInternal(string eventId, string attributes)
+	{
+		Debug.Log ("[Pushwoosh] Error: PostEvent is not supported on this platform");
+	}
+
 	protected void RegisteredForPushNotifications(string token)
 	{
 		OnRegisteredForPushNotifications(token);
