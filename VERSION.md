@@ -1,3 +1,6 @@
+Current version: 1.8.1
+=========================
+Publish: [iOS] Treat all notifications except foreground as launch notifications
 Current version: 1.8.0
 =========================
 Publish: [SetUserId](Documentation/Pushwoosh.md#setuserid) and [PostEvent](Documentation/Pushwoosh.md#postevent) methods for [In-App Messages](http://docs.pushwoosh.com/docs/in-app-messages)
