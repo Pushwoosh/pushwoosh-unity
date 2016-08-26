@@ -11,7 +11,7 @@ char * g_tokenStr = 0;
 char * g_registerErrStr = 0;
 char * g_pushMessageStr = 0;
 char * g_listenerName = 0;
-bool g_launchNotificationCleared = false;
+NSString * g_launchNotification = nil;
 
 void registerForRemoteNotifications() {
 	[[PushNotificationManager pushManager] registerForPushNotifications];
@@ -41,21 +41,15 @@ void * _getPushwooshHWID()
 }
 
 void * _getLaunchNotification() {
-	if (g_launchNotificationCleared) {
-		return NULL;
+	if (g_launchNotification) {
+		return (void *)[g_launchNotification UTF8String];
 	}
-
-	NSDictionary *notificationDict = [PushNotificationManager pushManager].launchNotification;
-	if (notificationDict) {
-		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:notificationDict options:0 error:nil];
-		NSString *launchNotification = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-		return (void *)[launchNotification UTF8String];
-	}
+	
 	return NULL;
 }
 
 void _clearLaunchNotification() {
-	g_launchNotificationCleared = true;
+	g_launchNotification = nil;
 }
 
 void _setUserId(char *userId) {
@@ -220,6 +214,10 @@ void addBadgeNumber(int deltaBadge)
 {
 	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:pushNotification options:0 error:nil];
 	NSString *jsonRequestData = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+	
+	if (onStart) {
+		g_launchNotification = jsonRequestData;
+	}
 
 	const char * str = [jsonRequestData UTF8String];
 	
