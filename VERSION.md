@@ -1,3 +1,6 @@
+Current version: 1.8.2
+=========================
+iOS SDK: 4.1.5, Android SDK: 4.9.0
 Current version: 1.8.1
 =========================
 Publish: [iOS] Treat all notifications except foreground as launch notifications
