@@ -1,3 +1,6 @@
+Current version: 1.8.3
+=========================
+Pushwoosh iOS SDK updated to 4.1.6
 Current version: 1.8.2
 =========================
 iOS SDK: 4.1.5, Android SDK: 4.9.0
