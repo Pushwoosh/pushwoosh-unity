@@ -1,3 +1,10 @@
+Current version: 1.8.4
+=========================
+Pushwoosh Unity Plugin 1.8.4
+
+Modified:
+    Google play services updated to v9.6.1
+    Android support v4 updated to v24.2.1
 Current version: 1.8.3
 =========================
 Pushwoosh iOS SDK updated to 4.1.6
