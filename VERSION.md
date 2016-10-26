@@ -1,3 +1,9 @@
+Current version: 1.9.0
+=========================
+Pushwoosh Unity Plugin 1.9.0
+
+Added:
+     Application icon badge number support for Sony, HUAWEI, ZUK and OPPO
 Current version: 1.8.4
 =========================
 Pushwoosh Unity Plugin 1.8.4
