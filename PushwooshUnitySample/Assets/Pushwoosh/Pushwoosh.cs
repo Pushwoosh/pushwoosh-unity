@@ -125,6 +125,11 @@ public class Pushwoosh : MonoBehaviour
 		PostEventInternal(eventId, attributesStr);
 	}
 
+	public virtual void SendPurchase(string productId, double price, string currency)
+	{
+		Debug.Log ("[Pushwoosh] Error: SendPurchase is not supported on this platform");
+	}
+
 	protected virtual void PostEventInternal(string eventId, string attributes)
 	{
 		Debug.Log ("[Pushwoosh] Error: PostEvent is not supported on this platform");

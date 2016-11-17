@@ -68,6 +68,9 @@ public class PushNotificationsIOS : Pushwoosh
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static public void _postEvent(string eventId, string attributes);
 
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static public void pw_sendPurchase(string productId, double price, string currency);
+
 	protected override void Initialize () 
 	{
 		initializePushManager(Pushwoosh.ApplicationCode, Application.productName);
@@ -163,6 +166,11 @@ public class PushNotificationsIOS : Pushwoosh
 	public override void AddBadgeNumber(int deltaBadge)
 	{
 		addBadgeNumber (deltaBadge);
+	}
+
+	public override void SendPurchase(string productId, double price, string currency)
+	{
+		pw_sendPurchase(productId, price, currency);
 	}
 
 	void onRegisteredForPushNotifications(string token)

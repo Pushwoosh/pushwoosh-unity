@@ -188,3 +188,13 @@ Post events for In-App Messages. This can trigger In-App message display as spec
 ```csharp
 public virtual void PostEvent(string eventId, IDictionary<string, object> attributes)
 ```
+
+---
+### SendPurchase
+
+Send purchase information. This will set default tags “In-app Product”, “In-app Purchase” and “Last In-app Purchase date”.
+
+```csharp
+public virtual void SendPurchase(string productId, double price, string currency)
+```
+

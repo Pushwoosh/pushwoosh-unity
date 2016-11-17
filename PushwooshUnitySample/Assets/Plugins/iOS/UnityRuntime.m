@@ -70,6 +70,14 @@ void _postEvent(char *event, char *attributes) {
 	}
 }
 
+void pw_sendPurchase(char *productId, double price, char *currency) {
+	NSString *productIdStr = [[NSString alloc] initWithUTF8String:productId];
+	NSDecimalNumber *priceDecimal = [[NSDecimalNumber alloc] initWithDouble:price];
+	NSString *currencyStr = [[NSString alloc] initWithUTF8String:currency];
+
+	[[PushNotificationManager pushManager] sendPurchase:productIdStr withPrice:priceDecimal currencyCode:currencyStr andDate:[NSDate date]];
+}
+
 void setListenerName(char * listenerName)
 {
 	free(g_listenerName); g_listenerName = 0;

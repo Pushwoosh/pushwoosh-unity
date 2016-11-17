@@ -32,6 +32,8 @@ public class PushNotificator : MonoBehaviour
 
 		Pushwoosh.Instance.SetBadgeNumber (0);
 
+		Pushwoosh.Instance.SendPurchase("com.pushwoosh.Developer", 49.95, "USD");
+
 #if !UNITY_EDITOR
 #if UNITY_IOS || UNITY_ANDROID
 

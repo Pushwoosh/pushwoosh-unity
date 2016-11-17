@@ -217,6 +217,11 @@ public class PushNotificationsAndroid : Pushwoosh
 		pushwoosh.Call("postEvent", eventId, attributes);
 	}
 
+	public override void SendPurchase(string productId, double price, string currency)
+	{
+		pushwoosh.Call("sendPurchase", productId, price, currency);
+	}
+
 	void onRegisteredForPushNotifications(string token)
 	{
 		RegisteredForPushNotifications (token);

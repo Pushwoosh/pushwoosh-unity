@@ -19,6 +19,7 @@ Provides specific features for Android platform.
 [public void SetBadgeNumber(int number)](https://github.com/Pushwoosh/pushwoosh-unity/blob/master/Documentation/Pushwoosh.md#setbadgenumber)  
 [public void SetUserId(string userId)](Pushwoosh.md#setuserid)  
 [public void PostEvent(string eventId, IDictionary<string, object> attributes)](Pushwoosh.md#postevent)  
+[public void SendPurchase(string productId, double price, string currency)](Pushwoosh.md#sendpurchase)  
 
 ## Methods
 
