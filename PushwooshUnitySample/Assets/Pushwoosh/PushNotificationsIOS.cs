@@ -6,125 +6,118 @@ using System.Collections.Generic;
 public class PushNotificationsIOS : Pushwoosh 
 {
 #if UNITY_IPHONE && !UNITY_EDITOR
-	//
-	//private methods
-	//
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_internalSendStringTags (string tagName, string[] tags);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_initializePushManager(string appCode, string appName);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_registerForRemoteNotifications();
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_unregisterForRemoteNotifications();
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_setListenerName(string listenerName);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private System.IntPtr pw_getPushToken();
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private System.IntPtr pw_getPushwooshHWID();
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private System.IntPtr pw_getLaunchNotification();
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_clearLaunchNotification();
 	
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static private void internalSendStringTags (string tagName, string[] tags);
-
-	//
-	//public
-	//
+	extern static private void pw_setIntTag(string tagName, int tagValue);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void initializePushManager(string appCode, string appName);
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void registerForRemoteNotifications();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void unregisterForRemoteNotifications();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void setListenerName(string listenerName);
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public System.IntPtr _getPushToken();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public System.IntPtr _getPushwooshHWID();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public System.IntPtr _getLaunchNotification();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void _clearLaunchNotification();
+	extern static private void pw_setStringTag(string tagName, string tagValue);
 	
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void setIntTag(string tagName, int tagValue);
+	extern static private void pw_startLocationTracking();
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void setStringTag(string tagName, string tagValue);
-	
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void startLocationTracking();
+	extern static private void pw_stopLocationTracking();
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void stopLocationTracking();
+	extern static private void pw_clearNotificationCenter();
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void clearNotificationCenter();
+	extern static private void pw_setBadgeNumber(int badge);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void setBadgeNumber(int badge);
+	extern static private void pw_addBadgeNumber(int deltaBadge);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void addBadgeNumber(int deltaBadge);
+	extern static private void pw_setUserId(string userId);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void _setUserId(string userId);
+	extern static private void pw_postEvent(string eventId, string attributes);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void _postEvent(string eventId, string attributes);
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static public void pw_sendPurchase(string productId, double price, string currency);
+	extern static private void pw_sendPurchase(string productId, double price, string currency);
 
 	protected override void Initialize () 
 	{
-		initializePushManager(Pushwoosh.ApplicationCode, Application.productName);
-		setListenerName(this.gameObject.name);
+		pw_initializePushManager(Pushwoosh.ApplicationCode, Application.productName);
+		pw_setListenerName(this.gameObject.name);
 	}
 
 	public override void RegisterForPushNotifications()
 	{
-		registerForRemoteNotifications();
+		pw_registerForRemoteNotifications();
 	}
 
 	public override void UnregisterForPushNotifications()
 	{
-		unregisterForRemoteNotifications();
+		pw_unregisterForRemoteNotifications();
 	}
 
 	public override string HWID
 	{
-		get { return Marshal.PtrToStringAnsi(_getPushwooshHWID()); }
+		get { return Marshal.PtrToStringAnsi(pw_getPushwooshHWID()); }
 	}
 
 	public override string PushToken
 	{
-		get { return Marshal.PtrToStringAnsi(_getPushToken()); }
+		get { return Marshal.PtrToStringAnsi(pw_getPushToken()); }
 	}
 
 	public string GetLaunchNotification()
 	{
-		return Marshal.PtrToStringAnsi(_getLaunchNotification()); 
+		return Marshal.PtrToStringAnsi(pw_getLaunchNotification()); 
 	}
 
 	public void ClearLaunchNotification()
 	{
-		_clearLaunchNotification();
+		pw_clearLaunchNotification();
 	}
 
 	public override void SetUserId(string userId)
 	{
-		_setUserId(userId);
+		pw_setUserId(userId);
 	}
 
 	protected override void PostEventInternal(string eventId, string attributes)
 	{
-		_postEvent(eventId, attributes);
+		pw_postEvent(eventId, attributes);
 	}
 
 	public override void StartTrackingGeoPushes()
 	{
-		startLocationTracking();
+		pw_startLocationTracking();
 	}
 
 	public override void StopTrackingGeoPushes()
 	{
-		stopLocationTracking();
+		pw_stopLocationTracking();
 	}
 
 	public override void SetListTag(string tagName, List<object> tagValues)
@@ -140,32 +133,32 @@ public class PushNotificationsIOS : Pushwoosh
 		
 		string[] array = stringTags.ToArray();
 		
-		internalSendStringTags (tagName, array);
+		pw_internalSendStringTags (tagName, array);
 	}
 
 	public override void SetIntTag(string tagName, int tagValue)
 	{
-		setIntTag(tagName, tagValue);
+		pw_setIntTag(tagName, tagValue);
 	}
 	
 	public override void SetStringTag(string tagName, string tagValue)
 	{
-		setStringTag(tagName, tagValue);
+		pw_setStringTag(tagName, tagValue);
 	}
 
 	public override void ClearNotificationCenter()
 	{
-		clearNotificationCenter ();
+		pw_clearNotificationCenter ();
 	}
 
 	public override void SetBadgeNumber(int number)
 	{
-		setBadgeNumber (number);
+		pw_setBadgeNumber (number);
 	}
 
 	public override void AddBadgeNumber(int deltaBadge)
 	{
-		addBadgeNumber (deltaBadge);
+		pw_addBadgeNumber (deltaBadge);
 	}
 
 	public override void SendPurchase(string productId, double price, string currency)
