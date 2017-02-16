@@ -5,3 +5,4 @@ PushwooshUnitySample.userprefs
 *.sln
 PushwooshUnitySample/build-ios
 PushwooshUnitySample/build-android
+PluginSource/Android/.idea
