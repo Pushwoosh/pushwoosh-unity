@@ -6,8 +6,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.os.Handler;
 
-import com.pushwoosh.MessageActivity;
 import com.pushwoosh.internal.PushManagerImpl;
+import com.unity3d.player.UnityPlayerActivity;
 
 import org.json.JSONObject;
 
@@ -25,8 +25,8 @@ public class IntentReceiver extends BroadcastReceiver
             return;
         }
 
-        // MessageActivity starts application
-        Intent launchIntent = new Intent(context, MessageActivity.class);
+        Intent launchIntent = new Intent(context, UnityPlayerActivity.class);
+        launchIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         launchIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         launchIntent.putExtras(pushBundle);
         context.startActivity(launchIntent);
