@@ -148,6 +148,22 @@ void pw_internalSendStringTags (char *tagName, char **tags) {
 #endif
 }
 
+void pw_getTags() {
+	[[PushNotificationManager pushManager] loadTags:^(NSDictionary *tags) {
+		NSError *error;
+		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tags options:0 error:&error];
+		if (error == nil) {
+			NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+			UnitySendMessage(g_pw_listenerName, "onTagsReceived", [json UTF8String]);
+		}
+		else {
+			UnitySendMessage(g_pw_listenerName, "onFailedToReceiveTags", [[error description] UTF8String]);
+		}
+	} error:^(NSError *error) {
+		UnitySendMessage(g_pw_listenerName, "onFailedToReceiveTags", [[error description] UTF8String]);
+	}];
+}
+
 void pw_startLocationTracking() {
 	[[PushNotificationManager pushManager] startLocationTracking];
 }

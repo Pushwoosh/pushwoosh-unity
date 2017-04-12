@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
@@ -39,6 +40,9 @@ public class PushNotificationsIOS : Pushwoosh
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private void pw_setStringTag(string tagName, string tagValue);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_getTags();
 	
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private void pw_startLocationTracking();
@@ -63,6 +67,8 @@ public class PushNotificationsIOS : Pushwoosh
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private void pw_sendPurchase(string productId, double price, string currency);
+
+	private Queue<GetTagsHandler> tagsHandlers = new Queue<GetTagsHandler>();
 
 	protected override void Initialize () 
 	{
@@ -146,6 +152,12 @@ public class PushNotificationsIOS : Pushwoosh
 		pw_setStringTag(tagName, tagValue);
 	}
 
+	public override void GetTags(GetTagsHandler handler)
+	{
+		tagsHandlers.Enqueue(handler);
+		pw_getTags();
+	}
+
 	public override void ClearNotificationCenter()
 	{
 		pw_clearNotificationCenter ();
@@ -179,6 +191,29 @@ public class PushNotificationsIOS : Pushwoosh
 	void onPushNotificationsReceived(string payload)
 	{
 		PushNotificationsReceived (payload);
+	}
+
+	void onTagsReceived(string json)
+	{
+		GetTagsHandler handler = tagsHandlers.Dequeue();
+		if (handler != null) {
+			try {
+				IDictionary<string, object> tags = PushwooshUtils.JsonToDictionary(json);
+				handler(tags, null);
+			}
+			catch(Exception e) {
+				Debug.Log ("Invalid tags: " + e.ToString());
+				handler (null, new PushwooshException(e.Message));
+			}
+		}
+	}
+
+	void onFailedToReceiveTags(string error)
+	{
+		GetTagsHandler handler = tagsHandlers.Dequeue();
+		if (handler != null) {
+			handler(null, new PushwooshException(error));
+		}
 	}
 #endif
 }
