@@ -268,6 +268,22 @@ public class PushwooshProxy
 		PushManager.sendTags(context, tags, null);
 	}
 
+	public void getTags()
+	{
+		PushManager.getTagsAsync(context, new PushManager.GetTagsListener() {
+			@Override
+			public void onTagsReceived(Map<String, Object> map) {
+				JSONObject json = JsonUtils.mapToJson(map);
+				UnityPlayer.UnitySendMessage(listenerName, "onTagsReceived", json.toString());
+			}
+
+			@Override
+			public void onError(Exception e) {
+				UnityPlayer.UnitySendMessage(listenerName, "onFailedToReceiveTags", e.getMessage());
+			}
+		});
+	}
+
 	public String getPushToken()
 	{
 		return PushManager.getPushToken(context);

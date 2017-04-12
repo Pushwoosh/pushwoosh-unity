@@ -5,6 +5,7 @@
 //
 
 #import "PushNotificationManager.h"
+#import <UserNotifications/UserNotifications.h>
 #import <objc/runtime.h>
 
 static char * g_pw_tokenStr = 0;
@@ -24,6 +25,7 @@ void pw_initializePushManager(char *appId, char *appName) {
 
 	[[PushNotificationManager pushManager] sendAppOpen];
 	[PushNotificationManager pushManager].delegate = (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
+	[UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
 }
 
 void pw_unregisterForRemoteNotifications() {

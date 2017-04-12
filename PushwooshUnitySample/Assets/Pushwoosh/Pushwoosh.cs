@@ -24,12 +24,15 @@ public class Pushwoosh : MonoBehaviour
 	
 	public delegate void NotificationHandler(string payload);
 
+	public delegate void GetTagsHandler(IDictionary<string, object> tags, PushwooshException error);
+
 
 	public event RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
 	
 	public event RegistrationErrorHandler OnFailedToRegisteredForPushNotifications = delegate {};
 	
 	public event NotificationHandler OnPushNotificationsReceived = delegate {};
+
 
 	public virtual string HWID
 	{
@@ -84,6 +87,11 @@ public class Pushwoosh : MonoBehaviour
 		Debug.Log ("[Pushwoosh] Error: SetListTag is not supported on this platform");
 	}
 
+	public virtual void GetTags(GetTagsHandler handler)
+	{
+		Debug.Log ("[Pushwoosh] Error: GetTags() is not supported on this platform");
+	}
+
 	public virtual void ClearNotificationCenter()
 	{
 		Debug.Log ("[Pushwoosh] Error: ClearNotificationCenter is not supported on this platform");
@@ -106,23 +114,8 @@ public class Pushwoosh : MonoBehaviour
 
 	public virtual void PostEvent(string eventId, IDictionary<string, object> attributes)
 	{
-		var entries = new List<string>();
-		if (attributes != null) {
-			foreach (var attribute in attributes) {	
-				var key = attribute.Key;
-				var value = attribute.Value;
-				
-				if (value is string) {
-					entries.Add (string.Format("\"{0}\": \"{1}\"", key, value));
-				}
-				else {
-					entries.Add (string.Format("\"{0}\": {1}", key, value));
-				}
-			}
-		}
-		string attributesStr = "{" + string.Join(",", entries.ToArray()) + "}";
-
-		PostEventInternal(eventId, attributesStr);
+		string attributesJson = PushwooshUtils.DictionaryToJson(attributes);
+		PostEventInternal(eventId, attributesJson);
 	}
 
 	public virtual void SendPurchase(string productId, double price, string currency)

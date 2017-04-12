@@ -1,4 +1,6 @@
 ﻿using UnityEngine;
+using SimpleJSON;
+using System.Collections;
 using System.Collections.Generic;
 
 /// <summary>
@@ -39,8 +41,7 @@ public class PushNotificator : MonoBehaviour
 
 		Pushwoosh.Instance.SetUserId("%userId%");
 
-		Dictionary<string, object> attributes = new Dictionary<string, object>()
-		{
+		Dictionary<string, object> attributes = new Dictionary<string, object>() {
 			{ "attribute", "value" },
 		};
 
@@ -55,8 +56,7 @@ public class PushNotificator : MonoBehaviour
 #endif
 
 #if UNITY_ANDROID
-		Dictionary<string, string> parameters = new Dictionary<string, string>()
-		{
+		Dictionary<string, string> parameters = new Dictionary<string, string>() {
 			{ "l", "https://www.pushwoosh.com/" },
 			{ "u", "custom data" }
 		};
@@ -93,6 +93,11 @@ public class PushNotificator : MonoBehaviour
 		Debug.Log(token);
 		Debug.Log ("HWID: " + Pushwoosh.Instance.HWID);
 		Debug.Log ("PushToken: " + Pushwoosh.Instance.PushToken);
+
+		Pushwoosh.Instance.GetTags((IDictionary<string, object> tags, PushwooshException error) => {
+			string json = PushwooshUtils.DictionaryToJson(tags);
+			Debug.Log("Tags: " + json);
+		});
 	}
 
 	void OnFailedToRegisteredForPushNotifications(string error)

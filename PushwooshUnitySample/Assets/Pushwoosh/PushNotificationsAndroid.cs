@@ -7,6 +7,8 @@ public class PushNotificationsAndroid : Pushwoosh
 {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	private static AndroidJavaObject pushwoosh = null;
+
+	private Queue<GetTagsHandler> tagsHandlers = new Queue<GetTagsHandler>();
 	
 	protected override void Initialize() 
 	{
@@ -14,7 +16,7 @@ public class PushNotificationsAndroid : Pushwoosh
 			return;
 		
 		using(var pluginClass = new AndroidJavaClass("com.pushwoosh.unityplugin.PushwooshProxy")) {
-		pluginClass.CallStatic("initialize", Pushwoosh.ApplicationCode, Pushwoosh.GcmProjectNumber);
+			pluginClass.CallStatic("initialize", Pushwoosh.ApplicationCode, Pushwoosh.GcmProjectNumber);
 			pushwoosh = pluginClass.CallStatic<AndroidJavaObject>("instance");
 		}
 		
@@ -45,12 +47,17 @@ public class PushNotificationsAndroid : Pushwoosh
 	{
 		AndroidJavaObject tags = new AndroidJavaObject ("com.pushwoosh.unityplugin.TagValues");
 
-		foreach( var tagValue in tagValues )
-		{
+		foreach( var tagValue in tagValues ) {
 			tags.Call ("addValue", tagValue);
 		}
 
 		pushwoosh.Call ("setListTag", tagName, tags);
+	}
+
+	public override void GetTags(GetTagsHandler handler)
+	{
+		tagsHandlers.Enqueue(handler);
+		pushwoosh.Call("getTags");
 	}
 
 	public string GetLaunchNotification()
@@ -66,8 +73,7 @@ public class PushNotificationsAndroid : Pushwoosh
 	public String[] GetPushHistory()
 	{
 		AndroidJavaObject history = pushwoosh.Call<AndroidJavaObject>("getPushHistory");
-		if (history.GetRawObject().ToInt32() == 0)
-		{
+		if (history.GetRawObject().ToInt32() == 0) {
 			return new String[0];
 		}
 		
@@ -237,18 +243,39 @@ public class PushNotificationsAndroid : Pushwoosh
 		PushNotificationsReceived (payload);
 	}
 
+	void onTagsReceived(string json)
+	{
+		GetTagsHandler handler = tagsHandlers.Dequeue();
+		if (handler != null) {
+			try {
+				IDictionary<string, object> tags = PushwooshUtils.JsonToDictionary(json);
+				handler(tags, null);
+			}
+			catch(Exception e) {
+				Debug.Log ("Invalid tags: " + e.ToString());
+				handler (null, new PushwooshException(e.Message));
+			}
+		}
+	}
+
+	void onFailedToReceiveTags(string error)
+	{
+		GetTagsHandler handler = tagsHandlers.Dequeue();
+		if (handler != null) {
+			handler(null, new PushwooshException(error));
+		}
+	}
+
 	void OnApplicationPause(bool paused)
 	{
 		//make sure everything runs smoothly even if pushwoosh is not initialized yet
 		if (pushwoosh == null)
 			Initialize();
 
-		if(paused)
-		{
+		if(paused) {
 			pushwoosh.Call("onPause");
 		}
-		else
-		{
+		else {
 			pushwoosh.Call("onResume");
 		}
 	}
