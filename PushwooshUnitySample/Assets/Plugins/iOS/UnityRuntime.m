@@ -20,7 +20,8 @@ void pw_registerForRemoteNotifications() {
 
 void pw_initializePushManager(char *appId, char *appName) {
 	NSString *appCodeStr = [[NSString alloc] initWithUTF8String:appId];
-	NSString *appNameStr = [[NSString alloc] initWithUTF8String:appName];
+	NSString *appNameStr = appName ? [[NSString alloc] initWithUTF8String:appName] :
+        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
 	[PushNotificationManager initializeWithAppCode:appCodeStr appName:appNameStr];
 
 	[[PushNotificationManager pushManager] sendAppOpen];

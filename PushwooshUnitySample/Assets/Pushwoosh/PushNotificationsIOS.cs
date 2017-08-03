@@ -72,7 +72,7 @@ public class PushNotificationsIOS : Pushwoosh
 
 	protected override void Initialize () 
 	{
-		pw_initializePushManager(Pushwoosh.ApplicationCode, Application.productName);
+		pw_initializePushManager(Pushwoosh.ApplicationCode, null);
 		pw_setListenerName(this.gameObject.name);
 	}
 
