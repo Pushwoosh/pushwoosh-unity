@@ -24,8 +24,8 @@ public class IntentReceiver extends BroadcastReceiver
         if(pushBundle == null) {
             return;
         }
-
-        Intent launchIntent = new Intent(context, UnityPlayerActivity.class);
+        
+        Intent launchIntent = context.getPackageManager().getLaunchIntentForPackage(context.getPackageName());
         launchIntent.addCategory(Intent.CATEGORY_LAUNCHER);
         launchIntent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP | Intent.FLAG_ACTIVITY_SINGLE_TOP | Intent.FLAG_ACTIVITY_NEW_TASK);
         launchIntent.putExtras(pushBundle);
