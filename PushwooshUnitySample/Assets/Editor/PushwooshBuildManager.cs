@@ -28,7 +28,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-#if UNITY_EDITOR_OSX && UNITY_5_X
+#if UNITY_EDITOR_OSX && UNITY_5_PLUS
 using UnityEditor.iOS.Xcode;
 #endif
 
@@ -36,7 +36,7 @@ public class PushwooshBuildManager : MonoBehaviour
 {
 	[PostProcessBuild]
 	private static void onPostProcessBuildPlayer(BuildTarget target, string pathToBuiltProject) {
-#if UNITY_EDITOR_OSX && UNITY_5_X
+#if UNITY_EDITOR_OSX && UNITY_5_PLUS
 		if (target == BuildTarget.iOS) {
 			UnityEngine.Debug.Log ("Path to built project: " + pathToBuiltProject);
 
