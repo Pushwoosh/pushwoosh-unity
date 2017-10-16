@@ -164,7 +164,7 @@ public class PushwooshProxy {
 			return;
 		}
 
-		UnityPlayer.UnitySendMessage(listenerName, "onPushNotificationOpen", string);
+		UnityPlayer.UnitySendMessage(listenerName, "onPushNotificationsOpened", string);
 		openPushData = null;
 	}
 

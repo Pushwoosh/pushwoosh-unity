@@ -33,8 +33,6 @@ public class PushNotificator : MonoBehaviour
 		Pushwoosh.Instance.OnPushNotificationsReceived += OnPushNotificationsReceived;
 		Pushwoosh.Instance.OnPushNotificationsOpened += OnPushNotificationsOpened;
 
-		Pushwoosh.Instance.SetStringTag ("test", null);
-
 		Pushwoosh.Instance.SetStringTag ("UserName", "Alex");
 		Pushwoosh.Instance.SetIntTag ("Age", 42);
 		Pushwoosh.Instance.SetListTag ("Hobbies", new List<object> (new[] { "Football", "Tennis", "Fishing" }));
@@ -95,9 +93,8 @@ public class PushNotificator : MonoBehaviour
 	public void OnSendPostEvent()
 	{
 		Debug.Log ("On Send post event key: " + postEventKeyUIText.text + "; attribute: " +postEventAttributeUIText.text );
-		Dictionary<string, object> parameters = new Dictionary<string, object>() {
-			{ postEventKeyUIText.text, postEventAttributeUIText.text }
-		};
+		Dictionary<string, object> parameters = new Dictionary<string, object> ();
+		parameters.Add (postEventKeyUIText.text, postEventAttributeUIText.text);
 		Pushwoosh.Instance.PostEvent (postEventKeyUIText.text, parameters);
 	}
 
