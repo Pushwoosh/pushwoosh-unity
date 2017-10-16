@@ -57,7 +57,7 @@ public class PushwooshProxy {
 	}
 
 	public static PushwooshProxy instance() {
-		if(INSTANCE == null) {
+		if (INSTANCE == null) {
 			synchronized (sPushwooshProxyMutex) {
 				if (INSTANCE == null) {
 					new PushwooshProxy();
@@ -72,11 +72,11 @@ public class PushwooshProxy {
 		INSTANCE = this;
 	}
 
-	public void onResume(){
+	public void onResume() {
 
 	}
 
-	public void onPause(){
+	public void onPause() {
 
 	}
 
@@ -84,9 +84,9 @@ public class PushwooshProxy {
 		Pushwoosh.getInstance().registerForPushNotifications(new Callback<String, RegisterForPushNotificationsException>() {
 			@Override
 			public void process(@NonNull Result<String, RegisterForPushNotificationsException> result) {
-				if(result.isSuccess()){
+				if (result.isSuccess()) {
 					onRegisterEvent(result.getData());
-				} else if(result.getException()!=null){
+				} else if (result.getException() != null) {
 					onRegisterErrorEvent(result.getException().getLocalizedMessage());
 				}
 			}
@@ -97,9 +97,9 @@ public class PushwooshProxy {
 		Pushwoosh.getInstance().unregisterForPushNotifications(new Callback<String, UnregisterForPushNotificationException>() {
 			@Override
 			public void process(@NonNull Result<String, UnregisterForPushNotificationException> result) {
-				if(result.isSuccess()){
+				if (result.isSuccess()) {
 					onUnRegisterEvent(result.getData());
-				} else if(result.getException()!=null){
+				} else if (result.getException() != null) {
 					onUnRegisterErrorEvent(result.getException().getLocalizedMessage());
 				}
 			}
@@ -183,7 +183,7 @@ public class PushwooshProxy {
 	}
 
 	public static void onUnRegisterEvent(String string) {
-		if(listenerName == null){
+		if (listenerName == null) {
 			return;
 		}
 
@@ -205,7 +205,7 @@ public class PushwooshProxy {
 	}
 
 	public void onUnRegisterErrorEvent(String string) {
-		if(listenerName == null){
+		if (listenerName == null) {
 			return;
 		}
 
@@ -325,7 +325,7 @@ public class PushwooshProxy {
 		int counter = 0;
 		PWLog.debug(TAG, "Push history:");
 
-		for(PushMessage pushMessage: pushHistory){
+		for (PushMessage pushMessage : pushHistory) {
 			stringArray[counter] = pushMessage.toJson().toString();
 			PWLog.debug(TAG, "    Message = " + stringArray[counter]);
 			counter++;
@@ -348,6 +348,11 @@ public class PushwooshProxy {
 
 	public void postEvent(String event, String attributesStr) {
 		try {
+			if (attributesStr.isEmpty()) {
+				PushwooshInApp.getInstance().postEvent(event);
+				return;
+			}
+
 			PushwooshInApp.getInstance().postEvent(event, Tags.fromJson(new JSONObject(attributesStr)));
 		} catch (JSONException e) {
 			PWLog.exception(e);

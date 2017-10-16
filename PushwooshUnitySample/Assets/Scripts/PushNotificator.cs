@@ -17,6 +17,10 @@ public class PushNotificator : MonoBehaviour
 	public UnityEngine.UI.Text launchNotificationUIText;
 	string launchNotificationString = "{}";
 
+	public UnityEngine.UI.Text postEventKeyUIText;
+	public UnityEngine.UI.Text postEventAttributeUIText;
+	public UnityEngine.UI.Button sendEventButton;
+
 	public GameObject AndroidSpecific;
 
 	// Use this for initialization
@@ -86,6 +90,15 @@ public class PushNotificator : MonoBehaviour
 	{
 		tokenString = "Unsubscribed";
 		Pushwoosh.Instance.UnregisterForPushNotifications ();
+	}
+
+	public void OnSendPostEvent()
+	{
+		Debug.Log ("On Send post event key: " + postEventKeyUIText.text + "; attribute: " +postEventAttributeUIText.text );
+		Dictionary<string, object> parameters = new Dictionary<string, object>() {
+			{ postEventKeyUIText.text, postEventAttributeUIText.text }
+		};
+		Pushwoosh.Instance.PostEvent (postEventKeyUIText.text, parameters);
 	}
 
 	void OnRegisteredForPushNotifications(string token)
