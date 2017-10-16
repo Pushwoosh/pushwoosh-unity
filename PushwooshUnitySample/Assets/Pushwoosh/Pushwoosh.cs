@@ -144,6 +144,11 @@ public class Pushwoosh : MonoBehaviour
 		OnPushNotificationsReceived(payload);
 	}
 
+	protected void PushNotificationsOpened(string payload)
+	{
+		OnPushNotificationsOpened(payload);
+	}
+
 	// Singleton
 	private static PushwooshInstanceType _instance;
 	

@@ -97,8 +97,12 @@ void pw_setListenerName(char *listenerName) {
 	
 	if(g_pw_pushMessageStr) {
 		UnitySendMessage(g_pw_listenerName, "onPushNotificationsReceived", g_pw_pushMessageStr);
-		free(g_pw_pushMessageStr); g_pw_pushMessageStr = 0;
 	}
+    
+    if(g_pw_pushMessageStr) {
+        UnitySendMessage(g_pw_listenerName, "onPushNotificationsOpened", g_pw_pushMessageStr);
+        free(g_pw_pushMessageStr); g_pw_pushMessageStr = 0;
+    }
 }
 
 void pw_setIntTag(char *tagName, int tagValue) {
@@ -224,24 +228,37 @@ void pw_addBadgeNumber(int deltaBadge) {
 	UnitySendMessage(g_pw_listenerName, "onFailedToRegisteredForPushNotifications", str);
 }
 
-//handle push notification, display alert, if this method is implemented onPushAccepted will not be called, internal message boxes will not be displayed
-- (void)onPushAccepted:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification onStart:(BOOL)onStart {
-	NSData *jsonData = [NSJSONSerialization dataWithJSONObject:pushNotification options:0 error:nil];
-	NSString *jsonRequestData = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-	
-	if (onStart) {
-		g_pw_launchNotification = jsonRequestData;
-	}
+- (const char *)jsonRequestDataWithNotification:(NSDictionary *)pushNotification onStart:(BOOL)onStart {
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:pushNotification options:0 error:nil];
+    NSString *jsonRequestData = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    if (onStart) {
+        g_pw_launchNotification = jsonRequestData;
+    }
+    
+    const char * str = [jsonRequestData UTF8String];
+    
+    if(!g_pw_listenerName) {
+        g_pw_pushMessageStr = malloc(strlen(str)+1);
+        strcpy(g_pw_pushMessageStr, str);
+        return NULL;
+    } else {
+        return str;
+    }
+}
 
-	const char * str = [jsonRequestData UTF8String];
-	
-	if(!g_pw_listenerName) {
-		g_pw_pushMessageStr = malloc(strlen(str)+1);
-		strcpy(g_pw_pushMessageStr, str);
-		return;
-	}
-	
-	UnitySendMessage(g_pw_listenerName, "onPushNotificationsReceived", str);
+- (void)onPushReceived:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification onStart:(BOOL)onStart {
+    const char * str = [self jsonRequestDataWithNotification:pushNotification onStart:onStart];
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPushNotificationsReceived", str);
+    }
+}
+
+- (void)onPushAccepted:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification onStart:(BOOL)onStart {
+    const char * str = [self jsonRequestDataWithNotification:pushNotification onStart:onStart];
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPushNotificationsOpened", str);
+    }
 }
 
 @end
