@@ -22,11 +22,14 @@ public class PushNotificator : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		Pushwoosh.ApplicationCode = "4FC89B6D14A655.46488481";
-		Pushwoosh.GcmProjectNumber = "60756016005";
+		Pushwoosh.ApplicationCode = "7559E-DE020";
+		Pushwoosh.GcmProjectNumber = "747084596472";
 		Pushwoosh.Instance.OnRegisteredForPushNotifications += OnRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnFailedToRegisteredForPushNotifications += OnFailedToRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnPushNotificationsReceived += OnPushNotificationsReceived;
+		Pushwoosh.Instance.OnPushNotificationsOpened += OnPushNotificationsOpened;
+
+		Pushwoosh.Instance.SetStringTag ("test", null);
 
 		Pushwoosh.Instance.SetStringTag ("UserName", "Alex");
 		Pushwoosh.Instance.SetIntTag ("Age", 42);
@@ -111,6 +114,10 @@ public class PushNotificator : MonoBehaviour
 	{
 		notificationString = payload;
 
-		Debug.Log(notificationString);
+		Debug.Log ("NotificationReceived: " + payload);
+	}
+
+	void OnPushNotificationsOpened(string payload){
+		Debug.Log ("NotificationOpened: " + payload);
 	}
 }

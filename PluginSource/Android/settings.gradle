@@ -1,1 +1,1 @@
-include ':app', ':pushwoosh-unityplugin', ':pushwoosh-sdk', ':unity', ':pushwoosh-badges'
+include ':app', ':pushwoosh-unityplugin', ':unity'

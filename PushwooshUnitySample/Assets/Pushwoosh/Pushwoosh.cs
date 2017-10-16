@@ -33,6 +33,7 @@ public class Pushwoosh : MonoBehaviour
 	
 	public event NotificationHandler OnPushNotificationsReceived = delegate {};
 
+	public event NotificationHandler OnPushNotificationsOpened = delegate {};
 
 	public virtual string HWID
 	{
