@@ -122,12 +122,14 @@ public class PushNotificator : MonoBehaviour
 	
 	void OnPushNotificationsReceived(string payload)
 	{
-		notificationString = payload;
+		notificationString = "NotificationReceived: " + payload;
 
 		Debug.Log ("NotificationReceived: " + payload);
 	}
 
-	void OnPushNotificationsOpened(string payload){
+	void OnPushNotificationsOpened(string payload)
+	{
+		notificationString = "NotificationOpened: " + payload;
 		Debug.Log ("NotificationOpened: " + payload);
 	}
 }
