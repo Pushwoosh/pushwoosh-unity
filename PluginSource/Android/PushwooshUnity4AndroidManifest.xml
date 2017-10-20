@@ -32,14 +32,18 @@
 	
 	<!-- This app has permission to register and receive data message. -->
 	<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
+	<!--GCM-->
+	<permission android:name="PACKAGE_NAME.permission.C2D_MESSAGE"
+	            android:protectionLevel="signature" />
+	
+	<uses-permission android:name="PACKAGE_NAME.permission.C2D_MESSAGE" />
 	<!--AMAZON-->
+	<uses-permission android:name="com.amazon.device.messaging.permission.RECEIVE" />
+	
 	<permission android:name="PACKAGE_NAME.permission.RECEIVE_ADM_MESSAGE"
 	            android:protectionLevel="signature" />
 	
 	<uses-permission android:name="PACKAGE_NAME.permission.RECEIVE_ADM_MESSAGE" />
-	
-	<uses-permission android:name="com.amazon.device.messaging.permission.RECEIVE" />
-	
 	<!--BADGE-->
 	<!--for Samsung-->
 	<uses-permission android:name="com.sec.android.provider.badge.permission.READ" />
@@ -85,7 +89,7 @@
 	<!--<uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />-->
 	<!--<uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />-->
 	<!---->
-	<!--<uses-permission-sdk-23 android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
+	<!--<uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />-->
 	
 	<application android:debuggable="true"
 	             android:icon="@drawable/app_icon"
@@ -100,7 +104,7 @@
 				<category android:name="android.intent.category.LAUNCHER" />
 			</intent-filter>
 		</activity>
-		<!-- intent-filter ${applicationId}.MESSAGE here allows to start Activity directly from push notification without restarting whole application -->
+		<!-- intent-filter PACKAGE_NAME.MESSAGE here allows to start Activity directly from push notification without restarting whole application -->
 		<activity android:name="com.unity3d.player.UnityPlayerActivity"
 		          android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
 		          android:label="@string/app_name"
@@ -131,8 +135,10 @@
 		<meta-data android:name="com.pushwoosh.internal.plugin_provider"
 		           android:value="com.pushwoosh.unityplugin.internal.UnityPluginProvider" />
 		<!--CORE-->
+		<activity android:name="com.pushwoosh.inapp.view.RichMediaWebActivity"
+		          android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 		
-		<activity android:name="com.pushwoosh.inapp.WebActivity"
+		<activity android:name="com.pushwoosh.inapp.view.RemoteUrlActivity"
 		          android:theme="@android:style/Theme.Translucent.NoTitleBar" />
 		
 		<service android:name="com.pushwoosh.inapp.InAppRetrieverService"
@@ -255,6 +261,7 @@
 		<amazon:enable-feature android:name="com.amazon.device.messaging"
 		                       android:required="false" />
 		
+		<!-- it must have initOrder higher than PushwooshInitProvider-->
 		<provider android:name="com.pushwoosh.amazon.AmazonInitProvider"
 		          android:authorities="PACKAGE_NAME.amazonpushwooshinitprovider"
 		          android:enabled="true"

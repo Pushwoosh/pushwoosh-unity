@@ -7,4 +7,9 @@ public class UnityPluginProvider implements PluginProvider {
 	public String getPluginType() {
 		return "Unity";
 	}
+
+	@Override
+	public int richMediaStartDelay() {
+		return 500;
+	}
 }
