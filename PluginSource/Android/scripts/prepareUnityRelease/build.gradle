@@ -92,12 +92,6 @@ task copyAndroidManifests << {
 			into manifestsTempDir
 		}
 	}
-
-	copy {
-		from("$projectDir/src/main/AndroidManifest.xml")
-		rename "AndroidManifest.xml", "${project.name}"
-		into manifestsTempDir
-	}
 }
 
 task unzipJarForExcludedLibs << {
