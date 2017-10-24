@@ -1,8 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
           package="com.pushwoosh.unityplugin">
 	
-	<uses-sdk android:targetSdkVersion="26" />
-	
 	<application android:allowBackup="true">
 		
 		<meta-data
@@ -12,40 +10,5 @@
 		<meta-data
 			android:name="com.pushwoosh.internal.plugin_provider"
 			android:value="com.pushwoosh.unityplugin.internal.UnityPluginProvider" />
-		
-		<activity
-			android:name="com.unity3d.player.UnityPlayerProxyActivity"
-			android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-			android:launchMode="singleTask"
-			android:screenOrientation="portrait">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
-		<!-- intent-filter PACKAGE_NAME.MESSAGE here allows to start Activity directly from push notification without restarting whole application -->
-		<activity
-			android:name="com.unity3d.player.UnityPlayerActivity"
-			android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-			android:launchMode="singleTask"
-			android:screenOrientation="portrait">
-			<intent-filter>
-				<action android:name="PACKAGE_NAME.MESSAGE" />
-				<category android:name="android.intent.category.DEFAULT" />
-			</intent-filter>
-		</activity>
-		<activity
-			android:name="com.unity3d.player.UnityPlayerNativeActivity"
-			android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-			android:launchMode="singleTask"
-			android:screenOrientation="portrait">
-			<meta-data
-				android:name="android.app.lib_name"
-				android:value="unity" />
-			<meta-data
-				android:name="unityplayer.ForwardNativeEventsToDalvik"
-				android:value="false" />
-		</activity>
-	
 	</application>
 </manifest>

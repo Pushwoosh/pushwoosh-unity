@@ -75,10 +75,12 @@ task copyExcludedJars << {
 }
 
 task copyAndroidManifests << {
-	fileTree(dir: publishDir)
-			.matching {
-		include 'pushwoosh*.aar'
-	}.each {
+	List excludeLibsPattern = new ArrayList();
+	exludePermissionsLibs.each {
+		excludeLibsPattern.add("$it*.aar")
+	}
+	fileTree(dir: publishDir, includes: excludeLibsPattern)
+			.each {
 		def path = it.path
 		def name = it.name.substring(0, it.name.lastIndexOf("-"))
 
@@ -138,7 +140,7 @@ task copyUnityPluginAar << {
 }
 
 task copyReadmeFiles << {
-	copy{
+	copy {
 		from readmeFilesDir
 		into publishDir
 	}
