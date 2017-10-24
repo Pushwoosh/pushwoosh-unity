@@ -1,0 +1,153 @@
+import groovy.xml.MarkupBuilder
+import groovy.xml.Namespace
+
+ext {
+	packageName = "PACKAGE_NAME"
+
+	androidNamespace = new Namespace("http://schemas.android.com/apk/res/android")
+	amazonNamespace = new Namespace("http://schemas.amazon.com/apk/res/android")
+	tabSpace = "\t"
+
+	preApplicationTags = ["uses-permission", "permission"]
+}
+
+task generatePublicAndroidManifest << {
+	def manifests = new File(manifestsPath)
+
+	publicManifestPath.withWriter { writer ->
+		def builder = new MarkupBuilder(new IndentPrinter(writer, tabSpace, true, true));
+
+		builder.manifest(
+				'xmlns:android': androidNamespace.getUri(),
+				'xmlns:amazon': amazonNamespace.getUri(),
+				'package': packageName
+		) {
+			"uses-sdk"(
+					'android:minSdkVersion': global_minSdk,
+					'android:targetSdkVersion': global_targetSdk
+			)
+
+			def appendModuleComment
+			appendModuleComment = { module, tabCount = 1 ->
+				mkp.yield("\n")
+				tabCount.times {
+					mkp.yield(tabSpace)
+				}
+				mkp.comment(module.name)
+			}
+
+			def addNodes
+			addNodes = { Node node ->
+				if (node == null) return
+				"${updateKey(node.name())}"(attributes(node)) {
+					node.children().each {
+						addNodes(it)
+					}
+				}
+			}
+
+			def addNodesAsComment
+			addNodesAsComment = { Node node, deepCount = 1 ->
+				mkp.yield("\n")
+				if (node == null) return
+				boolean autoClose = node.children().isEmpty()
+				deepCount.times {
+					mkp.yield(tabSpace)
+				}
+				mkp.comment("<${updateKey(node.name())} ${attributeMapToString(attributes(node))}" + (autoClose ? "/>" : ">"))
+				node.children().each {
+					addNodesAsComment(it, deepCount + 1)
+				}
+
+				if (!autoClose) {
+					mkp.yield("\n")
+					mkp.comment("</${updateKey(node.name())}>")
+				}
+			}
+
+			//add permissions
+			manifests.listFiles()
+					.each {
+				File moduleFile = it
+				def manifest = new XmlParser().parse(moduleFile)
+
+				boolean notEmpty
+				preApplicationTags.each {
+					notEmpty = notEmpty || !manifest."$it".isEmpty()
+				}
+
+				if (notEmpty) {
+					appendModuleComment(moduleFile)
+					preApplicationTags.each {
+						manifest."$it".each {
+							if (exludePermissionsLibs.contains(moduleFile.name)) {
+								addNodesAsComment(it)
+							} else {
+								addNodes(it)
+							}
+						}
+					}
+				}
+				mkp.yield("\n")
+			}
+
+			//add application
+			application() {
+				manifests.listFiles()
+						.each {
+					def moduleManifest = new XmlParser().parse(it)
+					appendModuleComment(it, 2)
+
+					Node moduleApplication = moduleManifest.application[0]
+					moduleApplication.children().each {
+						addNodes(it)
+					}
+
+					mkp.yield("\n")
+				}
+			}
+		}
+	}
+}
+
+String updateApplicationId(def name) {
+	String localName = name
+	if (localName.contains('${applicationId}')) {
+		return localName.replaceAll("\\\$", "").replaceAll('\\{applicationId\\}', packageName)
+	} else {
+		return name
+	}
+}
+
+
+Map attributes(Node node) {
+	Map result = new HashMap();
+	node.attributes().each {
+		result.put(updateKey(it.key), updateApplicationId(it.value))
+	}
+
+	return result
+}
+
+String updateKey(def key) {
+	if (key instanceof String) {
+		return key
+	}
+
+	if (key.namespaceURI == androidNamespace.getUri()) {
+		return "android:${key.localPart}"
+	} else if (key.namespaceURI == amazonNamespace.getUri()) {
+		return "amazon:${key.localPart}"
+	}
+
+	return key
+}
+
+static String attributeMapToString(Map attributes) {
+	StringBuilder stringBuilder = new StringBuilder()
+	attributes.each { key, value ->
+		stringBuilder.append("$key=\"$value\" ")
+	}
+
+	return stringBuilder.toString()
+}

@@ -82,12 +82,12 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/bundles" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/classes" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/dependency-cache" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-compat/25.2.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-core-ui/25.2.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-core-utils/25.2.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-fragment/25.2.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-media-compat/25.2.0/jars" />
-      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/25.2.0/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-compat/26.0.2/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-core-ui/26.0.2/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-core-utils/26.0.2/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-fragment/26.0.2/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-media-compat/26.0.2/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.android.support/support-v4/26.0.2/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-base/11.4.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/11.4.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-gcm/11.4.0/jars" />
@@ -96,7 +96,9 @@
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.google.android.gms/play-services-tasks/11.4.0/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.pushwoosh/pushwoosh-amazon/5.4.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.pushwoosh/pushwoosh-badge/5.4.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.pushwoosh/pushwoosh-beacon/5.4.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.pushwoosh/pushwoosh-gcm/5.4.1/jars" />
+      <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.pushwoosh/pushwoosh-location/5.4.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/exploded-aar/com.pushwoosh/pushwoosh/5.4.1/jars" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/incremental-safeguard" />
@@ -112,25 +114,27 @@
     </content>
     <orderEntry type="jdk" jdkName="Android API 26 Platform" jdkType="Android SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" exported="" name="support-core-ui-26.0.2" level="project" />
     <orderEntry type="library" exported="" name="play-services-location-11.4.0" level="project" />
+    <orderEntry type="library" exported="" name="support-compat-26.0.2" level="project" />
+    <orderEntry type="library" exported="" name="pushwoosh-beacon_v5.4.1" level="project" />
+    <orderEntry type="library" exported="" name="support-media-compat-26.0.2" level="project" />
     <orderEntry type="library" exported="" name="pushwoosh-amazon-5.4.1" level="project" />
     <orderEntry type="library" exported="" name="pushwoosh-gcm-5.4.1" level="project" />
-    <orderEntry type="library" exported="" name="pushwoosh-beacon_v5.1.1" level="project" />
     <orderEntry type="library" exported="" name="pushwoosh-badge-5.4.1" level="project" />
-    <orderEntry type="library" exported="" name="pushwoosh-5.4.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-gcm-11.4.0" level="project" />
-    <orderEntry type="library" exported="" name="pushwoosh-location_v5.1.1" level="project" />
-    <orderEntry type="library" exported="" name="support-v4-25.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-compat-25.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-media-compat-25.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-core-ui-25.2.0" level="project" />
+    <orderEntry type="library" exported="" name="support-fragment-26.0.2" level="project" />
+    <orderEntry type="library" exported="" name="pushwoosh-5.4.1" level="project" />
+    <orderEntry type="library" exported="" name="support-annotations-26.0.2" level="project" />
+    <orderEntry type="library" exported="" name="support-v4-26.0.2" level="project" />
+    <orderEntry type="library" exported="" name="pushwoosh-location_v5.4.1" level="project" />
+    <orderEntry type="library" exported="" name="support-core-utils-26.0.2" level="project" />
+    <orderEntry type="library" exported="" name="pushwoosh-beacon-5.4.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-basement-11.4.0" level="project" />
+    <orderEntry type="library" exported="" name="pushwoosh-location-5.4.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-base-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-tasks-11.4.0" level="project" />
-    <orderEntry type="library" exported="" name="support-annotations-25.2.0" level="project" />
     <orderEntry type="library" exported="" name="play-services-iid-11.4.0" level="project" />
-    <orderEntry type="library" exported="" name="support-core-utils-25.2.0" level="project" />
-    <orderEntry type="library" exported="" name="support-fragment-25.2.0" level="project" />
     <orderEntry type="module" module-name="unity" exported="" />
   </component>
 </module>
