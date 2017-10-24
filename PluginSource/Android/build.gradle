@@ -24,6 +24,7 @@ allprojects {
 ext {
     global_minSdk = 16
     global_targetSdk = 26
+	global_buildToolsSdk = "26.0.2"
     global_versionName = "1.11.1"
     play_services = "11.4.0"
     support = "26.0.2"

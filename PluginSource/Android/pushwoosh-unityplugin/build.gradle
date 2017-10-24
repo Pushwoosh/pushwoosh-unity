@@ -3,7 +3,7 @@ apply from: '../scripts/prepareUnityRelease/build.gradle'
 
 android {
     compileSdkVersion global_targetSdk
-    buildToolsVersion "26.0.2"
+    buildToolsVersion global_buildToolsSdk
 
     defaultConfig {
         versionName global_versionName

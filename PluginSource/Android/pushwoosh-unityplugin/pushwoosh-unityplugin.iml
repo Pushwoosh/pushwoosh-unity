@@ -61,13 +61,6 @@
       <sourceFolder url="file://$MODULE_DIR$/src/main/java" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/rs" isTestSource="false" />
       <sourceFolder url="file://$MODULE_DIR$/src/main/shaders" isTestSource="false" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
-      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/shaders" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/res" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/resources" type="java-test-resource" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/assets" type="java-test-resource" />
@@ -75,6 +68,13 @@
       <sourceFolder url="file://$MODULE_DIR$/src/test/java" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/rs" isTestSource="true" />
       <sourceFolder url="file://$MODULE_DIR$/src/test/shaders" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/res" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/resources" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/assets" type="java-test-resource" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/aidl" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/java" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/rs" isTestSource="true" />
+      <sourceFolder url="file://$MODULE_DIR$/src/androidTest/shaders" isTestSource="true" />
       <excludeFolder url="file://$MODULE_DIR$/build/.DS_Store" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/annotations" />
       <excludeFolder url="file://$MODULE_DIR$/build/intermediates/assets" />
@@ -117,7 +117,6 @@
     <orderEntry type="library" exported="" name="support-core-ui-26.0.2" level="project" />
     <orderEntry type="library" exported="" name="play-services-location-11.4.0" level="project" />
     <orderEntry type="library" exported="" name="support-compat-26.0.2" level="project" />
-    <orderEntry type="library" exported="" name="pushwoosh-beacon_v5.4.1" level="project" />
     <orderEntry type="library" exported="" name="support-media-compat-26.0.2" level="project" />
     <orderEntry type="library" exported="" name="pushwoosh-amazon-5.4.1" level="project" />
     <orderEntry type="library" exported="" name="pushwoosh-gcm-5.4.1" level="project" />
@@ -127,7 +126,6 @@
     <orderEntry type="library" exported="" name="pushwoosh-5.4.1" level="project" />
     <orderEntry type="library" exported="" name="support-annotations-26.0.2" level="project" />
     <orderEntry type="library" exported="" name="support-v4-26.0.2" level="project" />
-    <orderEntry type="library" exported="" name="pushwoosh-location_v5.4.1" level="project" />
     <orderEntry type="library" exported="" name="support-core-utils-26.0.2" level="project" />
     <orderEntry type="library" exported="" name="pushwoosh-beacon-5.4.1" level="project" />
     <orderEntry type="library" exported="" name="play-services-basement-11.4.0" level="project" />
