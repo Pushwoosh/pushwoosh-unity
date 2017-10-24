@@ -4,6 +4,7 @@ ext {
 	publishDir = "${project.rootDir}/publish"
 	manifestsTempDir = "$publishDir/manifests"
 	readmeFilesDir = "${project.rootDir}/readme"
+	unityActivitiesAndroidManifestPath = "${project.rootDir}/scripts/prepareUnityRelease"
 
 	publicManifestPath = file("$publishDir/AndroidManifest.xml")
 	manifestsPath = manifestsTempDir
@@ -91,6 +92,14 @@ task copyAndroidManifests << {
 			}
 			into manifestsTempDir
 		}
+	}
+
+	copy {
+		from(unityActivitiesAndroidManifestPath) {
+			include "UnityActivitiesAndroidManifest.xml"
+			rename "UnityActivitiesAndroidManifest.xml", "unity-activities"
+		}
+		into manifestsTempDir
 	}
 }
 

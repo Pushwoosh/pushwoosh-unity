@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 
@@ -50,6 +52,8 @@ public class PushwooshProxy {
 	private static String listenerName;
 
 	static PushwooshProxy INSTANCE = null;
+
+	private final Handler handler = new Handler(Looper.getMainLooper());
 
 	public static void initialize(String appId, String projectId) {
 		Pushwoosh.getInstance().setAppId(appId);
@@ -288,11 +292,21 @@ public class PushwooshProxy {
 	}
 
 	public void startTrackingGeoPushes() {
-		PushwooshLocation.startLocationTracking();
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				PushwooshLocation.startLocationTracking();
+			}
+		});
 	}
 
 	public void stopTrackingGeoPushes() {
-		PushwooshLocation.stopLocationTracking();
+		handler.post(new Runnable() {
+			@Override
+			public void run() {
+				PushwooshLocation.stopLocationTracking();
+			}
+		});
 	}
 
 	public void startTrackingBeaconPushes() {
