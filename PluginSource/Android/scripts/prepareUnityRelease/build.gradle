@@ -21,7 +21,7 @@ task copyPushwooshDependency << {
 			.compile
 			.resolvedConfiguration
 			.resolvedArtifacts.each {
-		def id = it.moduleVersion.getId();
+		def id = it.moduleVersion.getId()
 		def path = file(it.file)
 
 		if (checkGroup(id)) {
@@ -36,6 +36,7 @@ task copyPushwooshDependency << {
 	}
 }
 
+@SuppressWarnings("GrMethodMayBeStatic")
 boolean checkGroup(ModuleVersionIdentifier id) {
 	def version = id.version
 	def group = id.group
@@ -48,10 +49,13 @@ boolean checkGroup(ModuleVersionIdentifier id) {
 		case "com.google.android.gms":
 			expectedVersion = play_services
 			break
-		case "com.pushwoosh":
+		case "com.pushwoosh.java7":
 			expectedVersion = pushwoosh
 			break
+		case "android.arch.lifecycle":
+		case "android.arch.core":
 		case "Android":
+		case "Unity":
 			return false
 		default:
 			throw new IllegalArgumentException("Unknown group: ${group}")
@@ -76,7 +80,7 @@ task copyExcludedJars << {
 }
 
 task copyAndroidManifests << {
-	List excludeLibsPattern = new ArrayList();
+	List excludeLibsPattern = new ArrayList()
 	exludePermissionsLibs.each {
 		excludeLibsPattern.add("$it*.aar")
 	}
@@ -104,7 +108,7 @@ task copyAndroidManifests << {
 }
 
 task unzipJarForExcludedLibs << {
-	List excludeLibsPattern = new ArrayList();
+	List excludeLibsPattern = new ArrayList()
 	exludePermissionsLibs.each {
 		excludeLibsPattern.add("$it*.aar")
 	}

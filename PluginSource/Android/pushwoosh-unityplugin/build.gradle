@@ -22,11 +22,11 @@ dependencies {
 	compile "com.google.android.gms:play-services-location:${play_services}"
 	compile "com.android.support:support-v4:${support}"
 
-    compile "com.pushwoosh:pushwoosh:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-amazon:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-badge:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-gcm:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-location:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-beacon:${pushwoosh}"
+    compile "com.pushwoosh.java7:pushwoosh:${pushwoosh}"
+    compile "com.pushwoosh.java7:pushwoosh-amazon:${pushwoosh}"
+    compile "com.pushwoosh.java7:pushwoosh-badge:${pushwoosh}"
+    compile "com.pushwoosh.java7:pushwoosh-gcm:${pushwoosh}"
+    compile "com.pushwoosh.java7:pushwoosh-location:${pushwoosh}"
+    compile "com.pushwoosh.java7:pushwoosh-beacon:${pushwoosh}"
 	compile project(':unity')
 }

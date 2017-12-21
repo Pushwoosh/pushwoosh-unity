@@ -5,6 +5,7 @@ buildscript {
         jcenter()
     }
     dependencies {
+        //noinspection GradleDependency
         classpath 'com.android.tools.build:gradle:2.1.2'
 
         // NOTE: Do not place your application dependencies here; they belong
@@ -24,9 +25,9 @@ allprojects {
 ext {
     global_minSdk = 16
     global_targetSdk = 26
-	global_buildToolsSdk = "26.0.2"
+    global_buildToolsSdk = "27.0.2"
     global_versionName = "5.5.0"
-    play_services = "11.4.0"
-    support = "26.0.2"
-	pushwoosh = "5.5.2"
+    play_services = "11.6.2"
+    support = "27.0.2"
+    pushwoosh = "5.5.2"
 }
