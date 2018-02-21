@@ -49,7 +49,7 @@ boolean checkGroup(ModuleVersionIdentifier id) {
 		case "com.google.android.gms":
 			expectedVersion = play_services
 			break
-		case "com.pushwoosh.java7":
+		case "com.pushwoosh":
 			expectedVersion = pushwoosh
 			break
 		case "android.arch.lifecycle":
