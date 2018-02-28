@@ -24,7 +24,7 @@ task copyPushwooshDependency << {
 		def id = it.moduleVersion.getId()
 		def path = file(it.file)
 
-		if (checkGroup(id)) {
+		if (checkGroup(id) && !it.name.endsWith("-license")) {
 			copy {
 				from(path.parent) {
 					include "*.aar"
