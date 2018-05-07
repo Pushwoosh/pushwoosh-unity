@@ -10,10 +10,12 @@ import android.os.Looper;
 import android.support.annotation.NonNull;
 import android.support.v4.app.NotificationManagerCompat;
 
+import com.pushwoosh.GDPRManager;
 import com.pushwoosh.Pushwoosh;
 import com.pushwoosh.badge.PushwooshBadge;
 import com.pushwoosh.beacon.PushwooshBeacon;
 import com.pushwoosh.exception.GetTagsException;
+import com.pushwoosh.exception.PushwooshException;
 import com.pushwoosh.exception.RegisterForPushNotificationsException;
 import com.pushwoosh.exception.UnregisterForPushNotificationException;
 import com.pushwoosh.function.Callback;
@@ -404,4 +406,55 @@ public class PushwooshProxy {
 			PWLog.exception(e);
 		}
 	}
+
+	public void showGDPRConsentUI(){
+		GDPRManager.getInstance().showGDPRConsentUI();
+	}
+
+	public void showGDPRDeletionUI(){
+		GDPRManager.getInstance().showGDPRDeletionUI();
+	}
+
+	public boolean isCommunicationEnabled(){
+		return GDPRManager.getInstance().isCommunicationEnabled();
+	}
+
+	public boolean isDeviceDataRemoved(){
+		return GDPRManager.getInstance().isDeviceDataRemoved();
+	}
+
+	public boolean isAvailable(){
+		return GDPRManager.getInstance().isAvailable();
+	}
+
+	public void setCommunicationEnabled(boolean enable){
+		 GDPRManager.getInstance().setCommunicationEnabled(enable, new Callback<Void, PushwooshException>() {
+			@Override
+			public void process(@NonNull Result<Void, PushwooshException> result) {
+				if(listenerName==null) return;
+				if (result.isSuccess()) {
+					UnityPlayer.UnitySendMessage(listenerName, "OnSetCommunicationEnabled", "success");
+				} else if (result.getException() != null) {
+					UnityPlayer.UnitySendMessage(listenerName, "OnFailedSetCommunicationEnabled", result.getException().getMessage());
+				}
+			}
+		});
+	}
+
+	public void removeAllDeviceData(){
+		GDPRManager.getInstance().removeAllDeviceData(new Callback<Void, PushwooshException>() {
+			@Override
+			public void process(@NonNull Result<Void, PushwooshException> result) {
+				if(listenerName==null) return;
+				if (result.isSuccess()) {
+					UnityPlayer.UnitySendMessage(listenerName, "OnRemoveAllDeviceData", "success");
+				} else if (result.getException() != null) {
+					UnityPlayer.UnitySendMessage(listenerName, "OnFailedRemoveAllDeviceData", result.getException().getMessage());
+				}
+			}
+		});
+	}
+
+
+
 }

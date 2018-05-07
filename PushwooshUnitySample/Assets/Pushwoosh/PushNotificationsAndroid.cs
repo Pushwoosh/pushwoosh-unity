@@ -284,5 +284,63 @@ public class PushNotificationsAndroid : Pushwoosh
 			pushwoosh.Call("onResume");
 		}
 	}
+
+    //GDPR
+
+    public override void ShowGDPRConsentUI()
+    {
+        pushwoosh.Call("showGDPRConsentUI");
+    }
+
+    public override void ShowGDPRDeletionUI()
+    {
+        pushwoosh.Call("showGDPRDeletionUI");
+    }
+
+    public override bool IsCommunicationEnabled()
+    {
+        return pushwoosh.Call<Boolean>("isCommunicationEnabled"); 
+    }
+
+    public override bool isDeviceDataRemoved()
+    {
+        return pushwoosh.Call<Boolean>("isDeviceDataRemoved");
+    }
+
+    public override bool IsAvailable()
+    {
+        return pushwoosh.Call<Boolean>("isAvailable");
+    }
+
+    public override void SetCommunicationEnabled(bool enable)
+    {
+    pushwoosh.Call("setCommunicationEnabled", enable);
+    }
+
+    void OnSetCommunicationEnabled(string success)
+    {
+        SetCommunicationEnableCallBack();
+    }
+
+    void OnFailedSetCommunicationEnabled(string error){
+        FailedSetCommunicationEnableCallback(error);
+    }
+
+    public override void RemoveAllDeviceData()
+    {
+        pushwoosh.Call("removeAllDeviceData");
+    }
+
+
+    void OnRemoveAllDeviceData(string success)
+    {
+        RemoveAllDataCallBack();
+    }
+
+    void OnFailedRemoveAllDeviceData(string error)
+    {
+        FailedRemoveAllDataCallback(error);
+    }
+
 #endif
 }

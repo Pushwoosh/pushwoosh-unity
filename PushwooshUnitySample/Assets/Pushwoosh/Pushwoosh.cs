@@ -21,6 +21,10 @@ public class Pushwoosh : MonoBehaviour
 	public delegate void RegistrationSuccessHandler(string token);
 	
 	public delegate void RegistrationErrorHandler(string error);
+
+    public delegate void GdprSuccessHandler();
+
+    public delegate void GdprErrorHandler(string error);
 	
 	public delegate void NotificationHandler(string payload);
 
@@ -34,6 +38,14 @@ public class Pushwoosh : MonoBehaviour
 	public event NotificationHandler OnPushNotificationsReceived = delegate {};
 
 	public event NotificationHandler OnPushNotificationsOpened = delegate {};
+
+    public event GdprSuccessHandler OnSetCommunicationEnable = delegate { };
+
+    public event GdprErrorHandler OnFailedSetCommunicationEnable = delegate { };
+
+    public event GdprSuccessHandler OnRemoveAllData = delegate { };
+
+    public event GdprErrorHandler OnFailedRemoveAllData = delegate { };
 
 	public virtual string HWID
 	{
@@ -148,6 +160,69 @@ public class Pushwoosh : MonoBehaviour
 	{
 		OnPushNotificationsOpened(payload);
 	}
+
+    //GPDR
+
+    public virtual void ShowGDPRConsentUI()
+    {
+        Debug.Log("[Pushwoosh] Error: ShowGDPRConsentUI is not supported on this platform");
+    }
+
+    public virtual void ShowGDPRDeletionUI()
+    {
+        Debug.Log("[Pushwoosh] Error: ShowGDPRDeletionUI is not supported on this platform");
+    }
+
+    public virtual bool IsCommunicationEnabled()
+    {
+        Debug.Log("[Pushwoosh] Error: IsCommunicationEnabled is not supported on this platform");
+        return false;
+    }
+
+    public virtual bool isDeviceDataRemoved()
+    {
+        Debug.Log("[Pushwoosh] Error: isDeviceDataRemoved is not supported on this platform");
+        return false;
+    }
+
+    public virtual bool IsAvailable()
+    {
+        Debug.Log("[Pushwoosh] Error: IsAvailable is not supported on this platform");
+        return false;
+    }
+
+    public virtual void SetCommunicationEnabled(bool enable)
+    {
+        Debug.Log("[Pushwoosh] Error: SetCommunicationEnabled is not supported on this platform");
+    }
+
+    public virtual void RemoveAllDeviceData()
+    {
+        Debug.Log("[Pushwoosh] Error: RemoveAllDeviceData is not supported on this platform");
+    }
+
+
+    protected void SetCommunicationEnableCallBack()
+    {
+        OnSetCommunicationEnable();
+    }
+
+    protected void FailedSetCommunicationEnableCallback(string error)
+    {
+        OnFailedSetCommunicationEnable(error);
+    }
+
+    protected void RemoveAllDataCallBack()
+    {
+        OnRemoveAllData();
+    }
+
+    protected void FailedRemoveAllDataCallback(string error)
+    {
+        OnFailedRemoveAllData(error);
+    }
+
+    //GPDR end
 
 	// Singleton
 	private static PushwooshInstanceType _instance;
