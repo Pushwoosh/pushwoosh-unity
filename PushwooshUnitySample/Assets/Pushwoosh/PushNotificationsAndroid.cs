@@ -307,7 +307,7 @@ public class PushNotificationsAndroid : Pushwoosh
         return pushwoosh.Call<Boolean>("isDeviceDataRemoved");
     }
 
-    public override bool IsAvailable()
+    public override bool IsGDPRAvailable()
     {
         return pushwoosh.Call<Boolean>("isAvailable");
     }

@@ -1,10 +1,11 @@
 //
 //  PushRuntime.m
 //  Pushwoosh SDK
-//  (c) Pushwoosh 2012
+//  (c) Pushwoosh 2018
 //
 
 #import "PushNotificationManager.h"
+#import "PWGDPRManager.h"
 #import <UserNotifications/UserNotifications.h>
 #import <objc/runtime.h>
 
@@ -15,89 +16,89 @@ static char * g_pw_listenerName = 0;
 static NSString * g_pw_launchNotification = nil;
 
 void pw_registerForRemoteNotifications() {
-	[[PushNotificationManager pushManager] registerForPushNotifications];
+    [[PushNotificationManager pushManager] registerForPushNotifications];
 }
 
 void pw_initializePushManager(char *appId, char *appName) {
-	NSString *appCodeStr = [[NSString alloc] initWithUTF8String:appId];
-	NSString *appNameStr = appName ? [[NSString alloc] initWithUTF8String:appName] :
-        [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
-	[PushNotificationManager initializeWithAppCode:appCodeStr appName:appNameStr];
-
-	[[PushNotificationManager pushManager] sendAppOpen];
-	[PushNotificationManager pushManager].delegate = (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
-	[UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
+    NSString *appCodeStr = [[NSString alloc] initWithUTF8String:appId];
+    NSString *appNameStr = appName ? [[NSString alloc] initWithUTF8String:appName] :
+    [[[NSBundle mainBundle] infoDictionary] objectForKey:@"CFBundleDisplayName"];
+    [PushNotificationManager initializeWithAppCode:appCodeStr appName:appNameStr];
+    
+    [[PushNotificationManager pushManager] sendAppOpen];
+    [PushNotificationManager pushManager].delegate = (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
+    [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
 }
 
 void pw_unregisterForRemoteNotifications() {
-	[[PushNotificationManager pushManager] unregisterForPushNotifications];
+    [[PushNotificationManager pushManager] unregisterForPushNotifications];
 }
 
 void *pw_getPushToken() {
-	return (void *)[[[PushNotificationManager pushManager] getPushToken] UTF8String];
+    return (void *)[[[PushNotificationManager pushManager] getPushToken] UTF8String];
 }
 
 void *pw_getPushwooshHWID() {
-	return (void *)[[[PushNotificationManager pushManager] getHWID] UTF8String];
+    return (void *)[[[PushNotificationManager pushManager] getHWID] UTF8String];
 }
 
 void *pw_getLaunchNotification() {
-	if (g_pw_launchNotification) {
-		return (void *)[g_pw_launchNotification UTF8String];
-	}
-	
-	return NULL;
+    if (g_pw_launchNotification) {
+        return (void *)[g_pw_launchNotification UTF8String];
+    }
+    
+    return NULL;
 }
 
 void pw_clearLaunchNotification() {
-	g_pw_launchNotification = nil;
+    g_pw_launchNotification = nil;
 }
 
 void pw_setUserId(char *userId) {
-	NSString *userIdStr = [[NSString alloc] initWithUTF8String:userId];
-	[[PushNotificationManager pushManager] setUserId:userIdStr];
+    NSString *userIdStr = [[NSString alloc] initWithUTF8String:userId];
+    [[PushNotificationManager pushManager] setUserId:userIdStr];
 }
 
 void pw_postEvent(char *event, char *attributes) {
-	NSString *eventStr = [[NSString alloc] initWithUTF8String:event];
-	NSString *attributesStr = [[NSString alloc] initWithUTF8String:attributes];
-
-	NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[attributesStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
-	if ([json isKindOfClass:[NSDictionary class]]) {
-		[[PushNotificationManager pushManager] postEvent:eventStr withAttributes:json];
-	}
-	else {
-		NSLog(@"Invalid postEvent attribute argument: %@", json);
-	}
+    NSString *eventStr = [[NSString alloc] initWithUTF8String:event];
+    NSString *attributesStr = [[NSString alloc] initWithUTF8String:attributes];
+    
+    NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[attributesStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
+    if ([json isKindOfClass:[NSDictionary class]]) {
+        [[PushNotificationManager pushManager] postEvent:eventStr withAttributes:json];
+    }
+    else {
+        NSLog(@"Invalid postEvent attribute argument: %@", json);
+    }
 }
 
 void pw_sendPurchase(char *productId, double price, char *currency) {
-	NSString *productIdStr = [[NSString alloc] initWithUTF8String:productId];
-	NSDecimalNumber *priceDecimal = [[NSDecimalNumber alloc] initWithDouble:price];
-	NSString *currencyStr = [[NSString alloc] initWithUTF8String:currency];
-
-	[[PushNotificationManager pushManager] sendPurchase:productIdStr withPrice:priceDecimal currencyCode:currencyStr andDate:[NSDate date]];
+    NSString *productIdStr = [[NSString alloc] initWithUTF8String:productId];
+    NSDecimalNumber *priceDecimal = [[NSDecimalNumber alloc] initWithDouble:price];
+    NSString *currencyStr = [[NSString alloc] initWithUTF8String:currency];
+    
+    [[PushNotificationManager pushManager] sendPurchase:productIdStr withPrice:priceDecimal currencyCode:currencyStr andDate:[NSDate date]];
 }
 
 void pw_setListenerName(char *listenerName) {
-	free(g_pw_listenerName); g_pw_listenerName = 0;
-	int len = strlen(listenerName);
-	g_pw_listenerName = malloc(len + 1);
-	strcpy(g_pw_listenerName, listenerName);
-	
-	if(g_pw_tokenStr) {
-		UnitySendMessage(g_pw_listenerName, "onRegisteredForPushNotifications", g_pw_tokenStr);
-		free(g_pw_tokenStr); g_pw_tokenStr = 0;
-	}
-	
-	if(g_pw_registerErrStr) {
-		UnitySendMessage(g_pw_listenerName, "onFailedToRegisteredForPushNotifications", g_pw_registerErrStr);
-		free(g_pw_registerErrStr); g_pw_registerErrStr = 0;
-	}
-	
-	if(g_pw_pushMessageStr) {
-		UnitySendMessage(g_pw_listenerName, "onPushNotificationsReceived", g_pw_pushMessageStr);
-	}
+    free(g_pw_listenerName); g_pw_listenerName = 0;
+    int len = strlen(listenerName);
+    g_pw_listenerName = malloc(len + 1);
+    strcpy(g_pw_listenerName, listenerName);
+    
+    if(g_pw_tokenStr) {
+        UnitySendMessage(g_pw_listenerName, "onRegisteredForPushNotifications", g_pw_tokenStr);
+        free(g_pw_tokenStr); g_pw_tokenStr = 0;
+    }
+    
+    if(g_pw_registerErrStr) {
+        UnitySendMessage(g_pw_listenerName, "onFailedToRegisteredForPushNotifications", g_pw_registerErrStr);
+        free(g_pw_registerErrStr); g_pw_registerErrStr = 0;
+    }
+    
+    if(g_pw_pushMessageStr) {
+        UnitySendMessage(g_pw_listenerName, "onPushNotificationsReceived", g_pw_pushMessageStr);
+    }
     
     if(g_pw_pushMessageStr) {
         UnitySendMessage(g_pw_listenerName, "onPushNotificationsOpened", g_pw_pushMessageStr);
@@ -106,25 +107,25 @@ void pw_setListenerName(char *listenerName) {
 }
 
 void pw_setIntTag(char *tagName, int tagValue) {
-	NSString *tagNameStr = [[NSString alloc] initWithUTF8String:tagName];
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:tagValue], tagNameStr, nil];
-	[[PushNotificationManager pushManager] setTags:dict];
-	
+    NSString *tagNameStr = [[NSString alloc] initWithUTF8String:tagName];
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:[NSNumber numberWithInt:tagValue], tagNameStr, nil];
+    [[PushNotificationManager pushManager] setTags:dict];
+    
 #if !__has_feature(objc_arc)
-	[tagNameStr release];
+    [tagNameStr release];
 #endif
 }
 
 void pw_setStringTag(char *tagName, char *tagValue) {
-	NSString *tagNameStr = [[NSString alloc] initWithUTF8String:tagName];
-	NSString *tagValueStr = [[NSString alloc] initWithUTF8String:tagValue];
-	
-	NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:tagValueStr, tagNameStr, nil];
-	[[PushNotificationManager pushManager] setTags:dict];
+    NSString *tagNameStr = [[NSString alloc] initWithUTF8String:tagName];
+    NSString *tagValueStr = [[NSString alloc] initWithUTF8String:tagValue];
+    
+    NSDictionary *dict = [NSDictionary dictionaryWithObjectsAndKeys:tagValueStr, tagNameStr, nil];
+    [[PushNotificationManager pushManager] setTags:dict];
     
 #if !__has_feature(objc_arc)
-	[tagNameStr release];
-	[tagValueStr release];
+    [tagNameStr release];
+    [tagValueStr release];
 #endif
 }
 
@@ -156,76 +157,116 @@ void pw_internalSendStringTags (char *tagName, char **tags) {
 }
 
 void pw_getTags() {
-	[[PushNotificationManager pushManager] loadTags:^(NSDictionary *tags) {
-		NSError *error;
-		NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tags options:0 error:&error];
-		if (error == nil) {
-			NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
-			UnitySendMessage(g_pw_listenerName, "onTagsReceived", [json UTF8String]);
-		}
-		else {
-			UnitySendMessage(g_pw_listenerName, "onFailedToReceiveTags", [[error description] UTF8String]);
-		}
-	} error:^(NSError *error) {
-		UnitySendMessage(g_pw_listenerName, "onFailedToReceiveTags", [[error description] UTF8String]);
-	}];
+    [[PushNotificationManager pushManager] loadTags:^(NSDictionary *tags) {
+        NSError *error;
+        NSData *jsonData = [NSJSONSerialization dataWithJSONObject:tags options:0 error:&error];
+        if (error == nil) {
+            NSString *json = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+            UnitySendMessage(g_pw_listenerName, "onTagsReceived", [json UTF8String]);
+        }
+        else {
+            UnitySendMessage(g_pw_listenerName, "onFailedToReceiveTags", [[error description] UTF8String]);
+        }
+    } error:^(NSError *error) {
+        UnitySendMessage(g_pw_listenerName, "onFailedToReceiveTags", [[error description] UTF8String]);
+    }];
 }
 
 void pw_startLocationTracking() {
-	[[PushNotificationManager pushManager] startLocationTracking];
+    [[PushNotificationManager pushManager] startLocationTracking];
 }
 
 void pw_clearNotificationCenter() {
-	[PushNotificationManager clearNotificationCenter];
+    [PushNotificationManager clearNotificationCenter];
 }
 
 void pw_stopLocationTracking() {
-	[[PushNotificationManager pushManager] stopLocationTracking];
+    [[PushNotificationManager pushManager] stopLocationTracking];
 }
 
 void pw_setBadgeNumber(int badge) {
-	[[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
+    [[UIApplication sharedApplication] setApplicationIconBadgeNumber:badge];
 }
 
 void pw_addBadgeNumber(int deltaBadge) {
-	int badge = [UIApplication sharedApplication].applicationIconBadgeNumber + deltaBadge;
-	pw_setBadgeNumber(badge);
+    int badge = [UIApplication sharedApplication].applicationIconBadgeNumber + deltaBadge;
+    pw_setBadgeNumber(badge);
+}
+
+bool pw_gdprAvailable () {
+    return [PWGDPRManager sharedManager].isAvailable;
+}
+
+bool pw_isCommunicationEnabled () {
+    return [PWGDPRManager sharedManager].isCommunicationEnabled;
+}
+
+bool pw_isDeviceDataRemoved () {
+    return [PWGDPRManager sharedManager].isDeviceDataRemoved;
+}
+
+void pw_setCommunicationEnabled(bool enabled) {
+    [[PWGDPRManager sharedManager] setCommunicationEnabled:enabled completion:^(NSError *error) {
+        if (!error) {
+            UnitySendMessage(g_pw_listenerName, "onSetCommunicationEnabled", [@"success" UTF8String]);
+        } else {
+            UnitySendMessage(g_pw_listenerName, "onFailSetCommunicationEnabled", [[error description] UTF8String]);
+        }
+    }];
+}
+
+void pw_removeAllDeviceData() {
+    [[PWGDPRManager sharedManager] removeAllDeviceDataWithCompletion:^(NSError *error) {
+        if (!error) {
+            UnitySendMessage(g_pw_listenerName, "onRemoveAllDeviceData",  [@"success" UTF8String]);
+        } else {
+            UnitySendMessage(g_pw_listenerName, "onFailRemoveAllDeviceData", [[error description] UTF8String]);
+        }
+    }];
+}
+
+void pw_showGDPRConsentUI() {
+    [[PWGDPRManager sharedManager] showGDPRConsentUI];
+}
+
+void pw_showGDPRDeletionUI() {
+    [[PWGDPRManager sharedManager] showGDPRDeletionUI];
 }
 
 @implementation UIApplication(InternalPushRuntime)
 
 - (NSObject<PushNotificationDelegate> *)getPushwooshDelegate {
-	return (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
+    return (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
 }
 
 - (BOOL)pushwooshUseRuntimeMagic {
-	return YES;
+    return YES;
 }
 
 //succesfully registered for push notifications
 - (void)onDidRegisterForRemoteNotificationsWithDeviceToken:(NSString *)token {
-	const char * str = [token UTF8String];
-	if(!g_pw_listenerName) {
-		g_pw_tokenStr = malloc(strlen(str)+1);
-		strcpy(g_pw_tokenStr, str);
-		return;
-	}
-	
-	UnitySendMessage(g_pw_listenerName, "onRegisteredForPushNotifications", str);
+    const char * str = [token UTF8String];
+    if(!g_pw_listenerName) {
+        g_pw_tokenStr = malloc(strlen(str)+1);
+        strcpy(g_pw_tokenStr, str);
+        return;
+    }
+    
+    UnitySendMessage(g_pw_listenerName, "onRegisteredForPushNotifications", str);
 }
 
 //failed to register for push notifications
 - (void)onDidFailToRegisterForRemoteNotificationsWithError:(NSError *)error {
-	const char * str = [[error description] UTF8String];
-	if(!g_pw_listenerName) {
-		if (str) {
-			g_pw_registerErrStr = malloc(strlen(str)+1);
-			strcpy(g_pw_registerErrStr, str);
-		}
-		return;
-	}
-	
-	UnitySendMessage(g_pw_listenerName, "onFailedToRegisteredForPushNotifications", str);
+    const char * str = [[error description] UTF8String];
+    if(!g_pw_listenerName) {
+        if (str) {
+            g_pw_registerErrStr = malloc(strlen(str)+1);
+            strcpy(g_pw_registerErrStr, str);
+        }
+        return;
+    }
+    
+    UnitySendMessage(g_pw_listenerName, "onFailedToRegisteredForPushNotifications", str);
 }
 
 - (const char *)jsonRequestDataWithNotification:(NSDictionary *)pushNotification onStart:(BOOL)onStart {
@@ -262,3 +303,4 @@ void pw_addBadgeNumber(int deltaBadge) {
 }
 
 @end
+
