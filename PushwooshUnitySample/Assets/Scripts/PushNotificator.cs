@@ -2,10 +2,15 @@
 using SimpleJSON;
 using System.Collections;
 using System.Collections.Generic;
+using System;
 
 /// <summary>
 ///  Pushwoosh sample class
 /// </summary>
+/// 
+/// 
+/// 
+
 public class PushNotificator : MonoBehaviour 
 {
 	public UnityEngine.UI.Text hwidUIText;
@@ -22,6 +27,12 @@ public class PushNotificator : MonoBehaviour
 	public UnityEngine.UI.Button sendEventButton;
 
 	public GameObject AndroidSpecific;
+
+
+    public UnityEngine.UI.Text gdprText;
+
+    string callbackTextSetCommunication;
+    string callbackTextRemoveAllData;
 
 	// Use this for initialization
 	void Start () 
@@ -40,6 +51,18 @@ public class PushNotificator : MonoBehaviour
 		Pushwoosh.Instance.SetBadgeNumber (0);
 
 		Pushwoosh.Instance.SendPurchase("com.pushwoosh.Developer", 49.95, "USD");
+
+        Pushwoosh.Instance.ShowGDPRConsentUI();
+        Pushwoosh.Instance.ShowGDPRDeletionUI();
+        /**   Pushwoosh.Instance.OnFailedSetCommunicationEnable += OnFailedSetCommunicationEnable;
+        Pushwoosh.Instance.OnSetCommunicationEnable += OnSetCommunicationEnable;
+        Pushwoosh.Instance.SetCommunicationEnabled(false);
+
+        Pushwoosh.Instance.OnRemoveAllData += OnRemoveAllData;
+        Pushwoosh.Instance.OnFailedRemoveAllData += OnFailedRemoveAllData;
+        Pushwoosh.Instance.RemoveAllDeviceData();**/ 
+
+    
 
 #if !UNITY_EDITOR
 #if UNITY_IOS || UNITY_ANDROID
@@ -71,12 +94,37 @@ public class PushNotificator : MonoBehaviour
 #endif
 	}
 
-	void Update()
+	private void OnFailedRemoveAllData(string error)
+    {
+        callbackTextRemoveAllData = "OnFailedRemoveAllData:" + error;
+    }
+
+    private void OnRemoveAllData()
+    {
+        callbackTextRemoveAllData = "OnRemoveAllData"; 
+    }
+
+    private void OnSetCommunicationEnable()
+    {
+        callbackTextSetCommunication = " OnSetCommunicationEnable";
+    }
+
+    private void OnFailedSetCommunicationEnable(string error)
+    {
+        callbackTextSetCommunication = " OnFailedSetCommunicationEnable:" + error;
+    }
+
+    void Update()
 	{
 		tokenUIText.text = tokenString;
 		hwidUIText.text = hwidString;
 		notificationUIText.text = notificationString;
 		launchNotificationUIText.text = launchNotificationString;
+
+       /* gdprText.text = "is Removed Data:" + Pushwoosh.Instance.isDeviceDataRemoved()
+            + " communication enable:" + Pushwoosh.Instance.IsCommunicationEnabled()
+            + " gdpr aviable:" + Pushwoosh.Instance.IsAvailable() 
+            + callbackTextSetCommunication + callbackTextRemoveAllData;*/
 	}
 
 	public void OnSubscribe()
