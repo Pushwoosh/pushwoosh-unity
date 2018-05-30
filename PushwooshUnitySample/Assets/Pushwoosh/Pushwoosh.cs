@@ -185,7 +185,7 @@ public class Pushwoosh : MonoBehaviour
         return false;
     }
 
-    public virtual bool IsAvailable()
+	public virtual bool IsGDPRAvailable()
     {
         Debug.Log("[Pushwoosh] Error: IsAvailable is not supported on this platform");
         return false;
