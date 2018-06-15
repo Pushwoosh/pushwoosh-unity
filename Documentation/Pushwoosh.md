@@ -198,3 +198,20 @@ Send purchase information. This will set default tags “In-app Product”, “I
 public virtual void SendPurchase(string productId, double price, string currency)
 ```
 
+---
+### ShowGDPRConsentUI
+
+Shows GDRPR consent form. This will trigger our system GDPRConsent Event and show the Consent Form Rich Media page. More info can be found [here](https://www.pushwoosh.com/docs/the-gdpr-compliance#section-consent-form)
+
+```csharp
+public virtual void ShowGDRPConsentUI()
+```
+
+---
+### ShowGDPRDeletionUI
+
+Shows GDRPR consent form. The method triggers a system GDPRDeletion Event and displays the Deletion Form Rich Media. More info can be found [here](https://www.pushwoosh.com/docs/the-gdpr-compliance#section-deletion-form)
+
+```csharp
+public virtual void ShowGDRPDeletionUI()
+```
