@@ -79,6 +79,47 @@ Push notification handler delegate.
 public event NotificationHandler OnPushNotificationsReceived = delegate {};
 ```
 
+---
+### OnSetCommunicationEnable
+
+Communication established handler.
+
+```csharp
+    public event GdprSuccessHandler OnSetCommunicationEnable = delegate {};
+```
+
+
+---
+### OnFailedSetCommunicationEnable
+
+Communication established error handler.
+
+```csharp
+    public event GdprSuccessHandler OnFailedSetCommunicationEnable = delegate {};
+```
+
+
+---
+### RemoveAllData
+
+GDPR Remove device data handler.
+
+```csharp
+
+    public event GdprSuccessHandler OnRemoveAllData = delegate { };
+```
+
+
+---
+### OnFailedRemoveAllData
+
+GDPR Remove device data error handler.
+
+```csharp
+    public event GdprErrorHandler OnFailedRemoveAllData = delegate { };
+```
+
+
 ## Methods
 
 ### RegisterForPushNotifications
@@ -214,4 +255,54 @@ Shows GDPR deletion form. The method triggers a system GDPRDeletion Event and di
 
 ```csharp
 public virtual void ShowGDRPDeletionUI()
+```
+
+
+---
+### SetCommunicationEnabled
+
+A binary method enabling/disabling all communication with Pushwoosh. The boolean value is false unsubscribes the device from receiving push notifications and stops in-app messages download. The value true reverses the effect.
+
+```csharp
+    public virtual void SetCommunicationEnabled(bool enable);
+```
+
+
+---
+### IsCommunicationEnabled
+
+Gets the current status of communication availability. Returns **true** if communication with Pushwoosh servers is enabled and **false** if not.
+
+```csharp
+    public virtual bool IsCommunicationEnabled();
+```
+
+
+---
+### isDeviceDataRemoved
+
+Returns **true** if device data was removed from Pushwoosh servers is enabled and **false** if not.
+
+```csharp
+    public virtual bool isDeviceDataRemoved();
+```
+
+
+---
+### IsGDPRAvailable
+
+Returns **true** GDPR consent and deletion forms can be presented and **false** if not.
+
+```csharp
+    public virtual bool IsGDPRAvailable();
+```
+
+
+---
+### SetCommunicationEnabled
+
+Removes all data about the device from Pushwoosh.
+
+```csharp
+    public virtual void RemoveAllDeviceData();
 ```
