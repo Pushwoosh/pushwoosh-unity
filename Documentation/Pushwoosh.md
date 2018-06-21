@@ -79,6 +79,47 @@ Push notification handler delegate.
 public event NotificationHandler OnPushNotificationsReceived = delegate {};
 ```
 
+---
+### OnSetCommunicationEnable
+
+Communication established handler.
+
+```csharp
+    public event GdprSuccessHandler OnSetCommunicationEnable = delegate {};
+```
+
+
+---
+### OnFailedSetCommunicationEnable
+
+Communication established error handler.
+
+```csharp
+    public event GdprErrorHandler OnFailedSetCommunicationEnable = delegate {};
+```
+
+
+---
+### OnRemoveAllData
+
+GDPR Remove device data handler.
+
+```csharp
+
+    public event GdprSuccessHandler OnRemoveAllData = delegate { };
+```
+
+
+---
+### OnFailedRemoveAllData
+
+GDPR Remove device data error handler.
+
+```csharp
+    public event GdprErrorHandler OnFailedRemoveAllData = delegate { };
+```
+
+
 ## Methods
 
 ### RegisterForPushNotifications
@@ -198,3 +239,70 @@ Send purchase information. This will set default tags “In-app Product”, “I
 public virtual void SendPurchase(string productId, double price, string currency)
 ```
 
+---
+### ShowGDPRConsentUI
+
+Shows GDPR consent form. This will trigger our system GDPRConsent Event and show the Consent Form Rich Media page. More info can be found [here](https://www.pushwoosh.com/docs/the-gdpr-compliance#section-consent-form)
+
+```csharp
+public virtual void ShowGDRPConsentUI()
+```
+
+---
+### ShowGDPRDeletionUI
+
+Shows GDPR deletion form. The method triggers a system GDPRDeletion Event and displays the Deletion Form Rich Media. More info can be found [here](https://www.pushwoosh.com/docs/the-gdpr-compliance#section-deletion-form)
+
+```csharp
+public virtual void ShowGDRPDeletionUI()
+```
+
+
+---
+### SetCommunicationEnabled
+
+A binary method enabling/disabling all communication with Pushwoosh. **false** boolean value unsubscribes the device from receiving push notifications and stops in-app messages download. The value **true** reverses the effect.
+
+```csharp
+    public virtual void SetCommunicationEnabled(bool enable);
+```
+
+
+---
+### IsCommunicationEnabled
+
+Gets the current status of communication availability. Returns **true** if communication with Pushwoosh servers is enabled and **false** if not.
+
+```csharp
+    public virtual bool IsCommunicationEnabled();
+```
+
+
+---
+### isDeviceDataRemoved
+
+Returns **true** if device data was removed from Pushwoosh servers is enabled and **false** if not.
+
+```csharp
+    public virtual bool isDeviceDataRemoved();
+```
+
+
+---
+### IsGDPRAvailable
+
+Returns **true** GDPR consent and deletion forms can be presented and **false** if not.
+
+```csharp
+    public virtual bool IsGDPRAvailable();
+```
+
+
+---
+### RemoveAllDeviceData
+
+Removes all data about the device from Pushwoosh.
+
+```csharp
+    public virtual void RemoveAllDeviceData();
+```
