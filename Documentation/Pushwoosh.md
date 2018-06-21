@@ -242,7 +242,7 @@ public virtual void SendPurchase(string productId, double price, string currency
 ---
 ### ShowGDPRConsentUI
 
-Shows GDPR consent form. This will trigger our system GDPRConsent Event and show the Consent Form Rich Media page. More info can be found [here](https://www.pushwoosh.com/docs/the-gdpr-compliance#section-consent-form)
+Shows GDPR consent form. This method triggers our system GDPRConsent Event and shows the Consent Form Rich Media. More info can be found [here](https://www.pushwoosh.com/docs/the-gdpr-compliance#section-consent-form)
 
 ```csharp
 public virtual void ShowGDRPConsentUI()
@@ -251,7 +251,7 @@ public virtual void ShowGDRPConsentUI()
 ---
 ### ShowGDPRDeletionUI
 
-Shows GDPR deletion form. The method triggers a system GDPRDeletion Event and displays the Deletion Form Rich Media. More info can be found [here](https://www.pushwoosh.com/docs/the-gdpr-compliance#section-deletion-form)
+Shows GDPR deletion form. This method triggers a system GDPRDeletion Event and displays the Deletion Form Rich Media. More information is available [here](https://www.pushwoosh.com/docs/the-gdpr-compliance#section-deletion-form)
 
 ```csharp
 public virtual void ShowGDRPDeletionUI()
@@ -261,7 +261,7 @@ public virtual void ShowGDRPDeletionUI()
 ---
 ### SetCommunicationEnabled
 
-A binary method enabling/disabling all communication with Pushwoosh. **false** boolean value unsubscribes the device from receiving push notifications and stops in-app messages download. The value **true** reverses the effect.
+A binary method for enabling/disabling all communication with Pushwoosh. **false** boolean value unsubscribes the device from receiving push notifications and stops in-app messages download. The value **true** reverses the effect.
 
 ```csharp
     public virtual void SetCommunicationEnabled(bool enable);
@@ -281,7 +281,7 @@ Gets the current status of communication availability. Returns **true** if commu
 ---
 ### isDeviceDataRemoved
 
-Returns **true** if device data was removed from Pushwoosh servers is enabled and **false** if not.
+Returns **true** if device data was removed from Pushwoosh servers and **false** if not.
 
 ```csharp
     public virtual bool isDeviceDataRemoved();
@@ -291,7 +291,7 @@ Returns **true** if device data was removed from Pushwoosh servers is enabled an
 ---
 ### IsGDPRAvailable
 
-Returns **true** GDPR consent and deletion forms can be presented and **false** if not.
+Returns **true** if GDPR functionality is available for the account and **false** if not.
 
 ```csharp
     public virtual bool IsGDPRAvailable();
@@ -301,7 +301,7 @@ Returns **true** GDPR consent and deletion forms can be presented and **false** 
 ---
 ### RemoveAllDeviceData
 
-Removes all data about the device from Pushwoosh.
+Completely removes all data about the device from Pushwoosh.
 
 ```csharp
     public virtual void RemoveAllDeviceData();
