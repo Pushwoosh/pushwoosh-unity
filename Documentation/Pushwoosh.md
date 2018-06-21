@@ -100,7 +100,7 @@ Communication established error handler.
 
 
 ---
-### RemoveAllData
+### OnRemoveAllData
 
 GDPR Remove device data handler.
 
@@ -261,7 +261,7 @@ public virtual void ShowGDRPDeletionUI()
 ---
 ### SetCommunicationEnabled
 
-A binary method enabling/disabling all communication with Pushwoosh. The boolean value is false unsubscribes the device from receiving push notifications and stops in-app messages download. The value true reverses the effect.
+A binary method enabling/disabling all communication with Pushwoosh. **false** boolean value unsubscribes the device from receiving push notifications and stops in-app messages download. The value **true** reverses the effect.
 
 ```csharp
     public virtual void SetCommunicationEnabled(bool enable);
@@ -299,7 +299,7 @@ Returns **true** GDPR consent and deletion forms can be presented and **false** 
 
 
 ---
-### SetCommunicationEnabled
+### RemoveAllDeviceData
 
 Removes all data about the device from Pushwoosh.
 
