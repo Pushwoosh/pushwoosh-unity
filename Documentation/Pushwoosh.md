@@ -95,7 +95,7 @@ Communication established handler.
 Communication established error handler.
 
 ```csharp
-    public event GdprSuccessHandler OnFailedSetCommunicationEnable = delegate {};
+    public event GdprErrorHandler OnFailedSetCommunicationEnable = delegate {};
 ```
 
 
