@@ -28,16 +28,13 @@
 		</receiver>
 
 		<!-- unity-activities -->
-		<activity android:configChanges='fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen' android:screenOrientation='portrait' android:name='com.unity3d.player.UnityPlayerProxyActivity' android:launchMode='singleTask'>
-			<intent-filter>
-				<action android:name='android.intent.action.MAIN' />
-				<category android:name='android.intent.category.LAUNCHER' />
-			</intent-filter>
-		</activity>
 		<activity android:configChanges='fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen' android:screenOrientation='portrait' android:name='com.unity3d.player.UnityPlayerActivity' android:launchMode='singleTask'>
 			<intent-filter>
 				<action android:name='com.pushwoosh.demoapp.MESSAGE' />
 				<category android:name='android.intent.category.DEFAULT' />
+
+					<action android:name='android.intent.action.MAIN' />
+				<category android:name='android.intent.category.LAUNCHER' />
 			</intent-filter>
 		</activity>
 		<activity android:configChanges='fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen' android:screenOrientation='portrait' android:name='com.unity3d.player.UnityPlayerNativeActivity' android:launchMode='singleTask'>
