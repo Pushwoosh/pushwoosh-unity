@@ -2,21 +2,15 @@
           xmlns:amazon='http://schemas.amazon.com/apk/res/android'
           package='${applicationId}'>
 	<application>
-		<activity android:name="com.unity3d.player.UnityPlayerProxyActivity"
-		          android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
-		          android:launchMode="singleTask"
-		          android:screenOrientation="portrait">
-			<intent-filter>
-				<action android:name="android.intent.action.MAIN" />
-				<category android:name="android.intent.category.LAUNCHER" />
-			</intent-filter>
-		</activity>
 		<!-- intent-filter ${applicationId}.MESSAGE here allows to start Activity directly from push notification without restarting whole application -->
 		<activity android:name="com.unity3d.player.UnityPlayerActivity"
 		          android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen"
 		          android:launchMode="singleTask"
 		          android:screenOrientation="portrait">
 			<intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+                <category android:name="android.intent.category.LAUNCHER" />
+
 				<action android:name="${applicationId}.MESSAGE" />
 				<category android:name="android.intent.category.DEFAULT" />
 			</intent-filter>

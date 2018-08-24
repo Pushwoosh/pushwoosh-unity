@@ -8,7 +8,7 @@
         <androidPackage spec="com.pushwoosh:pushwoosh-amazon:5.8.6"/>
         <androidPackage spec="com.pushwoosh:pushwoosh-badge:5.8.6"/>
         <androidPackage spec="com.pushwoosh:pushwoosh-gcm:5.8.6"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.8.6"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-beacon:5.8.6"/>
+<!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.8.6"/>-->
+<!--        <androidPackage spec="com.pushwoosh:pushwoosh-beacon:5.8.6"/>-->
     </androidPackages>
 </dependencies>
