@@ -8,12 +8,45 @@ ext {
 
 	publicManifestPath = file("$publishDir/AndroidManifest.xml")
 	manifestsPath = manifestsTempDir
-	exludePermissionsLibs = ["pushwoosh-location",
-	                         "pushwoosh-beacon"]
 }
 
 task cleanPublishDir << {
 	file(publishDir).deleteDir()
+}
+
+task copyAndroidManifests << {
+	copy {
+		from(unityActivitiesAndroidManifestPath) {
+			include "UnityActivitiesAndroidManifest.xml"
+			rename "UnityActivitiesAndroidManifest.xml", "unity-activities"
+		}
+		into manifestsTempDir
+	}
+}
+
+task unzipJarForExcludedLibs << {
+	List excludeLibsPattern = new ArrayList()
+	exludePermissionsLibs.each {
+		excludeLibsPattern.add("$it*.aar")
+	}
+	fileTree(dir: publishDir, includes: excludeLibsPattern)
+			.each {
+		File file = it
+
+		copy {
+			from(zipTree(file)) {
+				include "classes.jar"
+				rename "classes.jar", "${file.name.substring(0, file.name.lastIndexOf(".aar"))}.jar"
+			}
+			into publishDir
+		}
+
+		file.delete()
+	}
+}
+
+task removeAndroidManifests << {
+	file(manifestsPath).deleteDir()
 }
 
 task copyUnityPluginAar << {
@@ -37,6 +70,9 @@ task copyReadmeFiles << {
 	}
 }
 
-copyUnityPluginAar.dependsOn cleanPublishDir
+copyAndroidManifests.dependsOn cleanPublishDir
+generatePublicAndroidManifest.dependsOn copyAndroidManifests
+removeAndroidManifests.dependsOn generatePublicAndroidManifest
+copyUnityPluginAar.dependsOn removeAndroidManifests
 copyReadmeFiles.dependsOn copyUnityPluginAar
 assemble.dependsOn copyReadmeFiles
