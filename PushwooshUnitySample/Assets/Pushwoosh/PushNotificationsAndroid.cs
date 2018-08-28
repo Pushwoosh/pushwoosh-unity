@@ -143,7 +143,7 @@ public class PushNotificationsAndroid : Pushwoosh
 			extras.Call("putString", item.Key, item.Value);
 		}
 		
-		return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras);
+		return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras, null);
 	}
 
 	public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters, string largeIcon)
