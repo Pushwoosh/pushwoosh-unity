@@ -146,6 +146,18 @@ public class PushNotificationsAndroid : Pushwoosh
 		return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras);
 	}
 
+	public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters, string largeIcon)
+	{
+	var extras = new AndroidJavaObject("android.os.Bundle");
+	foreach (var item in parameters)
+	{
+	extras.Call("putString", item.Key, item.Value);
+	}
+
+	return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras, largeIcon);
+	}
+
+
 	public void ClearLocalNotification(int id)
 	{
 		pushwoosh.Call("clearLocalNotification", id);
