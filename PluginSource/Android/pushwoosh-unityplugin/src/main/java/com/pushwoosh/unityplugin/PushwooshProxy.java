@@ -132,11 +132,12 @@ public class PushwooshProxy {
 
 	public String getLaunchNotification() {
 		PushMessage data = Pushwoosh.getInstance().getLaunchNotification();
+		String result = null;
 		if (data != null) {
-			return data.toJson().toString();
+			result = data.toJson().toString();
 		}
 
-		return null;
+		return returnStringToUnity(result);
 	}
 
 	public void clearLaunchNotification() {
@@ -244,11 +245,11 @@ public class PushwooshProxy {
 	}
 
 	public String getPushToken() {
-		return Pushwoosh.getInstance().getPushToken();
+		return returnStringToUnity(Pushwoosh.getInstance().getPushToken());
 	}
 
 	public String getPushwooshHWID() {
-		return Pushwoosh.getInstance().getHwid();
+		return returnStringToUnity(Pushwoosh.getInstance().getHwid());
 	}
 
 	public void clearLocalNotifications() {
@@ -455,6 +456,10 @@ public class PushwooshProxy {
 		});
 	}
 
-
-
+	//HACK: unity 2018 crashes if function returns null instead of string
+	private String returnStringToUnity(String string) {
+		if (string == null)
+			return "";
+		return string;
+	}
 }

@@ -3,7 +3,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 
-public class PushNotificationsAndroid : Pushwoosh 
+public class PushNotificationsAndroid : Pushwoosh
 {
 #if UNITY_ANDROID && !UNITY_EDITOR
 	private static AndroidJavaObject pushwoosh = null;
@@ -62,7 +62,7 @@ public class PushNotificationsAndroid : Pushwoosh
 
 	public string GetLaunchNotification()
 	{
-		return pushwoosh.Call<string>("getLaunchNotification");
+    return ReturnStringFromNative(pushwoosh.Call<string>("getLaunchNotification"));
 	}
 
 	public void ClearLaunchNotification()
@@ -205,12 +205,12 @@ public class PushNotificationsAndroid : Pushwoosh
 
 	public override string HWID
 	{
-		get { return pushwoosh.Call<string>("getPushwooshHWID"); }
+        get { return ReturnStringFromNative(pushwoosh.Call<string>("getPushwooshHWID")); }
 	}
 
 	public override string PushToken
 	{
-		get { return pushwoosh.Call<string>("getPushToken"); }
+        get { return ReturnStringFromNative(pushwoosh.Call<string>("getPushToken")); }
 	}
 
 	public override void SetUserId(string userId)
@@ -340,6 +340,14 @@ public class PushNotificationsAndroid : Pushwoosh
     void OnFailedRemoveAllDeviceData(string error)
     {
         FailedRemoveAllDataCallback(error);
+    }
+
+    private string ReturnStringFromNative(string fromNative) 
+    {
+        if (fromNative != null && fromNative.Length > 0) {
+            return fromNative;
+        }
+        return null;
     }
 
 #endif
