@@ -256,19 +256,17 @@ public class PushwooshProxy {
 		LocalNotificationReceiver.cancelAll();
 	}
 
-    public int scheduleLocalNotification(String message, int seconds) {
-        return scheduleLocalNotification(message, seconds, new Bundle(), null);
-    }
-
     public int scheduleLocalNotification(String message, int seconds, Bundle extras, String largeIcon) {
         LocalNotification.Builder builder = new LocalNotification.Builder();
         if (largeIcon != null) {
 			builder.setLargeIcon(largeIcon);
         }
+        if (extras != null) {
+            builder.setExtras(extras);
+        }
         LocalNotification notification = builder
                 .setMessage(message)
                 .setDelay(seconds)
-                .setExtras(extras)
                 .build();
 
         return Pushwoosh.getInstance().scheduleLocalNotification(notification).getRequestId();

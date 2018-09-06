@@ -125,36 +125,33 @@ public class PushNotificationsAndroid : Pushwoosh
 
 	public int ScheduleLocalNotification(string message, int seconds)
 	{
-		return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds);
+        return ScheduleLocalNotification(message, seconds, null, null);
 	}
 
 	public int ScheduleLocalNotification(string message, int seconds, string userdata)
 	{
 		IDictionary<string,string> parameters = new Dictionary<string, string>();
 		parameters.Add("u", userdata);
-		return ScheduleLocalNotification(message, seconds, parameters);
+        return ScheduleLocalNotification(message, seconds, parameters, null);
 	}
 
 	public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters)
 	{
-		var extras = new AndroidJavaObject("android.os.Bundle");
-		foreach (var item in parameters)
-		{
-			extras.Call("putString", item.Key, item.Value);
-		}
-		
-		return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras, null);
+        return ScheduleLocalNotification(message, seconds, parameters, null);
 	}
 
 	public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters, string largeIcon)
 	{
-	var extras = new AndroidJavaObject("android.os.Bundle");
-	foreach (var item in parameters)
-	{
-	extras.Call("putString", item.Key, item.Value);
-	}
+        AndroidJavaObject extras = null;
+        if (parameters != null) {
+            extras = new AndroidJavaObject("android.os.Bundle");
+            foreach (var item in parameters)
+            {
+                extras.Call("putString", item.Key, item.Value);
+            }
+        }
 
-	return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras, largeIcon);
+    	return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras, largeIcon);
 	}
 
 
