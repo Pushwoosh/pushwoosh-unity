@@ -3,10 +3,10 @@
     <package>com.android.support:support-v4:27.0.2</package>
     <package>com.google.android.gms:play-services-gcm:11.6.2</package>
     <package>com.google.android.gms:play-services-location:11.6.2</package>
-    <package>com.pushwoosh:pushwoosh:5.8.6</package>
-    <package>com.pushwoosh:pushwoosh-amazon:5.8.6</package>
-    <package>com.pushwoosh:pushwoosh-badge:5.8.6</package>
-    <package>com.pushwoosh:pushwoosh-gcm:5.8.6</package>
+    <package>com.pushwoosh:pushwoosh:5.8.8</package>
+    <package>com.pushwoosh:pushwoosh-amazon:5.8.8</package>
+    <package>com.pushwoosh:pushwoosh-badge:5.8.8</package>
+    <package>com.pushwoosh:pushwoosh-gcm:5.8.8</package>
   </packages>
   <files>
     <file>Assets/Plugins/Android/com.android.support.support-annotations-27.0.2.jar</file>
@@ -28,9 +28,9 @@
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-location-license-11.6.2.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-tasks-11.6.2.aar</file>
     <file>Assets/Plugins/Android/com.google.android.gms.play-services-tasks-license-11.6.2.aar</file>
-    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-5.8.6.aar</file>
-    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-amazon-5.8.6.aar</file>
-    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-badge-5.8.6.aar</file>
-    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-gcm-5.8.6.aar</file>
+    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-5.8.8.aar</file>
+    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-amazon-5.8.8.aar</file>
+    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-badge-5.8.8.aar</file>
+    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-gcm-5.8.8.aar</file>
   </files>
 </dependencies>

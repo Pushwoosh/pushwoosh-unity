@@ -4,11 +4,11 @@
         <androidPackage spec="com.google.android.gms:play-services-gcm:11.6.2"/>
         <androidPackage spec="com.google.android.gms:play-services-location:11.6.2"/>
         <androidPackage spec="com.android.support:support-v4:27.0.2"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh:5.8.6"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-amazon:5.8.6"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-badge:5.8.6"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-gcm:5.8.6"/>
-<!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.8.6"/>-->
-<!--        <androidPackage spec="com.pushwoosh:pushwoosh-beacon:5.8.6"/>-->
+        <androidPackage spec="com.pushwoosh:pushwoosh:5.8.8"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-amazon:5.8.8"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-badge:5.8.8"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-gcm:5.8.8"/>
+<!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.8.8"/>-->
+<!--        <androidPackage spec="com.pushwoosh:pushwoosh-beacon:5.8.8"/>-->
     </androidPackages>
 </dependencies>
