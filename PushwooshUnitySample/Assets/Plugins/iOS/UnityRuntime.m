@@ -54,6 +54,13 @@ void pw_clearLaunchNotification() {
     g_pw_launchNotification = nil;
 }
 
+void *pw_getRemoteNotificationStatus() {
+    NSMutableDictionary *results = [PushNotificationManager getRemoteNotificationStatus];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:results options:0 error:nil];
+    NSString *status = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return (void *)[status UTF8String];
+}
+
 void pw_setUserId(char *userId) {
     NSString *userIdStr = [[NSString alloc] initWithUTF8String:userId];
     [[PushNotificationManager pushManager] setUserId:userIdStr];

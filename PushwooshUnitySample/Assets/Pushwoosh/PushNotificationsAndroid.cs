@@ -70,6 +70,11 @@ public class PushNotificationsAndroid : Pushwoosh
 		pushwoosh.Call("clearLaunchNotification");
 	}
 
+    public override string GetRemoteNotificationStatus()
+    {
+    return ReturnStringFromNative(pushwoosh.Call<string>("getRemoteNotificationStatus"));
+    }
+
 	public String[] GetPushHistory()
 	{
 		AndroidJavaObject history = pushwoosh.Call<AndroidJavaObject>("getPushHistory");

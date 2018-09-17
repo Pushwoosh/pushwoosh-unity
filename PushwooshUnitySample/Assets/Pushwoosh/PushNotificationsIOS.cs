@@ -4,7 +4,7 @@ using System.Collections;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
-public class PushNotificationsIOS : Pushwoosh 
+public class PushNotificationsIOS : Pushwoosh
 {
 #if UNITY_IPHONE && !UNITY_EDITOR
 
@@ -34,6 +34,9 @@ public class PushNotificationsIOS : Pushwoosh
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private void pw_clearLaunchNotification();
+
+    [System.Runtime.InteropServices.DllImport("__Internal")]
+    extern static private System.IntPtr pw_getRemoteNotificationStatus();
 	
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private void pw_setIntTag(string tagName, int tagValue);
@@ -128,6 +131,11 @@ public class PushNotificationsIOS : Pushwoosh
 	{
 		pw_clearLaunchNotification();
 	}
+
+    public override string GetRemoteNotificationStatus()
+    {
+    return Marshal.PtrToStringAnsi(pw_getRemoteNotificationStatus());
+    }
 
 	public override void SetUserId(string userId)
 	{
