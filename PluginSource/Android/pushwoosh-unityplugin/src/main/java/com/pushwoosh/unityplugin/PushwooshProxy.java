@@ -140,9 +140,21 @@ public class PushwooshProxy {
 		return returnStringToUnity(result);
 	}
 
-	public void clearLaunchNotification() {
-		Pushwoosh.getInstance().clearLaunchNotification();
-	}
+    public void clearLaunchNotification() {
+        Pushwoosh.getInstance().clearLaunchNotification();
+    }
+
+    public String getRemoteNotificationStatus(){
+        JSONObject result = new JSONObject();
+        try {
+            String enabled = PushwooshNotificationSettings.areNotificationsEnabled() ? "1" : "0";
+
+            result.put("enabled", enabled);
+        } catch (Exception e){
+            PWLog.exception(e);
+        }
+        return result.toString();
+    }
 
 	public static void onPushReceiveEvent(String string) {
 		if (listenerName == null) {
