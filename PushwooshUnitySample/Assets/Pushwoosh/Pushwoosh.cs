@@ -110,6 +110,12 @@ public class Pushwoosh : MonoBehaviour
 		Debug.Log ("[Pushwoosh] Error: ClearNotificationCenter is not supported on this platform");
 	}
 
+    public virtual NotificationSettings GetRemoteNotificationStatus()
+    {
+        Debug.Log ("[Pushwoosh] Error: GetRemoteNotificationStatus ins not supported on this platform");
+        return null;
+    }
+
 	public virtual void SetBadgeNumber(int number)
 	{
 		Debug.Log ("[Pushwoosh] Error: SetBadgeNumber is not supported on this platform");

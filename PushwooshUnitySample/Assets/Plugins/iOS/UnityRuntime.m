@@ -9,6 +9,10 @@
 #import <UserNotifications/UserNotifications.h>
 #import <objc/runtime.h>
 
+#import "PWInAppManager.h"
+
+#import "PWMUserNotificationCenterDelegateProxy.h"
+
 static char * g_pw_tokenStr = 0;
 static char * g_pw_registerErrStr = 0;
 static char * g_pw_pushMessageStr = 0;
@@ -27,11 +31,12 @@ void pw_initializePushManager(char *appId, char *appName) {
     
     [[PushNotificationManager pushManager] sendAppOpen];
     [PushNotificationManager pushManager].delegate = (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
-    [UNUserNotificationCenter currentNotificationCenter].delegate = [PushNotificationManager pushManager].notificationCenterDelegate;
+    
+    [PWMUserNotificationCenterDelegateProxy setupWithPushDelegate:[PushNotificationManager pushManager].notificationCenterDelegate];
 }
 
 void pw_unregisterForRemoteNotifications() {
-    [[PushNotificationManager pushManager] unregisterForPushNotifications];
+    [[PushNotificationManager pushManager] unregisterForPushNotificationsWithCompletion:nil];
 }
 
 void *pw_getPushToken() {
@@ -54,9 +59,16 @@ void pw_clearLaunchNotification() {
     g_pw_launchNotification = nil;
 }
 
+void *pw_getRemoteNotificationStatus() {
+    NSMutableDictionary *results = [PushNotificationManager getRemoteNotificationStatus];
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:results options:0 error:nil];
+    NSString *status = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    return (void *)[status UTF8String];
+}
+
 void pw_setUserId(char *userId) {
     NSString *userIdStr = [[NSString alloc] initWithUTF8String:userId];
-    [[PushNotificationManager pushManager] setUserId:userIdStr];
+    [[PWInAppManager sharedManager] setUserId:userIdStr];
 }
 
 void pw_postEvent(char *event, char *attributes) {
@@ -65,7 +77,7 @@ void pw_postEvent(char *event, char *attributes) {
     
     NSDictionary *json = [NSJSONSerialization JSONObjectWithData:[attributesStr dataUsingEncoding:NSUTF8StringEncoding] options:0 error:nil];
     if ([json isKindOfClass:[NSDictionary class]]) {
-        [[PushNotificationManager pushManager] postEvent:eventStr withAttributes:json];
+        [[PWInAppManager sharedManager] postEvent:eventStr withAttributes:json];
     }
     else {
         NSLog(@"Invalid postEvent attribute argument: %@", json);
@@ -82,7 +94,7 @@ void pw_sendPurchase(char *productId, double price, char *currency) {
 
 void pw_setListenerName(char *listenerName) {
     free(g_pw_listenerName); g_pw_listenerName = 0;
-    int len = strlen(listenerName);
+    int len = (int)strlen(listenerName);
     g_pw_listenerName = malloc(len + 1);
     strcpy(g_pw_listenerName, listenerName);
     
@@ -189,7 +201,7 @@ void pw_setBadgeNumber(int badge) {
 }
 
 void pw_addBadgeNumber(int deltaBadge) {
-    int badge = [UIApplication sharedApplication].applicationIconBadgeNumber + deltaBadge;
+    int badge = (int)[UIApplication sharedApplication].applicationIconBadgeNumber + deltaBadge;
     pw_setBadgeNumber(badge);
 }
 

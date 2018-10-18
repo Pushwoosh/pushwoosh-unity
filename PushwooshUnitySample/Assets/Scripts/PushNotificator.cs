@@ -40,6 +40,14 @@ public class PushNotificator : MonoBehaviour
 		Pushwoosh.Instance.SetBadgeNumber (0);
 
 		Pushwoosh.Instance.SendPurchase("com.pushwoosh.Developer", 49.95, "USD");
+        NotificationSettings notificationSettings = Pushwoosh.Instance.GetRemoteNotificationStatus();
+        Debug.Log("Notification status enabled: " + notificationSettings.enabled
+#if UNITY_IPHONE && !UNITY_EDITOR
+                  + " alert: " + notificationSettings.pushAlert
+                  + " badge: " + notificationSettings.pushBadge
+                  + " sound: " + notificationSettings.pushSound
+#endif
+                 );
 
 #if !UNITY_EDITOR
 #if UNITY_IOS || UNITY_ANDROID
@@ -111,6 +119,7 @@ public class PushNotificator : MonoBehaviour
 			string json = PushwooshUtils.DictionaryToJson(tags);
 			Debug.Log("Tags: " + json);
 		});
+        Debug.Log(Pushwoosh.Instance.GetRemoteNotificationStatus());
 	}
 
 	void OnFailedToRegisteredForPushNotifications(string error)
