@@ -132,9 +132,10 @@ public class PushNotificationsIOS : Pushwoosh
 		pw_clearLaunchNotification();
 	}
 
-    public override string GetRemoteNotificationStatus()
+    public override NotificationSettings GetRemoteNotificationStatus()
     {
-    return Marshal.PtrToStringAnsi(pw_getRemoteNotificationStatus());
+        string jsonSettings = Marshal.PtrToStringAnsi(pw_getRemoteNotificationStatus());
+        return JsonUtility.FromJson<NotificationSettings>(jsonSettings);
     }
 
 	public override void SetUserId(string userId)
