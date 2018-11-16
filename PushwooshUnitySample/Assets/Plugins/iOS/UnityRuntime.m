@@ -4,13 +4,9 @@
 //  (c) Pushwoosh 2018
 //
 
-#import "PushNotificationManager.h"
-#import "PWGDPRManager.h"
 #import <UserNotifications/UserNotifications.h>
 #import <objc/runtime.h>
-
-#import "PWInAppManager.h"
-
+#import <Pushwoosh/Pushwoosh.h>
 #import "PWMUserNotificationCenterDelegateProxy.h"
 
 static char * g_pw_tokenStr = 0;
@@ -184,16 +180,33 @@ void pw_getTags() {
     }];
 }
 
+void pw_performSelector(id object, NSString *selectorName) {
+    SEL selector = NSSelectorFromString(selectorName);
+    IMP imp = [object methodForSelector:selector];
+    void (*func)(id, SEL) = (void *)imp;
+    func(object, selector);
+}
+
 void pw_startLocationTracking() {
-    [[PushNotificationManager pushManager] startLocationTracking];
+    Class geozonesManagerClass = NSClassFromString(@"PWGeozonesManager");
+    
+    if (geozonesManagerClass) {
+        id geozonesManager = [geozonesManagerClass performSelector:@selector(sharedManager)];
+        pw_performSelector(geozonesManager, @"startLocationTracking");
+    }
+}
+
+void pw_stopLocationTracking() {
+    Class geozonesManagerClass = NSClassFromString(@"PWGeozonesManager");
+    
+    if (geozonesManagerClass) {
+        id geozonesManager = [geozonesManagerClass performSelector:@selector(sharedManager)];
+        pw_performSelector(geozonesManager, @"stopLocationTracking");
+    }
 }
 
 void pw_clearNotificationCenter() {
     [PushNotificationManager clearNotificationCenter];
-}
-
-void pw_stopLocationTracking() {
-    [[PushNotificationManager pushManager] stopLocationTracking];
 }
 
 void pw_setBadgeNumber(int badge) {

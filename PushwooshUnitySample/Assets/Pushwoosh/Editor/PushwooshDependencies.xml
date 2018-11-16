@@ -11,4 +11,9 @@
 <!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.9.3"/>-->
 <!--        <androidPackage spec="com.pushwoosh:pushwoosh-beacon:5.9.3"/>-->
     </androidPackages>
+
+    <iosPods>
+    	<iosPod name="Pushwoosh"/>
+    	<!-- <iosPod name="Pushwoosh/Geozones"/> -->
+  	</iosPods>
 </dependencies>
