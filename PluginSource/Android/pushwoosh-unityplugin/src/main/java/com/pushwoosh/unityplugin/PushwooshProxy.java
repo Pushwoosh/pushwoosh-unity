@@ -40,238 +40,238 @@ import org.json.JSONObject;
 import static com.unity3d.player.UnityPlayer.currentActivity;
 
 public class PushwooshProxy {
-	static final String TAG = "UnityPushwooshProxy";
+    static final String TAG = "UnityPushwooshProxy";
 
-	private static final Object sPushwooshProxyMutex = new Object();
+    private static final Object sPushwooshProxyMutex = new Object();
 
-	private static final Object sStartPushLock = new Object();
-	private static String receivePushData = null;
-	private static String openPushData = null;
+    private static final Object sStartPushLock = new Object();
+    private static String receivePushData = null;
+    private static String openPushData = null;
 
-	private static String registerEventString = null;
-	private static String registerErrorEventString = null;
+    private static String registerEventString = null;
+    private static String registerErrorEventString = null;
 
-	private static String listenerName;
+    private static String listenerName;
 
-	static PushwooshProxy INSTANCE = null;
+    static PushwooshProxy INSTANCE = null;
 
-	private final Handler handler = new Handler(Looper.getMainLooper());
+    private final Handler handler = new Handler(Looper.getMainLooper());
 
-	public static void initialize(String appId, String projectId) {
-		Pushwoosh.getInstance().setAppId(appId);
-		Pushwoosh.getInstance().setSenderId(projectId);
-	}
+    public static void initialize(String appId, String projectId) {
+        Pushwoosh.getInstance().setAppId(appId);
+        Pushwoosh.getInstance().setSenderId(projectId);
+    }
 
-	public static PushwooshProxy instance() {
-		if (INSTANCE == null) {
-			synchronized (sPushwooshProxyMutex) {
-				if (INSTANCE == null) {
-					new PushwooshProxy();
-				}
-			}
-		}
+    public static PushwooshProxy instance() {
+        if (INSTANCE == null) {
+            synchronized (sPushwooshProxyMutex) {
+                if (INSTANCE == null) {
+                    new PushwooshProxy();
+                }
+            }
+        }
 
-		return INSTANCE;
-	}
+        return INSTANCE;
+    }
 
-	public PushwooshProxy() {
-		INSTANCE = this;
-	}
+    public PushwooshProxy() {
+        INSTANCE = this;
+    }
 
-	public void onResume() {
+    public void onResume() {
 
-	}
+    }
 
-	public void onPause() {
+    public void onPause() {
 
-	}
+    }
 
-	public void registerForPushNotifications() {
-		Pushwoosh.getInstance().registerForPushNotifications(new Callback<String, RegisterForPushNotificationsException>() {
-			@Override
-			public void process(@NonNull Result<String, RegisterForPushNotificationsException> result) {
-				if (result.isSuccess()) {
-					onRegisterEvent(result.getData());
-				} else if (result.getException() != null) {
-					onRegisterErrorEvent(result.getException().getLocalizedMessage());
-				}
-			}
-		});
-	}
+    public void registerForPushNotifications() {
+        Pushwoosh.getInstance().registerForPushNotifications(new Callback<String, RegisterForPushNotificationsException>() {
+            @Override
+            public void process(@NonNull Result<String, RegisterForPushNotificationsException> result) {
+                if (result.isSuccess()) {
+                    onRegisterEvent(result.getData());
+                } else if (result.getException() != null) {
+                    onRegisterErrorEvent(result.getException().getLocalizedMessage());
+                }
+            }
+        });
+    }
 
-	public void unregisterFromPushNotifications() {
-		Pushwoosh.getInstance().unregisterForPushNotifications(new Callback<String, UnregisterForPushNotificationException>() {
-			@Override
-			public void process(@NonNull Result<String, UnregisterForPushNotificationException> result) {
-				if (result.isSuccess()) {
-					onUnRegisterEvent(result.getData());
-				} else if (result.getException() != null) {
-					onUnRegisterErrorEvent(result.getException().getLocalizedMessage());
-				}
-			}
-		});
-	}
+    public void unregisterFromPushNotifications() {
+        Pushwoosh.getInstance().unregisterForPushNotifications(new Callback<String, UnregisterForPushNotificationException>() {
+            @Override
+            public void process(@NonNull Result<String, UnregisterForPushNotificationException> result) {
+                if (result.isSuccess()) {
+                    onUnRegisterEvent(result.getData());
+                } else if (result.getException() != null) {
+                    onUnRegisterErrorEvent(result.getException().getLocalizedMessage());
+                }
+            }
+        });
+    }
 
-	public void setListenerName(String name) {
-		PWLog.debug(TAG, "Listener name: " + name);
-		listenerName = name;
+    public void setListenerName(String name) {
+        PWLog.debug(TAG, "Listener name: " + name);
+        listenerName = name;
 
-		if (receivePushData != null) {
-			onPushReceiveEvent(receivePushData);
-		}
+        if (receivePushData != null) {
+            onPushReceiveEvent(receivePushData);
+        }
 
-		if (registerEventString != null) {
-			onRegisterEvent(registerEventString);
-		}
+        if (registerEventString != null) {
+            onRegisterEvent(registerEventString);
+        }
 
 
-		if (registerErrorEventString != null) {
-			onRegisterErrorEvent(registerErrorEventString);
-		}
-	}
+        if (registerErrorEventString != null) {
+            onRegisterErrorEvent(registerErrorEventString);
+        }
+    }
 
-	public String getLaunchNotification() {
-		PushMessage data = Pushwoosh.getInstance().getLaunchNotification();
-		String result = null;
-		if (data != null) {
-			result = data.toJson().toString();
-		}
+    public String getLaunchNotification() {
+        PushMessage data = Pushwoosh.getInstance().getLaunchNotification();
+        String result = null;
+        if (data != null) {
+            result = data.toJson().toString();
+        }
 
-		return returnStringToUnity(result);
-	}
+        return returnStringToUnity(result);
+    }
 
     public void clearLaunchNotification() {
         Pushwoosh.getInstance().clearLaunchNotification();
     }
 
-    public String getRemoteNotificationStatus(){
+    public String getRemoteNotificationStatus() {
         JSONObject result = new JSONObject();
         try {
             String enabled = PushwooshNotificationSettings.areNotificationsEnabled() ? "1" : "0";
 
             result.put("enabled", enabled);
-        } catch (Exception e){
+        } catch (Exception e) {
             PWLog.exception(e);
         }
         return result.toString();
     }
 
-	public static void onPushReceiveEvent(String string) {
-		if (listenerName == null) {
-			PWLog.debug(TAG, "onPushReceiveEvent: listener is null");
-			receivePushData = string;
-			return;
-		}
+    public static void onPushReceiveEvent(String string) {
+        if (listenerName == null) {
+            PWLog.debug(TAG, "onPushReceiveEvent: listener is null");
+            receivePushData = string;
+            return;
+        }
 
-		if (string == null) {
-			PWLog.debug(TAG, "onPushReceiveEvent: message is null");
-			return;
-		}
+        if (string == null) {
+            PWLog.debug(TAG, "onPushReceiveEvent: message is null");
+            return;
+        }
 
-		PWLog.debug(TAG, "onPushReceiveEvent: send payload to onPushNotificationsReceived");
-		UnityPlayer.UnitySendMessage(listenerName, "onPushNotificationsReceived", string);
-		receivePushData = null;
-	}
+        PWLog.debug(TAG, "onPushReceiveEvent: send payload to onPushNotificationsReceived");
+        UnityPlayer.UnitySendMessage(listenerName, "onPushNotificationsReceived", string);
+        receivePushData = null;
+    }
 
-	public static void onPushOpenEvent(String string) {
-		if (listenerName == null) {
-			openPushData = string;
-			return;
-		}
+    public static void onPushOpenEvent(String string) {
+        if (listenerName == null) {
+            openPushData = string;
+            return;
+        }
 
-		if (string == null) {
-			return;
-		}
+        if (string == null) {
+            return;
+        }
 
-		UnityPlayer.UnitySendMessage(listenerName, "onPushNotificationsOpened", string);
-		openPushData = null;
-	}
+        UnityPlayer.UnitySendMessage(listenerName, "onPushNotificationsOpened", string);
+        openPushData = null;
+    }
 
-	public static void onRegisterEvent(String string) {
-		if (listenerName == null) {
-			registerEventString = string;
-			return;
-		}
+    public static void onRegisterEvent(String string) {
+        if (listenerName == null) {
+            registerEventString = string;
+            return;
+        }
 
-		if (string == null) {
-			return;
-		}
+        if (string == null) {
+            return;
+        }
 
-		UnityPlayer.UnitySendMessage(listenerName, "onRegisteredForPushNotifications", string);
-		registerEventString = null;
-	}
+        UnityPlayer.UnitySendMessage(listenerName, "onRegisteredForPushNotifications", string);
+        registerEventString = null;
+    }
 
-	public static void onUnRegisterEvent(String string) {
-		if (listenerName == null) {
-			return;
-		}
+    public static void onUnRegisterEvent(String string) {
+        if (listenerName == null) {
+            return;
+        }
 
-		UnityPlayer.UnitySendMessage(listenerName, "onUnRegisteredForPushNotifications", string);
-	}
+        UnityPlayer.UnitySendMessage(listenerName, "onUnRegisteredForPushNotifications", returnStringToUnity(string));
+    }
 
-	public static void onRegisterErrorEvent(String string) {
-		if (listenerName == null) {
-			registerErrorEventString = string;
-			return;
-		}
+    public static void onRegisterErrorEvent(String string) {
+        if (listenerName == null) {
+            registerErrorEventString = string;
+            return;
+        }
 
-		if (string == null) {
-			return;
-		}
+        if (string == null) {
+            return;
+        }
 
-		UnityPlayer.UnitySendMessage(listenerName, "onFailedToRegisteredForPushNotifications", string);
-		registerErrorEventString = null;
-	}
+        UnityPlayer.UnitySendMessage(listenerName, "onFailedToRegisteredForPushNotifications", string);
+        registerErrorEventString = null;
+    }
 
-	public void onUnRegisterErrorEvent(String string) {
-		if (listenerName == null) {
-			return;
-		}
+    public void onUnRegisterErrorEvent(String string) {
+        if (listenerName == null) {
+            return;
+        }
 
-		UnityPlayer.UnitySendMessage(listenerName, "onFailedToUnRegisteredForPushNotifications", string);
-	}
+        UnityPlayer.UnitySendMessage(listenerName, "onFailedToUnRegisteredForPushNotifications", returnStringToUnity(string));
+    }
 
-	public void setIntTag(String name, int value) {
-		Pushwoosh.getInstance().sendTags(Tags.intTag(name, value));
-	}
+    public void setIntTag(String name, int value) {
+        Pushwoosh.getInstance().sendTags(Tags.intTag(name, value));
+    }
 
-	public void setStringTag(String name, String value) {
-		Pushwoosh.getInstance().sendTags(Tags.stringTag(name, value));
-	}
+    public void setStringTag(String name, String value) {
+        Pushwoosh.getInstance().sendTags(Tags.stringTag(name, value));
+    }
 
-	public void setListTag(String name, TagValues value) {
-		Pushwoosh.getInstance().sendTags(ConversionUtils.convertToTagsBundle(Collections.<String, Object>singletonMap(name, value)));
-	}
+    public void setListTag(String name, TagValues value) {
+        Pushwoosh.getInstance().sendTags(ConversionUtils.convertToTagsBundle(Collections.<String, Object>singletonMap(name, value)));
+    }
 
-	public void getTags() {
-		Pushwoosh.getInstance().getTags(new Callback<TagsBundle, GetTagsException>() {
-			@Override
-			public void process(@NonNull Result<TagsBundle, GetTagsException> result) {
-				if (result.isSuccess()) {
-					UnityPlayer.UnitySendMessage(listenerName, "onTagsReceived", result.getData() == null ? JSONObject.NULL.toString() : result.getData().toJson().toString());
-				} else if (result.getException() != null) {
-					UnityPlayer.UnitySendMessage(listenerName, "onFailedToReceiveTags", result.getException().getMessage());
-				}
-			}
-		});
-	}
+    public void getTags() {
+        Pushwoosh.getInstance().getTags(new Callback<TagsBundle, GetTagsException>() {
+            @Override
+            public void process(@NonNull Result<TagsBundle, GetTagsException> result) {
+                if (result.isSuccess()) {
+                    UnityPlayer.UnitySendMessage(listenerName, "onTagsReceived", result.getData() == null ? JSONObject.NULL.toString() : result.getData().toJson().toString());
+                } else if (result.getException() != null) {
+                    UnityPlayer.UnitySendMessage(listenerName, "onFailedToReceiveTags", result.getException().getMessage());
+                }
+            }
+        });
+    }
 
-	public String getPushToken() {
-		return returnStringToUnity(Pushwoosh.getInstance().getPushToken());
-	}
+    public String getPushToken() {
+        return returnStringToUnity(Pushwoosh.getInstance().getPushToken());
+    }
 
-	public String getPushwooshHWID() {
-		return returnStringToUnity(Pushwoosh.getInstance().getHwid());
-	}
+    public String getPushwooshHWID() {
+        return returnStringToUnity(Pushwoosh.getInstance().getHwid());
+    }
 
-	public void clearLocalNotifications() {
-		LocalNotificationReceiver.cancelAll();
-	}
+    public void clearLocalNotifications() {
+        LocalNotificationReceiver.cancelAll();
+    }
 
     public int scheduleLocalNotification(String message, int seconds, Bundle extras, String largeIcon) {
         LocalNotification.Builder builder = new LocalNotification.Builder();
         if (largeIcon != null) {
-			builder.setLargeIcon(largeIcon);
+            builder.setLargeIcon(largeIcon);
         }
         if (extras != null) {
             builder.setExtras(extras);
@@ -284,196 +284,196 @@ public class PushwooshProxy {
         return Pushwoosh.getInstance().scheduleLocalNotification(notification).getRequestId();
     }
 
-	public void clearLocalNotification(int id) {
-		LocalNotificationReceiver.cancelNotification(id);
-	}
+    public void clearLocalNotification(int id) {
+        LocalNotificationReceiver.cancelNotification(id);
+    }
 
-	public void setMultiNotificationMode() {
-		PushwooshNotificationSettings.setMultiNotificationMode(true);
-	}
+    public void setMultiNotificationMode() {
+        PushwooshNotificationSettings.setMultiNotificationMode(true);
+    }
 
-	public void setSimpleNotificationMode() {
-		PushwooshNotificationSettings.setMultiNotificationMode(false);
-	}
+    public void setSimpleNotificationMode() {
+        PushwooshNotificationSettings.setMultiNotificationMode(false);
+    }
 
-	public void setSoundNotificationType(int soundNotificationType) {
-		PushwooshNotificationSettings.setSoundNotificationType(SoundType.fromInt(soundNotificationType));
-	}
+    public void setSoundNotificationType(int soundNotificationType) {
+        PushwooshNotificationSettings.setSoundNotificationType(SoundType.fromInt(soundNotificationType));
+    }
 
-	public void setVibrateNotificationType(int vibrateNotificationType) {
-		PushwooshNotificationSettings.setVibrateNotificationType(VibrateType.fromInt(vibrateNotificationType));
-	}
+    public void setVibrateNotificationType(int vibrateNotificationType) {
+        PushwooshNotificationSettings.setVibrateNotificationType(VibrateType.fromInt(vibrateNotificationType));
+    }
 
-	public void setLightScreenOnNotification(boolean lightsOn) {
-		PushwooshNotificationSettings.setLightScreenOnNotification(lightsOn);
-	}
+    public void setLightScreenOnNotification(boolean lightsOn) {
+        PushwooshNotificationSettings.setLightScreenOnNotification(lightsOn);
+    }
 
-	public void startTrackingGeoPushes() {
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				PushwooshLocation.startLocationTracking();
-			}
-		});
-	}
+    public void startTrackingGeoPushes() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                PushwooshLocation.startLocationTracking();
+            }
+        });
+    }
 
-	public void stopTrackingGeoPushes() {
-		handler.post(new Runnable() {
-			@Override
-			public void run() {
-				PushwooshLocation.stopLocationTracking();
-			}
-		});
-	}
+    public void stopTrackingGeoPushes() {
+        handler.post(new Runnable() {
+            @Override
+            public void run() {
+                PushwooshLocation.stopLocationTracking();
+            }
+        });
+    }
 
-	public void startTrackingBeaconPushes() {
-		PushwooshBeacon.startTrackingBeaconPushes();
-	}
+    public void startTrackingBeaconPushes() {
+        PushwooshBeacon.startTrackingBeaconPushes();
+    }
 
-	public void stopTrackingBeaconPushes() {
-		PushwooshBeacon.stopTrackingBeaconPushes();
-	}
+    public void stopTrackingBeaconPushes() {
+        PushwooshBeacon.stopTrackingBeaconPushes();
+    }
 
-	public void setBeaconBackgroundMode(boolean backgroundMode) {
-		PushwooshBeacon.setBeaconBackgroundMode(backgroundMode);
-	}
+    public void setBeaconBackgroundMode(boolean backgroundMode) {
+        PushwooshBeacon.setBeaconBackgroundMode(backgroundMode);
+    }
 
-	public void setEnableLED(boolean ledOn) {
-		PushwooshNotificationSettings.setEnableLED(ledOn);
-	}
+    public void setEnableLED(boolean ledOn) {
+        PushwooshNotificationSettings.setEnableLED(ledOn);
+    }
 
-	public void setBadgeNumber(int newBadge) {
-		PushwooshBadge.setBadgeNumber(newBadge);
-	}
+    public void setBadgeNumber(int newBadge) {
+        PushwooshBadge.setBadgeNumber(newBadge);
+    }
 
-	public void addBadgeNumber(int deltaBadge) {
-		PushwooshBadge.addBadgeNumber(deltaBadge);
-	}
+    public void addBadgeNumber(int deltaBadge) {
+        PushwooshBadge.addBadgeNumber(deltaBadge);
+    }
 
-	public String[] getPushHistory() {
-		List<PushMessage> pushHistory = Pushwoosh.getInstance().getPushHistory();
-		String stringArray[] = new String[pushHistory.size()];
-		int counter = 0;
-		PWLog.debug(TAG, "Push history:");
+    public String[] getPushHistory() {
+        List<PushMessage> pushHistory = Pushwoosh.getInstance().getPushHistory();
+        String stringArray[] = new String[pushHistory.size()];
+        int counter = 0;
+        PWLog.debug(TAG, "Push history:");
 
-		for (PushMessage pushMessage : pushHistory) {
-			stringArray[counter] = pushMessage.toJson().toString();
-			PWLog.debug(TAG, "    Message = " + stringArray[counter]);
-			counter++;
-		}
+        for (PushMessage pushMessage : pushHistory) {
+            stringArray[counter] = pushMessage.toJson().toString();
+            PWLog.debug(TAG, "    Message = " + stringArray[counter]);
+            counter++;
+        }
 
-		return stringArray;
-	}
+        return stringArray;
+    }
 
-	public void clearPushHistory() {
-		Pushwoosh.getInstance().clearPushHistory();
-	}
+    public void clearPushHistory() {
+        Pushwoosh.getInstance().clearPushHistory();
+    }
 
-	public void clearNotificationCenter() {
-		NotificationManagerCompat.from(currentActivity).cancelAll();
-	}
+    public void clearNotificationCenter() {
+        NotificationManagerCompat.from(currentActivity).cancelAll();
+    }
 
-	public void setUserId(String userId) {
-		PushwooshInApp.getInstance().setUserId(userId);
-	}
+    public void setUserId(String userId) {
+        PushwooshInApp.getInstance().setUserId(userId);
+    }
 
-	public void postEvent(String event, String attributesStr) {
-		try {
-			if (attributesStr.isEmpty()) {
-				PushwooshInApp.getInstance().postEvent(event);
-				return;
-			}
+    public void postEvent(String event, String attributesStr) {
+        try {
+            if (attributesStr.isEmpty()) {
+                PushwooshInApp.getInstance().postEvent(event);
+                return;
+            }
 
-			PushwooshInApp.getInstance().postEvent(event, Tags.fromJson(new JSONObject(attributesStr)));
-		} catch (JSONException e) {
-			PWLog.exception(e);
-		}
-	}
+            PushwooshInApp.getInstance().postEvent(event, Tags.fromJson(new JSONObject(attributesStr)));
+        } catch (JSONException e) {
+            PWLog.exception(e);
+        }
+    }
 
-	public void sendPurchase(String productId, double price, String currency) {
-		Pushwoosh.getInstance().sendInappPurchase(productId, new BigDecimal(price), currency);
-	}
+    public void sendPurchase(String productId, double price, String currency) {
+        Pushwoosh.getInstance().sendInappPurchase(productId, new BigDecimal(price), currency);
+    }
 
-	static void openPush(String pushData) {
-		PWLog.info(TAG, "Push open: " + pushData);
+    static void openPush(String pushData) {
+        PWLog.info(TAG, "Push open: " + pushData);
 
-		try {
-			synchronized (sStartPushLock) {
-				openPushData = pushData;
-				onPushOpenEvent(openPushData);
-			}
-		} catch (Exception e) {
-			// React Native is highly unstable
-			PWLog.exception(e);
-		}
-	}
+        try {
+            synchronized (sStartPushLock) {
+                openPushData = pushData;
+                onPushOpenEvent(openPushData);
+            }
+        } catch (Exception e) {
+            // React Native is highly unstable
+            PWLog.exception(e);
+        }
+    }
 
-	static void messageReceived(String pushData) {
-		PWLog.info(TAG, "Push received: " + pushData);
+    static void messageReceived(String pushData) {
+        PWLog.info(TAG, "Push received: " + pushData);
 
-		try {
-			synchronized (sStartPushLock) {
-				receivePushData = pushData;
-				onPushReceiveEvent(pushData);
-			}
-		} catch (Exception e) {
-			// React Native is highly unstable
-			PWLog.exception(e);
-		}
-	}
+        try {
+            synchronized (sStartPushLock) {
+                receivePushData = pushData;
+                onPushReceiveEvent(pushData);
+            }
+        } catch (Exception e) {
+            // React Native is highly unstable
+            PWLog.exception(e);
+        }
+    }
 
-	public void showGDPRConsentUI(){
-		GDPRManager.getInstance().showGDPRConsentUI();
-	}
+    public void showGDPRConsentUI() {
+        GDPRManager.getInstance().showGDPRConsentUI();
+    }
 
-	public void showGDPRDeletionUI(){
-		GDPRManager.getInstance().showGDPRDeletionUI();
-	}
+    public void showGDPRDeletionUI() {
+        GDPRManager.getInstance().showGDPRDeletionUI();
+    }
 
-	public boolean isCommunicationEnabled(){
-		return GDPRManager.getInstance().isCommunicationEnabled();
-	}
+    public boolean isCommunicationEnabled() {
+        return GDPRManager.getInstance().isCommunicationEnabled();
+    }
 
-	public boolean isDeviceDataRemoved(){
-		return GDPRManager.getInstance().isDeviceDataRemoved();
-	}
+    public boolean isDeviceDataRemoved() {
+        return GDPRManager.getInstance().isDeviceDataRemoved();
+    }
 
-	public boolean isAvailable(){
-		return GDPRManager.getInstance().isAvailable();
-	}
+    public boolean isAvailable() {
+        return GDPRManager.getInstance().isAvailable();
+    }
 
-	public void setCommunicationEnabled(boolean enable){
-		 GDPRManager.getInstance().setCommunicationEnabled(enable, new Callback<Void, PushwooshException>() {
-			@Override
-			public void process(@NonNull Result<Void, PushwooshException> result) {
-				if(listenerName==null) return;
-				if (result.isSuccess()) {
-					UnityPlayer.UnitySendMessage(listenerName, "OnSetCommunicationEnabled", "success");
-				} else if (result.getException() != null) {
-					UnityPlayer.UnitySendMessage(listenerName, "OnFailedSetCommunicationEnabled", result.getException().getMessage());
-				}
-			}
-		});
-	}
+    public void setCommunicationEnabled(boolean enable) {
+        GDPRManager.getInstance().setCommunicationEnabled(enable, new Callback<Void, PushwooshException>() {
+            @Override
+            public void process(@NonNull Result<Void, PushwooshException> result) {
+                if (listenerName == null) return;
+                if (result.isSuccess()) {
+                    UnityPlayer.UnitySendMessage(listenerName, "OnSetCommunicationEnabled", "success");
+                } else if (result.getException() != null) {
+                    UnityPlayer.UnitySendMessage(listenerName, "OnFailedSetCommunicationEnabled", result.getException().getMessage());
+                }
+            }
+        });
+    }
 
-	public void removeAllDeviceData(){
-		GDPRManager.getInstance().removeAllDeviceData(new Callback<Void, PushwooshException>() {
-			@Override
-			public void process(@NonNull Result<Void, PushwooshException> result) {
-				if(listenerName==null) return;
-				if (result.isSuccess()) {
-					UnityPlayer.UnitySendMessage(listenerName, "OnRemoveAllDeviceData", "success");
-				} else if (result.getException() != null) {
-					UnityPlayer.UnitySendMessage(listenerName, "OnFailedRemoveAllDeviceData", result.getException().getMessage());
-				}
-			}
-		});
-	}
+    public void removeAllDeviceData() {
+        GDPRManager.getInstance().removeAllDeviceData(new Callback<Void, PushwooshException>() {
+            @Override
+            public void process(@NonNull Result<Void, PushwooshException> result) {
+                if (listenerName == null) return;
+                if (result.isSuccess()) {
+                    UnityPlayer.UnitySendMessage(listenerName, "OnRemoveAllDeviceData", "success");
+                } else if (result.getException() != null) {
+                    UnityPlayer.UnitySendMessage(listenerName, "OnFailedRemoveAllDeviceData", result.getException().getMessage());
+                }
+            }
+        });
+    }
 
-	//HACK: unity 2018 crashes if function returns null instead of string
-	private String returnStringToUnity(String string) {
-		if (string == null)
-			return "";
-		return string;
-	}
+    //HACK: unity 2018 crashes if function returns null instead of string
+    private static String returnStringToUnity(String string) {
+        if (string == null)
+            return "";
+        return string;
+    }
 }
