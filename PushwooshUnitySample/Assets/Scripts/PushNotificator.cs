@@ -98,7 +98,18 @@ public class PushNotificator : MonoBehaviour
 		Pushwoosh.Instance.UnregisterForPushNotifications ();
 	}
 
-	public void OnSendPostEvent()
+    public void OnStartLocationTracking()
+    {
+        Pushwoosh.Instance.StartTrackingGeoPushes();
+    }
+
+    public void OnStopLocationTracking()
+    {
+        Pushwoosh.Instance.StopTrackingGeoPushes();
+    }
+
+
+    public void OnSendPostEvent()
 	{
 		Debug.Log ("On Send post event key: " + postEventKeyUIText.text + "; attribute: " +postEventAttributeUIText.text );
 		Dictionary<string, object> parameters = new Dictionary<string, object> ();
