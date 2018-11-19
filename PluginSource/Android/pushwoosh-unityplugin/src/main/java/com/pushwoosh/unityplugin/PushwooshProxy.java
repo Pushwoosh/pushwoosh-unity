@@ -100,16 +100,7 @@ public class PushwooshProxy {
 	}
 
 	public void unregisterFromPushNotifications() {
-		Pushwoosh.getInstance().unregisterForPushNotifications(new Callback<String, UnregisterForPushNotificationException>() {
-			@Override
-			public void process(@NonNull Result<String, UnregisterForPushNotificationException> result) {
-				if (result.isSuccess()) {
-					onUnRegisterEvent(result.getData());
-				} else if (result.getException() != null) {
-					onUnRegisterErrorEvent(result.getException().getLocalizedMessage());
-				}
-			}
-		});
+		Pushwoosh.getInstance().unregisterForPushNotifications();
 	}
 
 	public void setListenerName(String name) {
@@ -201,14 +192,6 @@ public class PushwooshProxy {
 		registerEventString = null;
 	}
 
-	public static void onUnRegisterEvent(String string) {
-		if (listenerName == null) {
-			return;
-		}
-
-		UnityPlayer.UnitySendMessage(listenerName, "onUnRegisteredForPushNotifications", string);
-	}
-
 	public static void onRegisterErrorEvent(String string) {
 		if (listenerName == null) {
 			registerErrorEventString = string;
@@ -221,14 +204,6 @@ public class PushwooshProxy {
 
 		UnityPlayer.UnitySendMessage(listenerName, "onFailedToRegisteredForPushNotifications", string);
 		registerErrorEventString = null;
-	}
-
-	public void onUnRegisterErrorEvent(String string) {
-		if (listenerName == null) {
-			return;
-		}
-
-		UnityPlayer.UnitySendMessage(listenerName, "onFailedToUnRegisteredForPushNotifications", string);
 	}
 
 	public void setIntTag(String name, int value) {
@@ -471,7 +446,7 @@ public class PushwooshProxy {
 	}
 
 	//HACK: unity 2018 crashes if function returns null instead of string
-	private String returnStringToUnity(String string) {
+	private static String returnStringToUnity(String string) {
 		if (string == null)
 			return "";
 		return string;
