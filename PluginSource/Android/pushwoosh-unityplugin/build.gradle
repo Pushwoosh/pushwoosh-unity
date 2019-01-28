@@ -20,7 +20,7 @@ android {
 dependencies {
     compile "com.google.firebase:firebase-core:${play_services}"
     compile "com.google.firebase:firebase-messaging:${play_services}"
-    compile "com.google.android.gms:play-services-gcm:${play_services}"
+    compile "com.google.android.gms:play-services-base:${play_services}"
 	compile "com.google.android.gms:play-services-location:${play_services}"
 	compile "com.android.support:support-v4:${support}"
 
