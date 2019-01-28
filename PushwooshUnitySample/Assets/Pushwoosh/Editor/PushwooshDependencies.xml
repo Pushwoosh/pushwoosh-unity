@@ -1,19 +1,22 @@
 
 <dependencies>
     <androidPackages>
-        <androidPackage spec="com.google.android.gms:play-services-gcm:11.6.2"/>
+        <androidPackage spec="com.google.android.gms:play-services-base:11.6.2"/>
         <androidPackage spec="com.google.android.gms:play-services-location:11.6.2"/>
         <androidPackage spec="com.android.support:support-v4:27.0.2"/>
         <androidPackage spec="com.pushwoosh:pushwoosh:5.11.0"/>
         <androidPackage spec="com.pushwoosh:pushwoosh-amazon:5.11.0"/>
         <androidPackage spec="com.pushwoosh:pushwoosh-badge:5.11.0"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-gcm:5.11.0"/>
+
+        <androidPackage spec="com.google.firebase:firebase-core:11.6.2"/>
+        <androidPackage spec="com.google.firebase:firebase-messaging:11.6.2"/>
 <!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.11.0"/>-->
 <!--        <androidPackage spec="com.pushwoosh:pushwoosh-beacon:5.11.0"/>-->
     </androidPackages>
-
+   
     <iosPods>
-    	<iosPod name="Pushwoosh"/>
-    	<!-- <iosPod name="Pushwoosh/Geozones"/> -->
-  	</iosPods>
+        <iosPod name="Pushwoosh"/>
+        <!-- <iosPod name="Pushwoosh/Geozones"/> -->
+    </iosPods>
 </dependencies>
+
