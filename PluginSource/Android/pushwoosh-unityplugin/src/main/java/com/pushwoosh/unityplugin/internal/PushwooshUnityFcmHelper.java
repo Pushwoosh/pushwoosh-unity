@@ -19,19 +19,24 @@ public class PushwooshUnityFcmHelper {
     private final String TAG = PushwooshUnityFcmHelper.class.getSimpleName();
 
     public void initFCM(Context context) {
-        if(context == null){
+        if (context == null) {
             PWLog.error("context is null");
             return;
         }
+        if (!FirebaseApp.getApps(context).isEmpty()) {
+            PWLog.debug( "Firebase already init");
+            return;
+        }
         String json = readGoogleServiceJsonFromAssets(context);
-        PWLog.debug(TAG,"json from google-service.json:" + json);
+        PWLog.debug(TAG, "json from google-service.json:" + json);
+
         try {
             JSONObject jsonObject = new JSONObject(json);
             String gcmSenderId = getSenderId(jsonObject);
             String applicationId = getApplicationId(jsonObject);
             initFirebaseApp(context, applicationId, gcmSenderId);
         } catch (JSONException e) {
-            PWLog.error(TAG,"can not parse info for GCM init:" + e);
+            PWLog.error(TAG, "can not parse info for GCM init:" + e);
         }
     }
 
@@ -46,7 +51,7 @@ public class PushwooshUnityFcmHelper {
                 result.append(mLine);
             }
         } catch (IOException e) {
-            PWLog.error(TAG,"can not read file google-services.json:" + e);
+            PWLog.error(TAG, "can not read file google-services.json:" + e);
 
         } finally {
             if (reader != null) {
