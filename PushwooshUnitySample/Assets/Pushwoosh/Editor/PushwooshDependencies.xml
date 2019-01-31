@@ -15,8 +15,8 @@
     </androidPackages>
    
     <iosPods>
-        <iosPod name="Pushwoosh"/>
-        <!-- <iosPod name="Pushwoosh/Geozones"/> -->
-    </iosPods>
+    	<iosPod name="Pushwoosh" version="5.11.0"/>
+    	<!-- <iosPod name="Pushwoosh/Geozones"/> -->
+  	</iosPods>
 </dependencies>
 
