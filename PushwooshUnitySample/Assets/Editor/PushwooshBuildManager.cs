@@ -51,6 +51,12 @@ public class PushwooshBuildManager : MonoBehaviour
 			proj.AddFrameworkToProject(projTarget, "Security.framework", false);
 			proj.AddBuildProperty(projTarget, "OTHER_LDFLAGS", "-ObjC -lz -lstdc++");
 
+            if (File.Exists("Assets/Plugins/iOS/Entitlements.plist"))
+            {
+                File.Copy("Assets/Plugins/iOS/Entitlements.plist", pathToBuiltProject + "/Entitlements.plist");
+            }
+            proj.AddBuildProperty(projTarget, "CODE_SIGN_ENTITLEMENTS", "Entitlements.plist");
+
 			File.WriteAllText(projPath, proj.WriteToString());
 
 		}

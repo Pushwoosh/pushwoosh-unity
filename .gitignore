@@ -11,3 +11,6 @@ PluginSource/Android/projectFilesBackup
 PushwooshUnitySample/Assets/Plugins/Android/com.*.aar
 PushwooshUnitySample/Assets/Plugins/Android/com.*.jar
 *.meta
+.vs
+obj
+bin
