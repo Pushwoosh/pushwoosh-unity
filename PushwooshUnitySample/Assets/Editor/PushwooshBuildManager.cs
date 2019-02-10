@@ -54,8 +54,8 @@ public class PushwooshBuildManager : MonoBehaviour
             if (File.Exists("Assets/Plugins/iOS/Entitlements.plist"))
             {
                 File.Copy("Assets/Plugins/iOS/Entitlements.plist", pathToBuiltProject + "/Entitlements.plist");
+                proj.AddBuildProperty(projTarget, "CODE_SIGN_ENTITLEMENTS", "Entitlements.plist");
             }
-            proj.AddBuildProperty(projTarget, "CODE_SIGN_ENTITLEMENTS", "Entitlements.plist");
 
 			File.WriteAllText(projPath, proj.WriteToString());
 
