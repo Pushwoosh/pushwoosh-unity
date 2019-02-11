@@ -1,4 +1,5 @@
 ﻿#if UNITY_EDITOR
+using System;
 using System.Collections.Generic;
 using System.IO;
 using MiniJSON;
@@ -10,6 +11,9 @@ class MyCustomBuildProcessor : IPreprocessBuild
     public void OnPreprocessBuild(BuildTarget target, string path)
     {
         string assetsUrl = Directory.GetCurrentDirectory() + "/Assets/";
+        CreateIfNeed(assetsUrl + "/Plugins/Android/res/");
+        CreateIfNeed(assetsUrl + "/Plugins/Android/res/values");
+       
         string sourcePath = assetsUrl + "google-services.json";
         string destenishinPath = assetsUrl + "/Plugins/Android/res/values/googleservices.xml";
         if (File.Exists(sourcePath))
@@ -31,6 +35,14 @@ class MyCustomBuildProcessor : IPreprocessBuild
 
             var xml = CreateXml(projectNumber, clientId, appId);
             WriteFile(xml, destenishinPath);
+        }
+    }
+
+    private void CreateIfNeed(string folderPath)
+    {
+        if (!Directory.Exists(folderPath))
+        {
+            Directory.CreateDirectory(folderPath);
         }
     }
 
