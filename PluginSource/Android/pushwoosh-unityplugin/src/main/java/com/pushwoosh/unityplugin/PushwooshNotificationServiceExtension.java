@@ -6,7 +6,6 @@ import android.content.pm.PackageManager;
 import com.pushwoosh.internal.utils.PWLog;
 import com.pushwoosh.notification.NotificationServiceExtension;
 import com.pushwoosh.notification.PushMessage;
-import com.pushwoosh.unityplugin.internal.PushwooshUnityFcmHelper;
 
 public class PushwooshNotificationServiceExtension extends NotificationServiceExtension {
 
@@ -14,8 +13,6 @@ public class PushwooshNotificationServiceExtension extends NotificationServiceEx
 
 
 	public PushwooshNotificationServiceExtension() {
-		PushwooshUnityFcmHelper pushwooshFcmHelper  = new PushwooshUnityFcmHelper();
-		pushwooshFcmHelper.initFCM(getApplicationContext());
 		try {
 			String packageName = getApplicationContext().getPackageName();
 			ApplicationInfo ai = getApplicationContext().getPackageManager().getApplicationInfo(packageName, PackageManager.GET_META_DATA);
