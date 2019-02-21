@@ -10,6 +10,8 @@ Assembly-CSharp.csproj.FilesWrittenAbsolute.txt
 PluginSource/Android/projectFilesBackup
 PushwooshUnitySample/Assets/Plugins/Android/com.*.aar
 PushwooshUnitySample/Assets/Plugins/Android/com.*.jar
+PushwooshUnitySample/Assets/Plugins/Android/android.*.[ja]ar
+PushwooshUnitySample/Assets/Plugins/Android/res/values/googleservices.xml
 *.meta
 .vs
 obj
