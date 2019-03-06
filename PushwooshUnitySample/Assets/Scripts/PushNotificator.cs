@@ -27,7 +27,7 @@ public class PushNotificator : MonoBehaviour
 	void Start () 
 	{
 		Pushwoosh.ApplicationCode = "7559E-DE020";
-		Pushwoosh.GcmProjectNumber = "747084596472";
+		Pushwoosh.FcmProjectNumber = "747084596472";
 		Pushwoosh.Instance.OnRegisteredForPushNotifications += OnRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnFailedToRegisteredForPushNotifications += OnFailedToRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnPushNotificationsReceived += OnPushNotificationsReceived;

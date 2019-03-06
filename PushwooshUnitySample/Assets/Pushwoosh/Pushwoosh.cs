@@ -15,8 +15,18 @@ public class Pushwoosh : MonoBehaviour
 {
 	public static string ApplicationCode { get; set; }
 	
-	public static string GcmProjectNumber { get; set; }
+	public static string FcmProjectNumber { get; set; }
 	
+    public static string GcmProjectNumber {
+        get
+        {
+            return FcmProjectNumber;
+        }
+        set
+        {
+            FcmProjectNumber = value;
+        }
+    }
 
 	public delegate void RegistrationSuccessHandler(string token);
 	
