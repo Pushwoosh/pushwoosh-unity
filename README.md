@@ -7,7 +7,7 @@ Pushwoosh Unity Plugin
 
 ### Guide
 
-http://docs.pushwoosh.com/docs/unity-plugin
+https://www.pushwoosh.com/platform-docs/pushwoosh-sdk/cross-platform-frameworks/unity
 
 ### Documentation
 
