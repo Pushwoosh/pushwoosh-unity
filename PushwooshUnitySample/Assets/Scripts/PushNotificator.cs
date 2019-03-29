@@ -117,7 +117,17 @@ public class PushNotificator : MonoBehaviour
 		Pushwoosh.Instance.PostEvent (postEventKeyUIText.text, parameters);
 	}
 
-	void OnRegisteredForPushNotifications(string token)
+    public void SetNotificationChannelName(string channelName)
+    {
+        Pushwoosh.Instance.SetDefaultNotificationChannelName(channelName);
+    }
+
+    public void SetNotificationChannelDescription(string channelDescription)
+    {
+        Pushwoosh.Instance.SetDefaultNotificationChannelDescription(channelDescription);
+    }
+
+    void OnRegisteredForPushNotifications(string token)
 	{
 		tokenString = token;
 		hwidString = Pushwoosh.Instance.HWID;

@@ -217,6 +217,15 @@ public class Pushwoosh : MonoBehaviour
         Debug.Log("[Pushwoosh] Error: RemoveAllDeviceData is not supported on this platform");
     }
 
+    public virtual void SetDefaultNotificationChannelName(string name)
+    {
+        Debug.Log("[Pushwoosh] Error: SetDefaultNotificationChannelName is not supported on this platform");
+    }
+
+    public virtual void SetDefaultNotificationChannelDescription(string description)
+    {
+        Debug.Log("[Pushwoosh] Error: SetDefaultNotificationChannelDescription is not supported on this platform");
+    }
 
     protected void SetCommunicationEnableCallBack()
     {

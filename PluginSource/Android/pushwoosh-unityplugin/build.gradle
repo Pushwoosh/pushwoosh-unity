@@ -24,7 +24,7 @@ dependencies {
 	compile "com.google.android.gms:play-services-location:${play_services}"
 	compile "com.android.support:support-v4:${support}"
 
-    compile "com.pushwoosh:pushwoosh:${pushwoosh}"
+    compile(name:'pushwoosh-5.13.2', ext:'aar')
     compile "com.pushwoosh:pushwoosh-amazon:${pushwoosh}"
     compile "com.pushwoosh:pushwoosh-badge:${pushwoosh}"
     compile "com.pushwoosh:pushwoosh-location:${pushwoosh}"

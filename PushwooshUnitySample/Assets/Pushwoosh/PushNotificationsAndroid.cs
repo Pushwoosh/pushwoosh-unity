@@ -346,6 +346,15 @@ public class PushNotificationsAndroid : Pushwoosh
         pushwoosh.Call("removeAllDeviceData");
     }
 
+    public override void SetDefaultNotificationChannelName(string name)
+    {
+        pushwoosh.Call("setDefaultNotificationChannelName", name);
+    }
+
+    public override void SetDefaultNotificationChannelDescription(string description)
+    {
+        pushwoosh.Call("setDefaultNotificationChannelDescription", description);
+    }
 
     void OnRemoveAllDeviceData(string success)
     {
