@@ -443,12 +443,8 @@ public class PushwooshProxy {
 		});
 	}
 
-	public void setDefaultNotificationChannelName(String name) {
-		PushwooshNotificationSettings.setNotificationChannelName(name);
-	}
-
-	public void setDefaultNotificationChannelDescription(String description) {
-		PushwooshNotificationSettings.setNotificationChannelDescription(description);
+	public void setOnAddNotificationChannelListener(OnAddNotificationChannelListener listener) {
+        UnityNotificationFactory.instance().setOnAddNotificationChannelListener(listener);
 	}
 
 	//HACK: unity 2018 crashes if function returns null instead of string

@@ -21,7 +21,8 @@ public class PushNotificationsAndroid : Pushwoosh
 		}
 		
 		pushwoosh.Call("setListenerName", this.gameObject.name);
-	}
+        pushwoosh.Call("setOnAddNotificationChannelListener", new OnAddNotificationChannelListener());
+    }
  
 	public override void RegisterForPushNotifications()
 	{
