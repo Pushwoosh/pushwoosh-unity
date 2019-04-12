@@ -31,20 +31,20 @@ public class UnityNotificationFactory extends PushwooshNotificationFactory {
     }
 
     @Override
-    public String channelName(String name) {
+    public String channelName(String channelName) {
         if (onAddNotificationChannelListener != null) {
-            return onAddNotificationChannelListener.channelName(name);
+            return onAddNotificationChannelListener.channelName(channelName);
         }
-        return super.channelName(name);
+        return super.channelName(channelName);
     }
 
     @Nullable
     @Override
-    public String channelDescription(String description) {
+    public String channelDescription(String channelName) {
         if (onAddNotificationChannelListener != null) {
-            return onAddNotificationChannelListener.channelDescription(description);
+            return onAddNotificationChannelListener.channelDescription(channelName);
         }
-        return super.channelDescription(description);
+        return super.channelDescription(channelName);
     }
 
     public void setOnAddNotificationChannelListener(OnAddNotificationChannelListener listener) {

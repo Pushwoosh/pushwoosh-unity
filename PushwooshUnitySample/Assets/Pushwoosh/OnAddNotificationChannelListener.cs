@@ -11,9 +11,9 @@ class OnAddNotificationChannelListener : AndroidJavaProxy
         return channelName;
     }
 
-    public string channelDescription(string channelDescription)
+    public string channelDescription(string channelName)
     {
         // Implement your channel description localization logic here
-        return channelDescription;
+        return channelName;
     }
 }
