@@ -2,10 +2,10 @@
 <dependencies>
     <androidPackages>
         <androidPackage spec="com.android.support:support-v4:[26.1.0,)"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh:5.13.2"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-amazon:5.13.2"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-badge:5.13.2"/>
-        
+        <androidPackage spec="com.pushwoosh:pushwoosh:5.14.0"/>      
+        <androidPackage spec="com.pushwoosh:pushwoosh-amazon:5.14.0"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-badge:5.14.0"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.14.0"/>
         <androidPackage spec="com.google.firebase:firebase-messaging:[15.0.2,)"/>
 <!--        <androidPackage spec="com.google.android.gms:play-services-location:11.6.2"/>-->
 <!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.13.2"/>-->

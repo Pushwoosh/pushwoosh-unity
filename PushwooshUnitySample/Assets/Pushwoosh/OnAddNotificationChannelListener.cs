@@ -5,15 +5,15 @@ class OnAddNotificationChannelListener : AndroidJavaProxy
 {
     public OnAddNotificationChannelListener() : base("com.pushwoosh.unityplugin.OnAddNotificationChannelListener") { }
 
-    public string channelName(string channelName)
+    public string ChannelName(string channelName)
     {
-        // Implement your channel name localization logic here
+        // Implement your channel name logic here (e.g. localization)
         return channelName;
     }
 
-    public string channelDescription(string channelName)
+    public string ChannelDescription(string channelName)
     {
-        // Implement your channel description localization logic here
-        return channelName;
+        // Implement your channel description logic here (e.g. localization)
+        return "";
     }
 }
