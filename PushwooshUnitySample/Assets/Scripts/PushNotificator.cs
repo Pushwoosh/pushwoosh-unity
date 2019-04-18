@@ -75,6 +75,7 @@ public class PushNotificator : MonoBehaviour
 		};
 
 		Pushwoosh.Instance.ScheduleLocalNotification ("Hello, Android!", 5, parameters);
+        Pushwoosh.Instance.SetNotificationChannelDelegate(new MyNotificationChannelDelegate());
 #endif
 #endif
 	}
@@ -117,16 +118,6 @@ public class PushNotificator : MonoBehaviour
 		Pushwoosh.Instance.PostEvent (postEventKeyUIText.text, parameters);
 	}
 
-    public void SetNotificationChannelName(string channelName)
-    {
-        Pushwoosh.Instance.SetDefaultNotificationChannelName(channelName);
-    }
-
-    public void SetNotificationChannelDescription(string channelDescription)
-    {
-        Pushwoosh.Instance.SetDefaultNotificationChannelDescription(channelDescription);
-    }
-
     void OnRegisteredForPushNotifications(string token)
 	{
 		tokenString = token;
@@ -162,4 +153,19 @@ public class PushNotificator : MonoBehaviour
 		notificationString = "NotificationOpened: " + payload;
 		Debug.Log ("NotificationOpened: " + payload);
 	}
+
+    private class MyNotificationChannelDelegate : NotificationChannelDelegate
+    {
+        public override string ChannelDescription(string channelName)
+        {
+            // Implement your channel description customization logic here
+            return "";
+        }
+
+        public override string ChannelName(string channelName)
+        {
+            // Implement your channel name customization logic here
+            return channelName;
+        }
+    }
 }

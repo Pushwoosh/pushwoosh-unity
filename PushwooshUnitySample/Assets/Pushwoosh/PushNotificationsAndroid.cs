@@ -21,7 +21,6 @@ public class PushNotificationsAndroid : Pushwoosh
 		}
 		
 		pushwoosh.Call("setListenerName", this.gameObject.name);
-        pushwoosh.Call("setOnAddNotificationChannelListener", new OnAddNotificationChannelListener());
     }
  
 	public override void RegisterForPushNotifications()
@@ -61,7 +60,12 @@ public class PushNotificationsAndroid : Pushwoosh
 		pushwoosh.Call("getTags");
 	}
 
-	public string GetLaunchNotification()
+    public override void SetNotificationChannelDelegate(NotificationChannelDelegate notificationChannelDelegate)
+    {
+        pushwoosh.Call("setNotificationChannelDelegate", notificationChannelDelegate);
+    }
+
+    public string GetLaunchNotification()
 	{
     return ReturnStringFromNative(pushwoosh.Call<string>("getLaunchNotification"));
 	}
@@ -345,16 +349,6 @@ public class PushNotificationsAndroid : Pushwoosh
     public override void RemoveAllDeviceData()
     {
         pushwoosh.Call("removeAllDeviceData");
-    }
-
-    public override void SetDefaultNotificationChannelName(string name)
-    {
-        pushwoosh.Call("setDefaultNotificationChannelName", name);
-    }
-
-    public override void SetDefaultNotificationChannelDescription(string description)
-    {
-        pushwoosh.Call("setDefaultNotificationChannelDescription", description);
     }
 
     void OnRemoveAllDeviceData(string success)

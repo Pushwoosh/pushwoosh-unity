@@ -415,7 +415,7 @@ public class PushwooshProxy {
 		return GDPRManager.getInstance().isAvailable();
 	}
 
-	public void setCommunicationEnabled(boolean enable){
+	public void setCommunicationEnabled(boolean enable) {
 		 GDPRManager.getInstance().setCommunicationEnabled(enable, new Callback<Void, PushwooshException>() {
 			@Override
 			public void process(@NonNull Result<Void, PushwooshException> result) {
@@ -429,7 +429,7 @@ public class PushwooshProxy {
 		});
 	}
 
-	public void removeAllDeviceData(){
+	public void removeAllDeviceData() {
 		GDPRManager.getInstance().removeAllDeviceData(new Callback<Void, PushwooshException>() {
 			@Override
 			public void process(@NonNull Result<Void, PushwooshException> result) {
@@ -443,8 +443,8 @@ public class PushwooshProxy {
 		});
 	}
 
-	public void setOnAddNotificationChannelListener(OnAddNotificationChannelListener listener) {
-        UnityNotificationFactory.instance().setOnAddNotificationChannelListener(listener);
+	public void setNotificationChannelDelegate(NotificationChannelDelegate delegate) {
+        UnityNotificationFactory.instance().setNotificationChannelDelegate(delegate);
 	}
 
 	//HACK: unity 2018 crashes if function returns null instead of string

@@ -8,7 +8,7 @@ import com.pushwoosh.notification.PushMessage;
 import com.pushwoosh.notification.PushwooshNotificationFactory;
 
 public class UnityNotificationFactory extends PushwooshNotificationFactory {
-    private OnAddNotificationChannelListener onAddNotificationChannelListener;
+    private NotificationChannelDelegate notificationChannelDelegate;
     static UnityNotificationFactory INSTANCE;
 
     public UnityNotificationFactory() {
@@ -32,8 +32,8 @@ public class UnityNotificationFactory extends PushwooshNotificationFactory {
 
     @Override
     public String channelName(String channelName) {
-        if (onAddNotificationChannelListener != null) {
-            return onAddNotificationChannelListener.channelName(channelName);
+        if (notificationChannelDelegate != null) {
+            return notificationChannelDelegate.ChannelName(channelName);
         }
         return super.channelName(channelName);
     }
@@ -41,13 +41,13 @@ public class UnityNotificationFactory extends PushwooshNotificationFactory {
     @Nullable
     @Override
     public String channelDescription(String channelName) {
-        if (onAddNotificationChannelListener != null) {
-            return onAddNotificationChannelListener.channelDescription(channelName);
+        if (notificationChannelDelegate != null) {
+            return notificationChannelDelegate.ChannelDescription(channelName);
         }
         return super.channelDescription(channelName);
     }
 
-    public void setOnAddNotificationChannelListener(OnAddNotificationChannelListener listener) {
-        this.onAddNotificationChannelListener = listener;
+    public void setNotificationChannelDelegate(NotificationChannelDelegate delegate) {
+        this.notificationChannelDelegate = delegate;
     }
 }
