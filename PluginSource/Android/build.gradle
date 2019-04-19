@@ -29,5 +29,5 @@ ext {
     global_versionName = "5.13.0"
     play_services = "11.6.2"
     support = "27.0.2"
-    pushwoosh = "5.8.8"
+    pushwoosh = "5.14.0"
 }

@@ -1,9 +1,5 @@
 package com.pushwoosh.unityplugin;
 
-import java.math.BigDecimal;
-import java.util.Collections;
-import java.util.List;
-
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
@@ -17,7 +13,6 @@ import com.pushwoosh.beacon.PushwooshBeacon;
 import com.pushwoosh.exception.GetTagsException;
 import com.pushwoosh.exception.PushwooshException;
 import com.pushwoosh.exception.RegisterForPushNotificationsException;
-import com.pushwoosh.exception.UnregisterForPushNotificationException;
 import com.pushwoosh.function.Callback;
 import com.pushwoosh.function.Result;
 import com.pushwoosh.inapp.PushwooshInApp;
@@ -36,6 +31,9 @@ import com.unity3d.player.UnityPlayer;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.math.BigDecimal;
+import java.util.Collections;
+import java.util.List;
 
 import static com.unity3d.player.UnityPlayer.currentActivity;
 
@@ -417,7 +415,7 @@ public class PushwooshProxy {
 		return GDPRManager.getInstance().isAvailable();
 	}
 
-	public void setCommunicationEnabled(boolean enable){
+	public void setCommunicationEnabled(boolean enable) {
 		 GDPRManager.getInstance().setCommunicationEnabled(enable, new Callback<Void, PushwooshException>() {
 			@Override
 			public void process(@NonNull Result<Void, PushwooshException> result) {
@@ -431,7 +429,7 @@ public class PushwooshProxy {
 		});
 	}
 
-	public void removeAllDeviceData(){
+	public void removeAllDeviceData() {
 		GDPRManager.getInstance().removeAllDeviceData(new Callback<Void, PushwooshException>() {
 			@Override
 			public void process(@NonNull Result<Void, PushwooshException> result) {
@@ -443,6 +441,10 @@ public class PushwooshProxy {
 				}
 			}
 		});
+	}
+
+	public void setNotificationChannelDelegate(NotificationChannelDelegate delegate) {
+        UnityNotificationFactory.instance().setNotificationChannelDelegate(delegate);
 	}
 
 	//HACK: unity 2018 crashes if function returns null instead of string
