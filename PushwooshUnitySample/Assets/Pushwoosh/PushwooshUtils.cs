@@ -89,9 +89,12 @@ public static class PushwooshUtils
 		} 
 		else if (value is List<object>) {
 			return ListToJson (value as List<object>);
-		}
-		else {
-			return value.ToString();
+		} 
+        else if (value is DateTime) {
+            return "\"" + ((DateTime)value).ToString("yyyy-MM-dd hh:mm") + "\"";
+        } 
+        else {
+			return "\"" + value.ToString() + "\"";
 		}
 	}
 
