@@ -6,8 +6,8 @@
         <androidPackage spec="com.pushwoosh:pushwoosh-amazon:5.14.3"/>
         <androidPackage spec="com.pushwoosh:pushwoosh-badge:5.14.3"/>
         
-        <androidPackage spec="com.google.firebase:firebase-messaging:[15.0.2,)"/>
-<!--        <androidPackage spec="com.google.android.gms:play-services-location:11.6.2"/>-->
+        <androidPackage spec="com.google.firebase:firebase-messaging:[15.0.2,19.0.0)"/>
+<!--        <androidPackage spec="com.google.android.gms:play-services-location:[11.6.2,17.0.0)"/>-->
 <!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:5.14.3"/>-->
 <!--        <androidPackage spec="com.pushwoosh:pushwoosh-beacon:5.14.3"/>-->
     </androidPackages>
