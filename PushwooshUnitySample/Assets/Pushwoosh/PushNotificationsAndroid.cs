@@ -65,12 +65,12 @@ public class PushNotificationsAndroid : Pushwoosh
         pushwoosh.Call("setNotificationChannelDelegate", notificationChannelDelegate);
     }
 
-    public string GetLaunchNotification()
+    public override string GetLaunchNotification()
 	{
-    return ReturnStringFromNative(pushwoosh.Call<string>("getLaunchNotification"));
+        return ReturnStringFromNative(pushwoosh.Call<string>("getLaunchNotification"));
 	}
 
-	public void ClearLaunchNotification()
+	public override void ClearLaunchNotification()
 	{
 		pushwoosh.Call("clearLaunchNotification");
 	}
@@ -81,24 +81,6 @@ public class PushNotificationsAndroid : Pushwoosh
         return JsonUtility.FromJson<NotificationSettings>(jsonSettings);
     }
 
-	public String[] GetPushHistory()
-	{
-		AndroidJavaObject history = pushwoosh.Call<AndroidJavaObject>("getPushHistory");
-		if (history.GetRawObject().ToInt32() == 0) {
-			return new String[0];
-		}
-		
-		String[] result = AndroidJNIHelper.ConvertFromJNIArray<String[]>(history.GetRawObject());
-		history.Dispose();
-		
-		return result;
-	}
-	
-	public void ClearPushHistory()
-	{
-		pushwoosh.Call("clearPushHistory");
-	}
-
 	public override void StartTrackingGeoPushes()
 	{
 		pushwoosh.Call("startTrackingGeoPushes");
@@ -108,109 +90,10 @@ public class PushNotificationsAndroid : Pushwoosh
 	{
 		pushwoosh.Call("stopTrackingGeoPushes");
 	}
-	
-	public void StartTrackingBeaconPushes()
-	{
-		pushwoosh.Call("startTrackingBeaconPushes");
-	}
-
-	public void StopTrackingBeaconPushes()
-	{
-		pushwoosh.Call("stopTrackingBeaconPushes");
-	}
-
-	public void SetBeaconBackgroundMode(bool backgroundMode)
-	{
-		pushwoosh.Call("setBeaconBackgroundMode", backgroundMode);
-	}
-	
-	public void ClearLocalNotifications()
-	{
-		pushwoosh.Call("clearLocalNotifications");
-	}
 
 	public override void ClearNotificationCenter()
 	{
 		pushwoosh.Call("clearNotificationCenter");
-	}
-
-	public int ScheduleLocalNotification(string message, int seconds)
-	{
-        return ScheduleLocalNotification(message, seconds, null, null);
-	}
-
-	public int ScheduleLocalNotification(string message, int seconds, string userdata)
-	{
-		IDictionary<string,string> parameters = new Dictionary<string, string>();
-		parameters.Add("u", userdata);
-        return ScheduleLocalNotification(message, seconds, parameters, null);
-	}
-
-	public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters)
-	{
-        return ScheduleLocalNotification(message, seconds, parameters, null);
-	}
-
-	public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters, string largeIcon)
-	{
-        AndroidJavaObject extras = null;
-        if (parameters != null) {
-            extras = new AndroidJavaObject("android.os.Bundle");
-            foreach (var item in parameters)
-            {
-                extras.Call("putString", item.Key, item.Value);
-            }
-        }
-
-    	return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras, largeIcon);
-	}
-
-
-	public void ClearLocalNotification(int id)
-	{
-		pushwoosh.Call("clearLocalNotification", id);
-	}
-	
-	public void SetMultiNotificationMode()
-	{
-		pushwoosh.Call("setMultiNotificationMode");
-	}
-
-	public void SetSimpleNotificationMode()
-	{
-		pushwoosh.Call("setSimpleNotificationMode");
-	}
-
-	/* 
-	 * Sound notification types:
-	 * 0 - default mode
-	 * 1 - no sound
-	 * 2 - always
-	 */
-	public void SetSoundNotificationType(int soundNotificationType)
-	{
-		pushwoosh.Call("setSoundNotificationType", soundNotificationType);
-	}
-
-	/* 
-	 * Vibrate notification types:
-	 * 0 - default mode
-	 * 1 - no vibrate
-	 * 2 - always
-	 */
-	public void SetVibrateNotificationType(int vibrateNotificationType)
-	{
-		pushwoosh.Call("setVibrateNotificationType", vibrateNotificationType);
-	}
-
-	public void SetLightScreenOnNotification(bool lightsOn)
-	{
-		pushwoosh.Call("setLightScreenOnNotification", lightsOn);
-	}
-
-	public void SetEnableLED(bool ledOn)
-	{
-		pushwoosh.Call("setEnableLED", ledOn);
 	}
 
 	public override void SetBadgeNumber(int number)
@@ -370,4 +253,156 @@ public class PushNotificationsAndroid : Pushwoosh
     }
 
 #endif
+
+    //Android specific methods
+
+    public string[] GetPushHistory()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidJavaObject history = pushwoosh.Call<AndroidJavaObject>("getPushHistory");
+        if (history.GetRawObject().ToInt32() == 0)
+        {
+            return new string[0];
+        }
+
+        string[] result = AndroidJNIHelper.ConvertFromJNIArray<string[]>(history.GetRawObject());
+        history.Dispose();
+
+        return result;
+#else
+        return new string[0];
+#endif
+    }
+
+    public void ClearPushHistory()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("clearPushHistory");
+#endif
+    }
+
+    public void StartTrackingBeaconPushes()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("startTrackingBeaconPushes");
+#endif
+    }
+
+    public void StopTrackingBeaconPushes()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("stopTrackingBeaconPushes");
+#endif
+    }
+
+    public void SetBeaconBackgroundMode(bool backgroundMode)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("setBeaconBackgroundMode", backgroundMode);
+#endif
+    }
+
+    public void ClearLocalNotifications()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("clearLocalNotifications");
+#endif
+    }
+
+    public void ClearLocalNotification(int id)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("clearLocalNotification", id);
+#endif
+    }
+
+    public int ScheduleLocalNotification(string message, int seconds)
+    {
+        return ScheduleLocalNotification(message, seconds, null, null);
+    }
+
+    public int ScheduleLocalNotification(string message, int seconds, string userdata)
+    {
+        IDictionary<string, string> parameters = new Dictionary<string, string>();
+        parameters.Add("u", userdata);
+        return ScheduleLocalNotification(message, seconds, parameters, null);
+    }
+
+    public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters)
+    {
+        return ScheduleLocalNotification(message, seconds, parameters, null);
+    }
+
+    public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters, string largeIcon)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        AndroidJavaObject extras = null;
+        if (parameters != null)
+        {
+            extras = new AndroidJavaObject("android.os.Bundle");
+            foreach (var item in parameters)
+            {
+                extras.Call("putString", item.Key, item.Value);
+            }
+        }
+
+        return pushwoosh.Call<int>("scheduleLocalNotification", message, seconds, extras, largeIcon);
+#else
+        return 0;
+#endif
+    }
+
+    public void SetMultiNotificationMode()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("setMultiNotificationMode");
+#endif
+    }
+
+    public void SetSimpleNotificationMode()
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("setSimpleNotificationMode");
+#endif
+    }
+
+    /* 
+	 * Sound notification types:
+	 * 0 - default mode
+	 * 1 - no sound
+	 * 2 - always
+	 */
+    public void SetSoundNotificationType(int soundNotificationType)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("setSoundNotificationType", soundNotificationType);
+#endif
+    }
+
+    /* 
+	 * Vibrate notification types:
+	 * 0 - default mode
+	 * 1 - no vibrate
+	 * 2 - always
+	 */
+    public void SetVibrateNotificationType(int vibrateNotificationType)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("setVibrateNotificationType", vibrateNotificationType);
+#endif
+    }
+
+    public void SetLightScreenOnNotification(bool lightsOn)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("setLightScreenOnNotification", lightsOn);
+#endif
+    }
+
+    public void SetEnableLED(bool ledOn)
+    {
+#if UNITY_ANDROID && !UNITY_EDITOR
+        pushwoosh.Call("setEnableLED", ledOn);
+#endif
+    }
 }

@@ -41,17 +41,15 @@ public class PushNotificator : MonoBehaviour
 
 		Pushwoosh.Instance.SendPurchase("com.pushwoosh.Developer", 49.95, "USD");
         NotificationSettings notificationSettings = Pushwoosh.Instance.GetRemoteNotificationStatus();
-        Debug.Log("Notification status enabled: " + notificationSettings.enabled
+        if (notificationSettings != null) { 
+            Debug.Log("Notification status enabled: " + notificationSettings.enabled
 #if UNITY_IPHONE && !UNITY_EDITOR
-                  + " alert: " + notificationSettings.pushAlert
-                  + " badge: " + notificationSettings.pushBadge
-                  + " sound: " + notificationSettings.pushSound
+                      + " alert: " + notificationSettings.pushAlert
+                      + " badge: " + notificationSettings.pushBadge
+                      + " sound: " + notificationSettings.pushSound
 #endif
-                 );
-
-#if !UNITY_EDITOR
-#if UNITY_IOS || UNITY_ANDROID
-
+                     );
+        }
 		Pushwoosh.Instance.SetUserId("%userId%");
 
 		Dictionary<string, object> attributes = new Dictionary<string, object>() {
@@ -66,7 +64,6 @@ public class PushNotificator : MonoBehaviour
 			launchNotificationString = "No launch notification";
 		else
 			launchNotificationString = launchNotification;
-#endif
 
 #if UNITY_ANDROID
 		Dictionary<string, string> parameters = new Dictionary<string, string>() {
@@ -76,7 +73,6 @@ public class PushNotificator : MonoBehaviour
 
 		Pushwoosh.Instance.ScheduleLocalNotification ("Hello, Android!", 5, parameters);
         Pushwoosh.Instance.SetNotificationChannelDelegate(new MyNotificationChannelDelegate());
-#endif
 #endif
 	}
 
@@ -91,7 +87,7 @@ public class PushNotificator : MonoBehaviour
 	public void OnSubscribe()
 	{
 		Pushwoosh.Instance.RegisterForPushNotifications ();
-	}
+    }
 
 	public void OnUnsubscribe()
 	{

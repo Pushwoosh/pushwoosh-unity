@@ -1,11 +1,11 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 
-#if UNITY_IPHONE && !UNITY_EDITOR
+#if UNITY_IPHONE
 using PushwooshInstanceType = PushNotificationsIOS;
-#elif UNITY_ANDROID && !UNITY_EDITOR
+#elif UNITY_ANDROID
 using PushwooshInstanceType = PushNotificationsAndroid;
-#elif (UNITY_WP8 || UNITY_WP8_1 || UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0) && !UNITY_EDITOR
+#elif (UNITY_WP8 || UNITY_WP8_1 || UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0)
 using PushwooshInstanceType = PushNotificationsWindows; 
 #else 
 using PushwooshInstanceType = Pushwoosh;
@@ -220,6 +220,17 @@ public class Pushwoosh : MonoBehaviour
     public virtual void SetNotificationChannelDelegate(NotificationChannelDelegate notificationChannelDelegate)
     {
         Debug.Log("[Pushwoosh] Error: SetNotificationChannelDelegate is not supported on this platform");
+    }
+
+    public virtual string GetLaunchNotification()
+    {
+        Debug.Log("[Pushwoosh] Error: GetLaunchNotification is not supported on this platform");
+        return null;
+    }
+
+    public virtual void ClearLaunchNotification()
+    {
+        Debug.Log("[Pushwoosh] Error: ClearLaunchNotification is not supported on this platform");
     }
 
     protected void SetCommunicationEnableCallBack()

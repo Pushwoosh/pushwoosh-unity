@@ -122,12 +122,12 @@ public class PushNotificationsIOS : Pushwoosh
 		get { return Marshal.PtrToStringAnsi(pw_getPushToken()); }
 	}
 
-	public string GetLaunchNotification()
+	public override string GetLaunchNotification()
 	{
 		return Marshal.PtrToStringAnsi(pw_getLaunchNotification()); 
 	}
 
-	public void ClearLaunchNotification()
+	public override void ClearLaunchNotification()
 	{
 		pw_clearLaunchNotification();
 	}
