@@ -10,63 +10,75 @@ ext {
 	manifestsPath = manifestsTempDir
 }
 
-task cleanPublishDir << {
-	file(publishDir).deleteDir()
+task cleanPublishDir {
+	doLast {
+		file(publishDir).deleteDir()
+	}
 }
 
-task copyAndroidManifests << {
-	copy {
-		from(unityActivitiesAndroidManifestPath) {
-			include "UnityActivitiesAndroidManifest.xml"
-			rename "UnityActivitiesAndroidManifest.xml", "unity-activities"
+task copyAndroidManifests {
+	doLast {
+		copy {
+			from(unityActivitiesAndroidManifestPath) {
+				include "UnityActivitiesAndroidManifest.xml"
+				rename "UnityActivitiesAndroidManifest.xml", "unity-activities"
+			}
+			into manifestsTempDir
 		}
-		into manifestsTempDir
 	}
 }
 
-task unzipJarForExcludedLibs << {
-	List excludeLibsPattern = new ArrayList()
-	exludePermissionsLibs.each {
-		excludeLibsPattern.add("$it*.aar")
+task unzipJarForExcludedLibs {
+	doLast {
+		List excludeLibsPattern = new ArrayList()
+		exludePermissionsLibs.each {
+			excludeLibsPattern.add("$it*.aar")
+		}
+		fileTree(dir: publishDir, includes: excludeLibsPattern)
+				.each {
+					File file = it
+
+					copy {
+						from(zipTree(file)) {
+							include "classes.jar"
+							rename "classes.jar", "${file.name.substring(0, file.name.lastIndexOf(".aar"))}.jar"
+						}
+						into publishDir
+					}
+
+					file.delete()
+				}
 	}
-	fileTree(dir: publishDir, includes: excludeLibsPattern)
-			.each {
-		File file = it
+}
+
+task removeAndroidManifests {
+	doLast {
+		file(manifestsPath).deleteDir()
+	}
+}
+
+task copyUnityPluginAar {
+	doLast {
+		def buildType = 'release'
+		def buildDir = file("${project.buildDir}/outputs/aar/")
 
 		copy {
-			from(zipTree(file)) {
-				include "classes.jar"
-				rename "classes.jar", "${file.name.substring(0, file.name.lastIndexOf(".aar"))}.jar"
-			}
+			from(buildDir)
+					{
+						include "${project.name}-${buildType}.aar"
+						rename "${project.name}-${buildType}.aar", "${project.name}-${global_versionName}.aar"
+					}
 			into publishDir
 		}
-
-		file.delete()
 	}
 }
 
-task removeAndroidManifests << {
-	file(manifestsPath).deleteDir()
-}
-
-task copyUnityPluginAar << {
-	def buildType = 'release'
-	def buildDir = file("${project.buildDir}/outputs/aar/")
-
-	copy {
-		from(buildDir)
-				{
-					include "${project.name}-${buildType}.aar"
-					rename "${project.name}-${buildType}.aar", "${project.name}-${global_versionName}.aar"
-				}
-		into publishDir
-	}
-}
-
-task copyReadmeFiles << {
-	copy {
-		from readmeFilesDir
-		into publishDir
+task copyReadmeFiles {
+	doLast {
+		copy {
+			from readmeFilesDir
+			into publishDir
+		}
 	}
 }
 

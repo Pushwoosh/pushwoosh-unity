@@ -3,7 +3,6 @@ apply from: '../scripts/prepareUnityRelease/build.gradle'
 
 android {
     compileSdkVersion global_targetSdk
-    buildToolsVersion global_buildToolsSdk
 
     defaultConfig {
         versionName global_versionName
@@ -18,16 +17,10 @@ android {
 }
 
 dependencies {
-    compile "com.google.firebase:firebase-core:${play_services}"
-    compile "com.google.firebase:firebase-messaging:${play_services}"
-    compile "com.google.android.gms:play-services-base:${play_services}"
-	compile "com.google.android.gms:play-services-location:${play_services}"
-	compile "com.android.support:support-v4:${support}"
-
-    compile "com.pushwoosh:pushwoosh:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-amazon:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-badge:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-location:${pushwoosh}"
-    compile "com.pushwoosh:pushwoosh-beacon:${pushwoosh}"
-	compile project(':unity')
+    implementation "com.pushwoosh:pushwoosh:${pushwoosh}"
+    implementation "com.pushwoosh:pushwoosh-firebase:${pushwoosh}"
+    implementation "com.pushwoosh:pushwoosh-amazon:${pushwoosh}"
+    implementation "com.pushwoosh:pushwoosh-badge:${pushwoosh}"
+    implementation "com.pushwoosh:pushwoosh-location:${pushwoosh}"
+    implementation project(':unity')
 }

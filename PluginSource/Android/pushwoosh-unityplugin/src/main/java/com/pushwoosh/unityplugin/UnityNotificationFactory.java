@@ -1,8 +1,8 @@
 package com.pushwoosh.unityplugin;
 
 import android.app.Notification;
-import android.support.annotation.NonNull;
-import android.support.annotation.Nullable;
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 
 import com.pushwoosh.notification.PushMessage;
 import com.pushwoosh.notification.PushwooshNotificationFactory;

@@ -3,13 +3,12 @@ package com.pushwoosh.unityplugin;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.support.annotation.NonNull;
-import android.support.v4.app.NotificationManagerCompat;
+import androidx.annotation.NonNull;
+import androidx.core.app.NotificationManagerCompat;
 
 import com.pushwoosh.GDPRManager;
 import com.pushwoosh.Pushwoosh;
 import com.pushwoosh.badge.PushwooshBadge;
-import com.pushwoosh.beacon.PushwooshBeacon;
 import com.pushwoosh.exception.GetTagsException;
 import com.pushwoosh.exception.PushwooshException;
 import com.pushwoosh.exception.RegisterForPushNotificationsException;
@@ -297,18 +296,6 @@ public class PushwooshProxy {
 				PushwooshLocation.stopLocationTracking();
 			}
 		});
-	}
-
-	public void startTrackingBeaconPushes() {
-		PushwooshBeacon.startTrackingBeaconPushes();
-	}
-
-	public void stopTrackingBeaconPushes() {
-		PushwooshBeacon.stopTrackingBeaconPushes();
-	}
-
-	public void setBeaconBackgroundMode(boolean backgroundMode) {
-		PushwooshBeacon.setBeaconBackgroundMode(backgroundMode);
 	}
 
 	public void setEnableLED(boolean ledOn) {
