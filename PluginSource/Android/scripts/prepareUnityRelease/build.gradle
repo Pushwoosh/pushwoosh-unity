@@ -11,16 +11,18 @@ ext {
 }
 
 task cleanPublishDir {
-	file(publishDir).deleteDir()
+	doLast {file(publishDir).deleteDir()}
 }
 
 task copyAndroidManifests {
-	copy {
-		from(unityActivitiesAndroidManifestPath) {
-			include "UnityActivitiesAndroidManifest.xml"
-			rename "UnityActivitiesAndroidManifest.xml", "unity-activities"
+	doLast {
+		copy {
+			from(unityActivitiesAndroidManifestPath) {
+				include "UnityActivitiesAndroidManifest.xml"
+				rename "UnityActivitiesAndroidManifest.xml", "unity-activities"
+			}
+			into manifestsTempDir
 		}
-		into manifestsTempDir
 	}
 }
 
@@ -48,27 +50,33 @@ task unzipJarForExcludedLibs {
 }
 
 task removeAndroidManifests {
-	file(manifestsPath).deleteDir()
+	doLast {
+		file(manifestsPath).deleteDir()
+	}
 }
 
 task copyUnityPluginAar {
-	def buildType = 'release'
-	def buildDir = file("${project.buildDir}/outputs/aar/")
+	doLast {
+		def buildType = 'release'
+		def buildDir = file("${project.buildDir}/outputs/aar/")
 
-	copy {
-		from(buildDir)
-				{
-					include "${project.name}-${buildType}.aar"
-					rename "${project.name}-${buildType}.aar", "${project.name}-${global_versionName}.aar"
-				}
-		into publishDir
+		copy {
+			from(buildDir)
+					{
+						include "${project.name}-${buildType}.aar"
+						rename "${project.name}-${buildType}.aar", "${project.name}-${global_versionName}.aar"
+					}
+			into publishDir
+		}
 	}
 }
 
 task copyReadmeFiles {
-	copy {
-		from readmeFilesDir
-		into publishDir
+	doLast {
+		copy {
+			from readmeFilesDir
+			into publishDir
+		}
 	}
 }
 
