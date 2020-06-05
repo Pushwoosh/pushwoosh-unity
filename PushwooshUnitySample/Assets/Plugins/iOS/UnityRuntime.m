@@ -6,7 +6,9 @@
 
 #import <UserNotifications/UserNotifications.h>
 #import <objc/runtime.h>
-#import <Pushwoosh/Pushwoosh.h>
+#import <Pushwoosh/PushNotificationManager.h>
+#import <Pushwoosh/PWInAppManager.h>
+#import <Pushwoosh/PWGDPRManager.h>
 #import "PWMUserNotificationCenterDelegateProxy.h"
 
 static char * g_pw_tokenStr = 0;
