@@ -27,7 +27,11 @@ public class AddNotificationServiceExtensioniOS : MonoBehaviour
         string projPath = PBXProject.GetPBXProjectPath(buildPath);
         proj.ReadFromFile(projPath);
 
+        #if UNITY_2019_3_OR_NEWER
+        string mainTarget = proj.TargetGuidByName(proj.GetUnityFrameworkTargetGuid());
+        #else
         string mainTarget = proj.TargetGuidByName(PBXProject.GetUnityTargetName());
+        #endif
 
         //Try to retreive bundleId from xcode project
         string bundleId = null;
