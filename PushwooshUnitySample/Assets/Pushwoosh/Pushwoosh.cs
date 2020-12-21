@@ -49,6 +49,8 @@ public class Pushwoosh : MonoBehaviour
 
 	public event NotificationHandler OnPushNotificationsOpened = delegate {};
 
+	public event NotificationHandler OnActionIdentifierReceived = delegate {};
+
     public event GdprSuccessHandler OnSetCommunicationEnable = delegate { };
 
     public event GdprErrorHandler OnFailedSetCommunicationEnable = delegate { };
@@ -175,6 +177,11 @@ public class Pushwoosh : MonoBehaviour
 	protected void PushNotificationsOpened(string payload)
 	{
 		OnPushNotificationsOpened(payload);
+	}
+
+	protected void ActionIdentifierReceived(string payload)
+	{
+		OnActionIdentifierReceived(payload);
 	}
 
     //GPDR

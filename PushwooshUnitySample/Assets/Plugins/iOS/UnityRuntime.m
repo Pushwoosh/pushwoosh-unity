@@ -329,5 +329,12 @@ void pw_showGDPRDeletionUI() {
     }
 }
 
+- (void)onActionIdentifierReceived:(NSString *)identifier{
+    const char * str = [identifier UTF8String];
+    if (str != NULL){
+        UnitySendMessage(g_pw_listenerName, "onActionIdentifierReceived", str);
+    }
+}
+
 @end
 

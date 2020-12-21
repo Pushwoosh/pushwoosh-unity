@@ -282,6 +282,11 @@ public class PushNotificationsIOS : Pushwoosh
 		PushNotificationsOpened (payload);
 	}
 
+	void onActionIdentifierReceived(string payload)
+	{
+		ActionIdentifierReceived (payload);
+	}
+
 	void onTagsReceived(string json)
 	{
 		GetTagsHandler handler = tagsHandlers.Dequeue();
