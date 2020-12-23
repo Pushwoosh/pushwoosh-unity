@@ -26,12 +26,14 @@ public class PushNotificator : MonoBehaviour
 	// Use this for initialization
 	void Start () 
 	{
-		Pushwoosh.ApplicationCode = "7559E-DE020";
-		Pushwoosh.FcmProjectNumber = "747084596472";
+		Pushwoosh.ApplicationCode = "8DE9B-D4E58";
+		Pushwoosh.FcmProjectNumber = "245850018966";
 		Pushwoosh.Instance.OnRegisteredForPushNotifications += OnRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnFailedToRegisteredForPushNotifications += OnFailedToRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnPushNotificationsReceived += OnPushNotificationsReceived;
 		Pushwoosh.Instance.OnPushNotificationsOpened += OnPushNotificationsOpened;
+		Pushwoosh.Instance.OnActionIdentifierReceived += OnActionIdentifierReceived;
+		Pushwoosh.Instance.RegisterForPushNotifications ();
 
 		Pushwoosh.Instance.SetStringTag ("UserName", "Alex");
 		Pushwoosh.Instance.SetIntTag ("Age", 42);
@@ -148,6 +150,12 @@ public class PushNotificator : MonoBehaviour
 	{
 		notificationString = "NotificationOpened: " + payload;
 		Debug.Log ("NotificationOpened: " + payload);
+	}
+
+	void OnActionIdentifierReceived(string payload)
+	{
+		notificationString = "ActionIdentifier: " + payload;
+		Debug.Log ("OnActionIdentifierReceived callback fired: " +notificationString);
 	}
 
     private class MyNotificationChannelDelegate : NotificationChannelDelegate
