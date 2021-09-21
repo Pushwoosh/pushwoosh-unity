@@ -1,20 +1,19 @@
-<manifest xmlns:android='http://schemas.android.com/apk/res/android' xmlns:amazon='http://schemas.amazon.com/apk/res/android' package='com.pushwoosh.demoapp'>
-	<uses-sdk android:minSdkVersion='16' android:targetSdkVersion='29' />
-
-	<application>
-		<!-- unity-activities -->
-		<activity android:configChanges='fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen' android:screenOrientation='portrait' android:name='com.unity3d.player.UnityPlayerActivity' android:launchMode='singleTask'>
-			<intent-filter>
-				<action android:name='android.intent.action.MAIN' />
-				<category android:name='android.intent.category.LAUNCHER' />
-				<action android:name='com.pushwoosh.demoapp.MESSAGE' />
-				<category android:name='android.intent.category.DEFAULT' />
-			</intent-filter>
-		</activity>
-		<activity android:configChanges='fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen' android:screenOrientation='portrait' android:name='com.unity3d.player.UnityPlayerNativeActivity' android:launchMode='singleTask'>
-			<meta-data android:value='unity' android:name='android.app.lib_name' />
-			<meta-data android:value='false' android:name='unityplayer.ForwardNativeEventsToDalvik' />
-		</activity>
-
-	</application>
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:amazon="http://schemas.amazon.com/apk/res/android" package="com.pushwoosh.demoapp">
+  <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="29" />
+  <application>
+    <!-- unity-activities -->
+    <activity android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:screenOrientation="portrait" android:name="com.unity3d.player.UnityPlayerActivity" android:launchMode="singleTask">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+        <action android:name="com.pushwoosh.demoapp.MESSAGE" />
+        <category android:name="android.intent.category.DEFAULT" />
+      </intent-filter>
+    </activity>
+    <activity android:configChanges="fontScale|keyboard|keyboardHidden|locale|mnc|mcc|navigation|orientation|screenLayout|screenSize|smallestScreenSize|uiMode|touchscreen" android:screenOrientation="portrait" android:name="com.unity3d.player.UnityPlayerNativeActivity" android:launchMode="singleTask">
+      <meta-data android:value="unity" android:name="android.app.lib_name" />
+      <meta-data android:value="false" android:name="unityplayer.ForwardNativeEventsToDalvik" />
+    </activity>
+  </application>
 </manifest>
