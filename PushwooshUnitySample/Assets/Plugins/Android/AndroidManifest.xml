@@ -1,5 +1,5 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:amazon="http://schemas.amazon.com/apk/res/android" package="com.pushwoosh.unitydemoapp">
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:amazon="http://schemas.amazon.com/apk/res/android" package="com.pushwoosh.demoapp">
   <uses-sdk android:minSdkVersion="17" android:targetSdkVersion="29" />
   <application>
     <!-- unity-activities -->
@@ -7,7 +7,7 @@
       <intent-filter>
         <action android:name="android.intent.action.MAIN" />
         <category android:name="android.intent.category.LAUNCHER" />
-        <action android:name="com.pushwoosh.unitydemoapp.MESSAGE" />
+        <action android:name="com.pushwoosh.demoapp.MESSAGE" />
         <category android:name="android.intent.category.DEFAULT" />
       </intent-filter>
     </activity>

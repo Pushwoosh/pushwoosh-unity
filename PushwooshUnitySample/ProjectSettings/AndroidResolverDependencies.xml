@@ -10,7 +10,7 @@
   <files />
   <settings>
     <setting name="androidAbis" value="armeabi-v7a,x86" />
-    <setting name="bundleId" value="com.pushwoosh.unitydemoapp" />
+    <setting name="bundleId" value="com.pushwoosh.demoapp" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
     <setting name="gradleTemplateEnabled" value="True" />
