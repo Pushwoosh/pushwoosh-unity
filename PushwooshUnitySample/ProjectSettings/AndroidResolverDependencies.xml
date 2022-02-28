@@ -1,20 +1,75 @@
 <dependencies>
   <packages>
     <package>com.google.firebase:firebase-messaging:19.0.0</package>
-    <package>com.pushwoosh:pushwoosh:6.3.3</package>
-    <package>com.pushwoosh:pushwoosh-amazon:6.3.3</package>
-    <package>com.pushwoosh:pushwoosh-badge:6.3.3</package>
-    <package>com.pushwoosh:pushwoosh-firebase:6.3.3</package>
-    <package>com.pushwoosh:pushwoosh-location:6.3.3</package>
+    <package>com.pushwoosh:pushwoosh:6.4.1</package>
+    <package>com.pushwoosh:pushwoosh-amazon:6.4.1</package>
+    <package>com.pushwoosh:pushwoosh-badge:6.4.1</package>
+    <package>com.pushwoosh:pushwoosh-firebase:6.4.1</package>
   </packages>
-  <files />
+  <files>
+    <file>Assets/Plugins/Android/androidx.annotation.annotation-1.2.0.jar</file>
+    <file>Assets/Plugins/Android/androidx.annotation.annotation-experimental-1.1.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.arch.core.core-common-2.1.0.jar</file>
+    <file>Assets/Plugins/Android/androidx.arch.core.core-runtime-2.1.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.asynclayoutinflater.asynclayoutinflater-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.collection.collection-1.0.0.jar</file>
+    <file>Assets/Plugins/Android/androidx.coordinatorlayout.coordinatorlayout-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.core.core-1.6.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.cursoradapter.cursoradapter-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.customview.customview-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.documentfile.documentfile-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.drawerlayout.drawerlayout-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.fragment.fragment-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.interpolator.interpolator-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.legacy.legacy-support-core-ui-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.legacy.legacy-support-core-utils-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.legacy.legacy-support-v4-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-common-2.1.0.jar</file>
+    <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-livedata-2.1.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-livedata-core-2.1.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-runtime-2.1.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-service-2.1.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.lifecycle.lifecycle-viewmodel-2.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.loader.loader-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.localbroadcastmanager.localbroadcastmanager-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.media.media-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.print.print-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.room.room-common-2.2.5.jar</file>
+    <file>Assets/Plugins/Android/androidx.room.room-runtime-2.2.5.aar</file>
+    <file>Assets/Plugins/Android/androidx.slidingpanelayout.slidingpanelayout-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.sqlite.sqlite-2.1.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.sqlite.sqlite-framework-2.1.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.startup.startup-runtime-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.swiperefreshlayout.swiperefreshlayout-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.tracing.tracing-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.versionedparcelable.versionedparcelable-1.1.1.aar</file>
+    <file>Assets/Plugins/Android/androidx.viewpager.viewpager-1.0.0.aar</file>
+    <file>Assets/Plugins/Android/androidx.work.work-runtime-2.7.1.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-base-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-basement-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-stats-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.android.gms.play-services-tasks-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.auto.value.auto-value-annotations-1.6.3.jar</file>
+    <file>Assets/Plugins/Android/com.google.firebase.firebase-common-18.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.firebase.firebase-iid-19.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.firebase.firebase-iid-interop-17.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.firebase.firebase-measurement-connector-18.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.firebase.firebase-messaging-19.0.0.aar</file>
+    <file>Assets/Plugins/Android/com.google.guava.listenablefuture-1.0.jar</file>
+    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-6.4.1.aar</file>
+    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-amazon-6.4.1.aar</file>
+    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-badge-6.4.1.aar</file>
+    <file>Assets/Plugins/Android/com.pushwoosh.pushwoosh-firebase-6.4.1.aar</file>
+  </files>
   <settings>
     <setting name="androidAbis" value="armeabi-v7a,x86" />
     <setting name="bundleId" value="com.pushwoosh.demoapp" />
     <setting name="explodeAars" value="True" />
     <setting name="gradleBuildEnabled" value="True" />
-    <setting name="gradleTemplateEnabled" value="True" />
+    <setting name="gradlePropertiesTemplateEnabled" value="False" />
+    <setting name="gradleTemplateEnabled" value="False" />
     <setting name="installAndroidPackages" value="True" />
+    <setting name="localMavenRepoDir" value="Assets/GeneratedLocalRepo" />
     <setting name="packageDir" value="Assets/Plugins/Android" />
     <setting name="patchAndroidManifest" value="True" />
     <setting name="patchMainTemplateGradle" value="True" />

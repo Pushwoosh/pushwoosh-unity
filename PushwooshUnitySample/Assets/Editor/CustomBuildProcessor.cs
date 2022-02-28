@@ -5,17 +5,21 @@ using System.IO;
 using MiniJSON;
 using UnityEditor;
 using UnityEditor.Build;
+
 class MyCustomBuildProcessor : IPreprocessBuild
 {
     public int callbackOrder { get { return 0; } }
     public void OnPreprocessBuild(BuildTarget target, string path)
     {
         string assetsUrl = Directory.GetCurrentDirectory() + "/Assets/";
-        CreateIfNeed(assetsUrl + "/Plugins/Android/res/");
-        CreateIfNeed(assetsUrl + "/Plugins/Android/res/values");
-       
         string sourcePath = assetsUrl + "google-services.json";
-        string destenishinPath = assetsUrl + "/Plugins/Android/res/values/googleservices.xml";
+        string libUrl = assetsUrl + "/Plugins/Android/pushwoosh-resources.androidlib/";
+
+        CreateIfNeeded(libUrl + "/res");
+        CreateIfNeeded(libUrl + "/res/values");
+
+        string destinationPath = assetsUrl + "/Plugins/Android/pushwoosh-resources.androidlib/res/values/googleservices.xml";
+       
         if (File.Exists(sourcePath))
         {
             string json = ReadJson(sourcePath);
@@ -34,11 +38,11 @@ class MyCustomBuildProcessor : IPreprocessBuild
             var appId = clientInfo["mobilesdk_app_id"];
 
             var xml = CreateXml(projectNumber, clientId, appId);
-            WriteFile(xml, destenishinPath);
+            WriteFile(xml, destinationPath);
         }
     }
 
-    private void CreateIfNeed(string folderPath)
+    private void CreateIfNeeded(string folderPath)
     {
         if (!Directory.Exists(folderPath))
         {
