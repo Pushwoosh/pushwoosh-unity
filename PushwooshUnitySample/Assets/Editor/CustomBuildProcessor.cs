@@ -13,6 +13,7 @@ class MyCustomBuildProcessor : IPreprocessBuild
     {
         string assetsUrl = Directory.GetCurrentDirectory() + "/Assets/";
         string sourcePath = assetsUrl + "google-services.json";
+        string amazonKeyUrl = assetsUrl + "api_key.txt";
         string libUrl = assetsUrl + "/Plugins/Android/pushwoosh-resources.androidlib/";
 
         CreateIfNeeded(libUrl + "/res");
@@ -39,6 +40,12 @@ class MyCustomBuildProcessor : IPreprocessBuild
 
             var xml = CreateXml(projectNumber, clientId, appId);
             WriteFile(xml, destinationPath);
+        }
+
+        if (File.Exists(amazonKeyUrl))
+        {
+            CreateIfNeeded(libUrl + "/assets");
+            FileUtil.CopyFileOrDirectory(amazonKeyUrl, libUrl + "assets/api_key.txt");
         }
     }
 
