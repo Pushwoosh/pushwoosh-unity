@@ -45,7 +45,7 @@ public class PushwooshBuildManager : MonoBehaviour
 
 			PBXProject proj = new PBXProject();
 			proj.ReadFromString(File.ReadAllText(projPath));
-			string projTarget = proj.TargetGuidByName("Unity-iPhone");
+			string projTarget = proj.GetUnityMainTargetGuid();
 			UnityEngine.Debug.Log ("Project Target: " + projTarget);
 
 			proj.AddFrameworkToProject(projTarget, "Security.framework", false);

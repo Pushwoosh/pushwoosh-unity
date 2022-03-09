@@ -28,7 +28,7 @@ public class AddNotificationServiceExtensioniOS : MonoBehaviour
         proj.ReadFromFile(projPath);
 
         #if UNITY_2019_3_OR_NEWER
-        string mainTarget = proj.TargetGuidByName(proj.GetUnityFrameworkTargetGuid());
+        string mainTarget = proj.GetUnityFrameworkTargetGuid();
         #else
         string mainTarget = proj.TargetGuidByName(PBXProject.GetUnityTargetName());
         #endif

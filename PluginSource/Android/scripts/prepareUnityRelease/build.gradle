@@ -3,7 +3,7 @@ apply from: '../scripts/generateManifest/build.gradle'
 ext {
 	publishDir = "${project.rootDir}/publish"
 	manifestsTempDir = "$publishDir/manifests"
-	readmeFilesDir = "${project.rootDir}/readme"
+	androidlibFilesDir = "${project.rootDir}/lib"
 	unityActivitiesAndroidManifestPath = "${project.rootDir}/scripts/prepareUnityRelease"
 
 	publicManifestPath = file("$publishDir/AndroidManifest.xml")
@@ -71,10 +71,10 @@ task copyUnityPluginAar {
 	}
 }
 
-task copyReadmeFiles {
+task copyAndroidlibFiles {
 	doLast {
 		copy {
-			from readmeFilesDir
+			from androidlibFilesDir
 			into publishDir
 		}
 	}
@@ -84,5 +84,5 @@ copyAndroidManifests.dependsOn cleanPublishDir
 generatePublicAndroidManifest.dependsOn copyAndroidManifests
 removeAndroidManifests.dependsOn generatePublicAndroidManifest
 copyUnityPluginAar.dependsOn removeAndroidManifests
-copyReadmeFiles.dependsOn copyUnityPluginAar
-assemble.dependsOn copyReadmeFiles
+copyAndroidlibFiles.dependsOn copyUnityPluginAar
+assemble.dependsOn copyAndroidlibFiles

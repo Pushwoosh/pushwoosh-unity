@@ -24,7 +24,6 @@ task generatePublicAndroidManifest {
 					'package': packageName
 			) {
 				"uses-sdk"(
-						'android:minSdkVersion': global_minSdk,
 						'android:targetSdkVersion': global_targetSdk
 				)
 
