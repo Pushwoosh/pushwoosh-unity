@@ -8,6 +8,7 @@ import androidx.core.app.NotificationManagerCompat;
 
 import com.pushwoosh.GDPRManager;
 import com.pushwoosh.Pushwoosh;
+import com.pushwoosh.RegisterForPushNotificationsResultData;
 import com.pushwoosh.badge.PushwooshBadge;
 import com.pushwoosh.exception.GetTagsException;
 import com.pushwoosh.exception.PushwooshException;
@@ -84,11 +85,15 @@ public class PushwooshProxy {
 	}
 
 	public void registerForPushNotifications() {
-		Pushwoosh.getInstance().registerForPushNotifications(new Callback<String, RegisterForPushNotificationsException>() {
+		Pushwoosh.getInstance().registerForPushNotifications(new Callback<RegisterForPushNotificationsResultData, RegisterForPushNotificationsException>() {
 			@Override
-			public void process(@NonNull Result<String, RegisterForPushNotificationsException> result) {
+			public void process(@NonNull Result<RegisterForPushNotificationsResultData, RegisterForPushNotificationsException> result) {
 				if (result.isSuccess()) {
-					onRegisterEvent(result.getData());
+					if (result.getData() != null) {
+						onRegisterEvent(result.getData().getToken());
+					} else {
+						onRegisterErrorEvent("Failed to get push token from registration callback");
+					}
 				} else if (result.getException() != null) {
 					onRegisterErrorEvent(result.getException().getLocalizedMessage());
 				}
