@@ -7,6 +7,7 @@
 #import <UserNotifications/UserNotifications.h>
 #import <objc/runtime.h>
 #import <Pushwoosh/PushNotificationManager.h>
+#import <Pushwoosh/Pushwoosh.h>
 #import <Pushwoosh/PWInAppManager.h>
 #import <Pushwoosh/PWGDPRManager.h>
 #import "PWMUserNotificationCenterDelegateProxy.h"
@@ -68,6 +69,63 @@ void pw_setUserId(char *userId) {
     NSString *userIdStr = [[NSString alloc] initWithUTF8String:userId];
     [[PWInAppManager sharedManager] setUserId:userIdStr];
 }
+
+void pw_setUser(char *userId, char **emails) {
+    size_t length = 0;
+    while (emails[length] != NULL) length++;
+    
+    NSMutableArray *emailsArray = [NSMutableArray array];
+    NSString *userIdStr = [[NSString alloc] initWithUTF8String:userId];
+    
+    for (int i = 0; i < length; i++) {
+        char *emailValue = emails[i];
+        NSString *emailValueStr = [[NSString alloc] initWithUTF8String:emailValue];
+        
+        if (emailValueStr) {
+            [emailsArray addObject:emailValueStr];
+        }
+#if !__has_feature(objc_arc)
+        [emailValueStr release];
+#endif
+    }
+    
+    if (emailsArray.count) {
+        [[Pushwoosh sharedInstance] setUser:userIdStr emails:emailsArray];
+    }
+#if !__has_feature(objc_arc)
+    [userIdStr release];
+#endif
+}
+
+void pw_setEmails(char **emails) {
+    size_t length = 0;
+    while (emails[length] != NULL) length++;
+    
+    NSMutableArray *emailsArray = [NSMutableArray array];
+    
+    for (int i = 0; i < length; i++) {
+        char *emailValue = emails[i];
+        NSString *emailValueStr = [[NSString alloc] initWithUTF8String:emailValue];
+        
+        if (emailValueStr) {
+            [emailsArray addObject:emailValueStr];
+        }
+#if !__has_feature(objc_arc)
+        [emailValueStr release];
+#endif
+    }
+    
+    if (emailsArray.count) {
+        [[Pushwoosh sharedInstance] setEmails:emailsArray];
+    }
+}
+
+void pw_setEmail(char *email) {
+    NSString *emailStr = [[NSString alloc] initWithUTF8String:email];
+
+    [[Pushwoosh sharedInstance] setEmail:emailStr];
+}
+
 
 void pw_postEvent(char *event, char *attributes) {
     NSString *eventStr = [[NSString alloc] initWithUTF8String:event];

@@ -342,6 +342,18 @@ public class PushwooshProxy {
 		PushwooshInApp.getInstance().setUserId(userId);
 	}
 
+	public void setUser(String userId, List<String> emails) {
+		Pushwoosh.getInstance().setUser(userId, emails);
+	}
+
+	public void setEmails(List<String> emails) {
+		Pushwoosh.getInstance().setEmail(emails);
+	}
+
+	public void setEmail(String email) {
+		Pushwoosh.getInstance().setEmail(email);
+	}
+
 	public void postEvent(String event, String attributesStr) {
 		try {
 			if (attributesStr.isEmpty()) {

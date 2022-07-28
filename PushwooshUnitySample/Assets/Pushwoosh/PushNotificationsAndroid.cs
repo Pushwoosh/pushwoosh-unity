@@ -121,6 +121,21 @@ public class PushNotificationsAndroid : Pushwoosh
 		pushwoosh.Call("setUserId", userId);
 	}
 
+	public override void SetUser(string userId, List<string> emails) 
+	{
+		pushwoosh.Call("setUser", userId, emails);
+	}
+
+	public override void SetEmails(List<string> emails) 
+	{
+		pushwoosh.Call("setEmails", emails);
+	}
+
+	public override void SetEmail(string email)
+	{
+		pushwoosh.Call("setEmail", email);
+	}
+
 	protected override void PostEventInternal(string eventId, string attributes)
 	{
 		pushwoosh.Call("postEvent", eventId, attributes);

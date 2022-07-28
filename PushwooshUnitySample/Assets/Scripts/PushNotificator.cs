@@ -52,6 +52,12 @@ public class PushNotificator : MonoBehaviour
         }
 		Pushwoosh.Instance.SetUserId("%userId%");
 
+		Pushwoosh.Instance.SetUser("666777", new List<string> (new[] { "test1@test.com", "test2@test.com" }));
+
+		Pushwoosh.Instance.SetEmails(new List<string> (new[] { "test3@test.com", "test4@test.com" }));
+
+		Pushwoosh.Instance.SetEmail("test5@test.com");
+
 		Dictionary<string, object> attributes = new Dictionary<string, object>() {
 			{ "attribute", "value" },
 		};

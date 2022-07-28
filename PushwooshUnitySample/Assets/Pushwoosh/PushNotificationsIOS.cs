@@ -65,6 +65,14 @@ public class PushNotificationsIOS : Pushwoosh
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private void pw_setUserId(string userId);
 
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_setUser(string userId, string[] emails);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_setEmails(string[] emails);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_setEmail(string email);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private bool pw_gdprAvailable();
@@ -141,6 +149,39 @@ public class PushNotificationsIOS : Pushwoosh
 	public override void SetUserId(string userId)
 	{
 		pw_setUserId(userId);
+	}
+
+	public override void SetUser(string userId, List<string> emails)
+	{
+		List <string> stringEmails = new List<string>();
+		
+		foreach (string email in emails) {			
+			if (email != null)
+				stringEmails.Add(email);
+		}
+		
+		string[] array = stringEmails.ToArray();
+	
+		pw_setUser(userId, array);
+	}
+
+	public override void SetEmails(List<string> emails)
+	{
+		List <string> stringEmails = new List<string>();
+		
+		foreach (string email in emails) {			
+			if (email != null)
+				stringEmails.Add(email);
+		}
+		
+		string[] array = stringEmails.ToArray();
+	
+		pw_setEmails(array);
+	}
+
+	public override void SetEmail(string email)
+	{
+		pw_setEmail(email);
 	}
 
 	protected override void PostEventInternal(string eventId, string attributes)
