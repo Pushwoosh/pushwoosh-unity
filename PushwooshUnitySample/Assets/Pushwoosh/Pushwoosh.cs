@@ -141,6 +141,21 @@ public class Pushwoosh : MonoBehaviour
 		Debug.Log ("[Pushwoosh] Error: SetUserId is not supported on this platform");
 	}
 
+	public virtual void SetUser(string userId, List<string> emails)
+	{
+		Debug.Log ("[Pushwoosh] Error: SetUser is not supported on this platform");
+	}
+
+	public virtual void SetEmails(List<string> emails)
+	{
+		Debug.Log ("[Pushwoosh] Error: SetEmails is not supported on this platform");
+	}
+
+	public virtual void SetEmail(string email)
+	{
+		Debug.Log ("[Pushwoosh] Error: SetEmail is not supported on this platform");
+	}
+
 	public virtual void PostEvent(string eventId, IDictionary<string, object> attributes)
 	{
 		string attributesJson = PushwooshUtils.DictionaryToJson(attributes);
