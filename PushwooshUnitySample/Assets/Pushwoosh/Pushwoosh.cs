@@ -40,6 +40,16 @@ public class Pushwoosh : MonoBehaviour
 
 	public delegate void GetTagsHandler(IDictionary<string, object> tags, PushwooshException error);
 
+	public delegate void PurchaseSuccessHandler(string identifier);
+
+	public delegate void PromotedPurchaseSuccessHandler(string identifier);
+
+	public delegate void CompletedTransactionsFailedHandler(string error);
+
+	public delegate void PaymentFailedProductIdentifierHandler(string error);
+	
+	public delegate void PurchaseHelperProductsHandler(string identifiers);
+
 
 	public event RegistrationSuccessHandler OnRegisteredForPushNotifications = delegate {};
 	
@@ -56,6 +66,16 @@ public class Pushwoosh : MonoBehaviour
     public event GdprSuccessHandler OnRemoveAllData = delegate { };
 
     public event GdprErrorHandler OnFailedRemoveAllData = delegate { };
+
+	public event PurchaseSuccessHandler OnPWInAppPurchaseHelperPaymentComplete = delegate { };
+
+	public event PromotedPurchaseSuccessHandler OnPWInAppPurchaseHelperCallPromotedPurchase = delegate { };
+
+	public event CompletedTransactionsFailedHandler OnPWInAppPurchaseHelperRestoreCompletedTransactionsFailed = delegate { };
+
+	public event PaymentFailedProductIdentifierHandler OnPWInAppPurchaseHelperPaymentFailedProductIdentifier = delegate { };
+
+	public event PurchaseHelperProductsHandler OnPWInAppPurchaseHelperProducts = delegate { };
 
 	public virtual string HWID
 	{
@@ -190,6 +210,33 @@ public class Pushwoosh : MonoBehaviour
 	protected void PushNotificationsOpened(string payload)
 	{
 		OnPushNotificationsOpened(payload);
+	}
+
+	// In-App Purchase iOS
+
+	protected void PWInAppPurchaseHelperPaymentComplete(string identifier)
+	{
+		OnPWInAppPurchaseHelperPaymentComplete(identifier);
+	}
+
+	protected void PWInAppPurchaseHelperCallPromotedPurchase(string identifier)
+	{
+		OnPWInAppPurchaseHelperCallPromotedPurchase(identifier);
+	}
+
+	protected void PWInAppPurchaseHelperRestoreCompletedTransactionsFailed(string error)
+	{
+		OnPWInAppPurchaseHelperRestoreCompletedTransactionsFailed(error);
+	}
+
+	protected void PWInAppPurchaseHelperPaymentFailedProductIdentifier(string error)
+	{
+		OnPWInAppPurchaseHelperPaymentFailedProductIdentifier(error);
+	}
+
+	protected void PWInAppPurchaseHelperProducts(string identifiers) 
+	{
+		OnPWInAppPurchaseHelperProducts(identifiers);
 	}
 
     //GPDR

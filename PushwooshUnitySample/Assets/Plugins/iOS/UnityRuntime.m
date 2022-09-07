@@ -14,8 +14,12 @@
 
 static char * g_pw_tokenStr = 0;
 static char * g_pw_registerErrStr = 0;
+static char * g_pw_restoreErrStr = 0;
+static char * g_pw_paymentFailErrStr = 0;
 static char * g_pw_pushMessageStr = 0;
 static char * g_pw_listenerName = 0;
+static char * g_pw_success_identifier = 0;
+static char * g_pw_productsRequested = 0;
 static NSString * g_pw_launchNotification = nil;
 
 void pw_registerForRemoteNotifications() {
@@ -30,6 +34,7 @@ void pw_initializePushManager(char *appId, char *appName) {
     
     [[PushNotificationManager pushManager] sendAppOpen];
     [PushNotificationManager pushManager].delegate = (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
+    [Pushwoosh sharedInstance].purchaseDelegate = (NSObject<PWPurchaseDelegate> *)[UIApplication sharedApplication];
     
     [PWMUserNotificationCenterDelegateProxy setupWithPushDelegate:[PushNotificationManager pushManager].notificationCenterDelegate];
 }
@@ -171,6 +176,31 @@ void pw_setListenerName(char *listenerName) {
     if(g_pw_pushMessageStr) {
         UnitySendMessage(g_pw_listenerName, "onPushNotificationsOpened", g_pw_pushMessageStr);
         free(g_pw_pushMessageStr); g_pw_pushMessageStr = 0;
+    }
+    
+    if (g_pw_success_identifier) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentComplete", g_pw_success_identifier);
+        free(g_pw_success_identifier); g_pw_success_identifier = 0;
+    }
+    
+    if (g_pw_success_identifier) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperCallPromotedPurchase", g_pw_success_identifier);
+        free(g_pw_success_identifier); g_pw_success_identifier = 0;
+    }
+    
+    if (g_pw_restoreErrStr) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed", g_pw_restoreErrStr);
+        free(g_pw_restoreErrStr); g_pw_restoreErrStr = 0;
+    }
+    
+    if (g_pw_paymentFailErrStr) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentFailedProductIdentifier", g_pw_paymentFailErrStr);
+        free(g_pw_paymentFailErrStr); g_pw_paymentFailErrStr = 0;
+    }
+    
+    if (g_pw_productsRequested) {
+        UnitySendMessage(g_pw_productsRequested, "onPWInAppPurchaseHelperProducts", g_pw_productsRequested);
+        free(g_pw_productsRequested); g_pw_productsRequested = 0;
     }
 }
 
@@ -324,6 +354,10 @@ void pw_showGDPRDeletionUI() {
     return (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
 }
 
+- (NSObject<PWPurchaseDelegate> *)getPurchaseDelegate {
+    return (NSObject<PWPurchaseDelegate> *)[UIApplication sharedApplication];
+}
+
 - (BOOL)pushwooshUseRuntimeMagic {
     return YES;
 }
@@ -373,6 +407,65 @@ void pw_showGDPRDeletionUI() {
     }
 }
 
+- (const char *)purchasedWithIdentifier:(NSString *)identifier {
+    const char * str = [identifier UTF8String];
+    
+    if (!g_pw_listenerName) {
+        g_pw_success_identifier = malloc(strlen(str)+1);
+        strcpy(g_pw_success_identifier, str);
+        return NULL;
+    } else {
+        return str;
+    }
+}
+
+- (const char *)restoreCompletedTransactionsFailed:(NSError *)error {
+    const char * str = [[error description] UTF8String];
+    if (!g_pw_listenerName) {
+        g_pw_restoreErrStr = malloc(strlen(str)+1);
+        strcpy(g_pw_restoreErrStr, str);
+        return NULL;
+    } else {
+        return str;
+    }
+}
+
+- (const char *)paymentFailedProductIdentifier:(NSString* _Nullable)identifier
+                                         error:(NSError* _Nullable)error {
+    NSDictionary *parameters = @{@"identifier": [self getStringOrEmpty:identifier],
+                                 @"error": [self getStringOrEmpty:error.description]
+    };
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
+    NSString *jsonRequestData = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    const char * str = [jsonRequestData UTF8String];
+    
+    if (!g_pw_listenerName) {
+        g_pw_paymentFailErrStr = malloc(strlen(str)+1);
+        strcpy(g_pw_paymentFailErrStr, str);
+        return NULL;
+    } else {
+        return str;
+    }
+}
+
+- (const char *)purchaseHelperProducts:(NSArray<SKProduct *>* _Nullable)products {
+    NSMutableString *mutableString = [[NSMutableString alloc] init];
+    for (SKProduct *product in products) {
+        [mutableString appendString:product.productIdentifier];
+    }
+        
+    const char * str = [mutableString UTF8String];
+    
+    if (!g_pw_listenerName) {
+        g_pw_productsRequested = malloc(strlen(str)+1);
+        strcpy(g_pw_productsRequested, str);
+        return NULL;
+    } else {
+        return str;
+    }
+}
+
 - (void)onPushReceived:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification onStart:(BOOL)onStart {
     const char * str = [self jsonRequestDataWithNotification:pushNotification onStart:onStart];
     if (str != NULL) {
@@ -386,6 +479,49 @@ void pw_showGDPRDeletionUI() {
         UnitySendMessage(g_pw_listenerName, "onPushNotificationsOpened", str);
     }
 }
+
+- (void)onPWInAppPurchaseHelperPaymentComplete:(NSString* _Nullable)identifier {
+    const char * str = [self purchasedWithIdentifier:identifier];
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentComplete", str);
+    }
+}
+
+- (void)onPWInAppPurchaseHelperCallPromotedPurchase:(NSString* _Nullable)identifier {
+    const char * str = [self purchasedWithIdentifier:identifier];
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperCallPromotedPurchase", str);
+    }
+}
+
+- (void)onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed:(NSError * _Nullable)error {
+    const char * str = [self restoreCompletedTransactionsFailed:error];
+    
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed", str);
+    }
+}
+
+- (void)onPWInAppPurchaseHelperPaymentFailedProductIdentifier:(NSString* _Nullable)identifier
+                                                        error:(NSError* _Nullable)error {
+    const char * str = [self paymentFailedProductIdentifier:identifier error:error];
+        
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentFailedProductIdentifier", str);
+    }
+}
+
+- (void)onPWInAppPurchaseHelperProducts:(NSArray<SKProduct *>* _Nullable)products {
+    const char * str = [self purchaseHelperProducts:products];
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperProducts", str);
+    }
+}
+
+- (NSString *)getStringOrEmpty:(NSString *)str {
+    return str ? str : @"";
+}
+
 
 @end
 
