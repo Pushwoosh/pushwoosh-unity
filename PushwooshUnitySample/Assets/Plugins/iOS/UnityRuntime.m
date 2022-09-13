@@ -14,12 +14,8 @@
 
 static char * g_pw_tokenStr = 0;
 static char * g_pw_registerErrStr = 0;
-static char * g_pw_restoreErrStr = 0;
-static char * g_pw_paymentFailErrStr = 0;
 static char * g_pw_pushMessageStr = 0;
 static char * g_pw_listenerName = 0;
-static char * g_pw_success_identifier = 0;
-static char * g_pw_productsRequested = 0;
 static NSString * g_pw_launchNotification = nil;
 
 void pw_registerForRemoteNotifications() {
@@ -176,31 +172,6 @@ void pw_setListenerName(char *listenerName) {
     if(g_pw_pushMessageStr) {
         UnitySendMessage(g_pw_listenerName, "onPushNotificationsOpened", g_pw_pushMessageStr);
         free(g_pw_pushMessageStr); g_pw_pushMessageStr = 0;
-    }
-    
-    if (g_pw_success_identifier) {
-        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentComplete", g_pw_success_identifier);
-        free(g_pw_success_identifier); g_pw_success_identifier = 0;
-    }
-    
-    if (g_pw_success_identifier) {
-        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperCallPromotedPurchase", g_pw_success_identifier);
-        free(g_pw_success_identifier); g_pw_success_identifier = 0;
-    }
-    
-    if (g_pw_restoreErrStr) {
-        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed", g_pw_restoreErrStr);
-        free(g_pw_restoreErrStr); g_pw_restoreErrStr = 0;
-    }
-    
-    if (g_pw_paymentFailErrStr) {
-        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentFailedProductIdentifier", g_pw_paymentFailErrStr);
-        free(g_pw_paymentFailErrStr); g_pw_paymentFailErrStr = 0;
-    }
-    
-    if (g_pw_productsRequested) {
-        UnitySendMessage(g_pw_productsRequested, "onPWInAppPurchaseHelperProducts", g_pw_productsRequested);
-        free(g_pw_productsRequested); g_pw_productsRequested = 0;
     }
 }
 
@@ -407,29 +378,6 @@ void pw_showGDPRDeletionUI() {
     }
 }
 
-- (const char *)purchasedWithIdentifier:(NSString *)identifier {
-    const char * str = [identifier UTF8String];
-    
-    if (!g_pw_listenerName) {
-        g_pw_success_identifier = malloc(strlen(str)+1);
-        strcpy(g_pw_success_identifier, str);
-        return NULL;
-    } else {
-        return str;
-    }
-}
-
-- (const char *)restoreCompletedTransactionsFailed:(NSError *)error {
-    const char * str = [[error description] UTF8String];
-    if (!g_pw_listenerName) {
-        g_pw_restoreErrStr = malloc(strlen(str)+1);
-        strcpy(g_pw_restoreErrStr, str);
-        return NULL;
-    } else {
-        return str;
-    }
-}
-
 - (const char *)paymentFailedProductIdentifier:(NSString* _Nullable)identifier
                                          error:(NSError* _Nullable)error {
     NSDictionary *parameters = @{@"identifier": [self getStringOrEmpty:identifier],
@@ -440,13 +388,7 @@ void pw_showGDPRDeletionUI() {
     
     const char * str = [jsonRequestData UTF8String];
     
-    if (!g_pw_listenerName) {
-        g_pw_paymentFailErrStr = malloc(strlen(str)+1);
-        strcpy(g_pw_paymentFailErrStr, str);
-        return NULL;
-    } else {
-        return str;
-    }
+    return str;
 }
 
 - (const char *)purchaseHelperProducts:(NSArray<SKProduct *>* _Nullable)products {
@@ -456,14 +398,8 @@ void pw_showGDPRDeletionUI() {
     }
         
     const char * str = [mutableString UTF8String];
-    
-    if (!g_pw_listenerName) {
-        g_pw_productsRequested = malloc(strlen(str)+1);
-        strcpy(g_pw_productsRequested, str);
-        return NULL;
-    } else {
-        return str;
-    }
+
+    return str;
 }
 
 - (void)onPushReceived:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification onStart:(BOOL)onStart {
@@ -481,21 +417,21 @@ void pw_showGDPRDeletionUI() {
 }
 
 - (void)onPWInAppPurchaseHelperPaymentComplete:(NSString* _Nullable)identifier {
-    const char * str = [self purchasedWithIdentifier:identifier];
+    const char * str = [identifier UTF8String];
     if (str != NULL) {
         UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentComplete", str);
     }
 }
 
 - (void)onPWInAppPurchaseHelperCallPromotedPurchase:(NSString* _Nullable)identifier {
-    const char * str = [self purchasedWithIdentifier:identifier];
+    const char * str = [identifier UTF8String];
     if (str != NULL) {
         UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperCallPromotedPurchase", str);
     }
 }
 
 - (void)onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed:(NSError * _Nullable)error {
-    const char * str = [self restoreCompletedTransactionsFailed:error];
+    const char * str = [[error description] UTF8String];
     
     if (str != NULL) {
         UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed", str);
