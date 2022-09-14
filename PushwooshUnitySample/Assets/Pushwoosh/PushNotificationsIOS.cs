@@ -323,6 +323,31 @@ public class PushNotificationsIOS : Pushwoosh
 		PushNotificationsOpened (payload);
 	}
 
+	void onPWInAppPurchaseHelperPaymentComplete(string identifier) 
+	{
+		PWInAppPurchaseHelperPaymentComplete(identifier);
+	}
+
+	void onPWInAppPurchaseHelperCallPromotedPurchase(string identifier)
+	{
+		PWInAppPurchaseHelperCallPromotedPurchase(identifier);
+	}
+
+	void onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed(string error) 
+	{
+		PWInAppPurchaseHelperRestoreCompletedTransactionsFailed(error);
+	}
+
+	void onPWInAppPurchaseHelperPaymentFailedProductIdentifier(string error)
+	{
+		PWInAppPurchaseHelperPaymentFailedProductIdentifier(error);
+	}
+
+	void onPWInAppPurchaseHelperProducts(string identifiers)
+	{
+		PWInAppPurchaseHelperProducts(identifiers);
+	}
+
 	void onTagsReceived(string json)
 	{
 		GetTagsHandler handler = tagsHandlers.Dequeue();

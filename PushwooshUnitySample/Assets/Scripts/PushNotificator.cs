@@ -32,6 +32,9 @@ public class PushNotificator : MonoBehaviour
 		Pushwoosh.Instance.OnFailedToRegisteredForPushNotifications += OnFailedToRegisteredForPushNotifications;
 		Pushwoosh.Instance.OnPushNotificationsReceived += OnPushNotificationsReceived;
 		Pushwoosh.Instance.OnPushNotificationsOpened += OnPushNotificationsOpened;
+		Pushwoosh.Instance.OnPWInAppPurchaseHelperPaymentComplete += OnPWInAppPurchaseHelperPaymentComplete;
+		Pushwoosh.Instance.OnPWInAppPurchaseHelperPaymentFailedProductIdentifier += OnPWInAppPurchaseHelperPaymentFailedProductIdentifier;
+		Pushwoosh.Instance.OnPWInAppPurchaseHelperRestoreCompletedTransactionsFailed += OnPWInAppPurchaseHelperRestoreCompletedTransactionsFailed;
 
 		Pushwoosh.Instance.SetStringTag ("UserName", "Alex");
 		Pushwoosh.Instance.SetIntTag ("Age", 42);
@@ -154,6 +157,21 @@ public class PushNotificator : MonoBehaviour
 	{
 		notificationString = "NotificationOpened: " + payload;
 		Debug.Log ("NotificationOpened: " + payload);
+	}
+
+	void OnPWInAppPurchaseHelperPaymentComplete(string identifier) 
+	{
+		Debug.Log ("PWInAppPurchaseHelperPaymentComplete: " + identifier);
+	}
+
+	void OnPWInAppPurchaseHelperPaymentFailedProductIdentifier(string error)
+	{
+		Debug.Log ("PWInAppPurchaseHelperPaymentFailedProductIdentifier: " + error);
+	}
+
+	void OnPWInAppPurchaseHelperRestoreCompletedTransactionsFailed(string error)
+	{
+		Debug.Log ("PWInAppPurchaseHelperRestoreCompletedTransactionsFailed: " + error);
 	}
 
     private class MyNotificationChannelDelegate : NotificationChannelDelegate

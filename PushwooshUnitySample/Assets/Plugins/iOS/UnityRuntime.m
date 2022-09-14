@@ -30,6 +30,7 @@ void pw_initializePushManager(char *appId, char *appName) {
     
     [[PushNotificationManager pushManager] sendAppOpen];
     [PushNotificationManager pushManager].delegate = (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
+    [Pushwoosh sharedInstance].purchaseDelegate = (NSObject<PWPurchaseDelegate> *)[UIApplication sharedApplication];
     
     [PWMUserNotificationCenterDelegateProxy setupWithPushDelegate:[PushNotificationManager pushManager].notificationCenterDelegate];
 }
@@ -324,6 +325,10 @@ void pw_showGDPRDeletionUI() {
     return (NSObject<PushNotificationDelegate> *)[UIApplication sharedApplication];
 }
 
+- (NSObject<PWPurchaseDelegate> *)getPurchaseDelegate {
+    return (NSObject<PWPurchaseDelegate> *)[UIApplication sharedApplication];
+}
+
 - (BOOL)pushwooshUseRuntimeMagic {
     return YES;
 }
@@ -373,6 +378,30 @@ void pw_showGDPRDeletionUI() {
     }
 }
 
+- (const char *)paymentFailedProductIdentifier:(NSString* _Nullable)identifier
+                                         error:(NSError* _Nullable)error {
+    NSDictionary *parameters = @{@"identifier": [self getStringOrEmpty:identifier],
+                                 @"error": [self getStringOrEmpty:error.description]
+    };
+    NSData *jsonData = [NSJSONSerialization dataWithJSONObject:parameters options:0 error:nil];
+    NSString *jsonRequestData = [[NSString alloc] initWithData:jsonData encoding:NSUTF8StringEncoding];
+    
+    const char * str = [jsonRequestData UTF8String];
+    
+    return str;
+}
+
+- (const char *)purchaseHelperProducts:(NSArray<SKProduct *>* _Nullable)products {
+    NSMutableString *mutableString = [[NSMutableString alloc] init];
+    for (SKProduct *product in products) {
+        [mutableString appendString:product.productIdentifier];
+    }
+        
+    const char * str = [mutableString UTF8String];
+
+    return str;
+}
+
 - (void)onPushReceived:(PushNotificationManager *)pushManager withNotification:(NSDictionary *)pushNotification onStart:(BOOL)onStart {
     const char * str = [self jsonRequestDataWithNotification:pushNotification onStart:onStart];
     if (str != NULL) {
@@ -386,6 +415,49 @@ void pw_showGDPRDeletionUI() {
         UnitySendMessage(g_pw_listenerName, "onPushNotificationsOpened", str);
     }
 }
+
+- (void)onPWInAppPurchaseHelperPaymentComplete:(NSString* _Nullable)identifier {
+    const char * str = [identifier UTF8String];
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentComplete", str);
+    }
+}
+
+- (void)onPWInAppPurchaseHelperCallPromotedPurchase:(NSString* _Nullable)identifier {
+    const char * str = [identifier UTF8String];
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperCallPromotedPurchase", str);
+    }
+}
+
+- (void)onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed:(NSError * _Nullable)error {
+    const char * str = [[error description] UTF8String];
+    
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperRestoreCompletedTransactionsFailed", str);
+    }
+}
+
+- (void)onPWInAppPurchaseHelperPaymentFailedProductIdentifier:(NSString* _Nullable)identifier
+                                                        error:(NSError* _Nullable)error {
+    const char * str = [self paymentFailedProductIdentifier:identifier error:error];
+        
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperPaymentFailedProductIdentifier", str);
+    }
+}
+
+- (void)onPWInAppPurchaseHelperProducts:(NSArray<SKProduct *>* _Nullable)products {
+    const char * str = [self purchaseHelperProducts:products];
+    if (str != NULL) {
+        UnitySendMessage(g_pw_listenerName, "onPWInAppPurchaseHelperProducts", str);
+    }
+}
+
+- (NSString *)getStringOrEmpty:(NSString *)str {
+    return str ? str : @"";
+}
+
 
 @end
 
