@@ -1,13 +1,13 @@
 ﻿
 <dependencies>
     <androidPackages>
-        <androidPackage spec="com.pushwoosh:pushwoosh:6.6.5"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-firebase:6.6.5"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-amazon:6.6.5"/>
-        <androidPackage spec="com.pushwoosh:pushwoosh-badge:6.6.5"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh:6.6.7"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-firebase:6.6.7"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-amazon:6.6.7"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-badge:6.6.7"/>
         
         <androidPackage spec="com.google.firebase:firebase-messaging:19.0.0"/>
-<!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:6.6.5"/>-->
+<!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:6.6.7"/>-->
     </androidPackages>
    
     <iosPods>
