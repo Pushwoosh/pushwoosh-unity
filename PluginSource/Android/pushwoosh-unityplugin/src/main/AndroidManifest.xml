@@ -14,5 +14,8 @@
 		<meta-data
 			android:name="com.pushwoosh.notification_factory"
 			android:value="com.pushwoosh.unityplugin.UnityNotificationFactory" />
+		<meta-data
+			android:name="com.pushwoosh.summary_notification_factory"
+			android:value="com.pushwoosh.unityplugin.UnitySummaryNotificationFactory" />
 	</application>
 </manifest>
