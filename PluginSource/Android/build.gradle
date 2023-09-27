@@ -25,7 +25,7 @@ allprojects {
 
 ext {
     global_minSdk = 16
-    global_targetSdk = 29
+    global_targetSdk = 34
     global_buildToolsSdk = "27.0.1"
     global_versionName = "6.1.9"
     pushwoosh = "6.6.12"
