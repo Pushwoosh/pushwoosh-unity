@@ -1,0 +1,16 @@
+
+=== Thu Sep 28 13:01:50 2023
+
+Packages were changed.
+Update Mode: updateDependencies
+
+The following packages were updated:
+  com.unity.ads from version 3.7.5 to 4.4.2
+  com.unity.collab-proxy from version 1.15.7 to 2.0.7
+  com.unity.ide.rider from version 3.0.9 to 3.0.24
+  com.unity.ide.visualstudio from version 2.0.14 to 2.0.18
+  com.unity.ide.vscode from version 1.2.4 to 1.2.5
+  com.unity.purchasing from version 4.1.2 to 4.9.3
+  com.unity.test-framework from version 1.1.29 to 1.1.33
+  com.unity.timeline from version 1.6.3 to 1.6.5
+  com.unity.xr.legacyinputhelpers from version 2.1.8 to 2.1.10
