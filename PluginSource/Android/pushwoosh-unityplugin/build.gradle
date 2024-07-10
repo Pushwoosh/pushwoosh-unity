@@ -3,6 +3,7 @@ apply from: '../scripts/prepareUnityRelease/build.gradle'
 
 android {
     compileSdkVersion global_targetSdk
+    namespace 'com.pushwoosh.unityplugin'
 
     defaultConfig {
         versionName global_versionName
