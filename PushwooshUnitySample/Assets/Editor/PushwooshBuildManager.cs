@@ -34,6 +34,18 @@ using UnityEditor.iOS.Xcode;
 
 public class PushwooshBuildManager : MonoBehaviour 
 {
+
+	#if UNITY_IOS
+    [PostProcessBuild(999)]
+    public static void OnPostProcessBuild(BuildTarget buildTarget, string path)
+    {
+        string preprocessorPath = path + "/Classes/Preprocessor.h";
+        string text = File.ReadAllText(preprocessorPath);
+        text = text.Replace("UNITY_USES_REMOTE_NOTIFICATIONS 0", "UNITY_USES_REMOTE_NOTIFICATIONS 1");
+        File.WriteAllText(preprocessorPath, text);
+    }
+    #endif
+
 	[PostProcessBuild]
 	private static void onPostProcessBuildPlayer(BuildTarget target, string pathToBuiltProject) {
 #if UNITY_EDITOR_OSX && UNITY_5_PLUS
