@@ -39,10 +39,12 @@ public class PushwooshBuildManager : MonoBehaviour
     [PostProcessBuild(999)]
     public static void OnPostProcessBuild(BuildTarget buildTarget, string path)
     {
-        string preprocessorPath = path + "/Classes/Preprocessor.h";
-        string text = File.ReadAllText(preprocessorPath);
-        text = text.Replace("UNITY_USES_REMOTE_NOTIFICATIONS 0", "UNITY_USES_REMOTE_NOTIFICATIONS 1");
-        File.WriteAllText(preprocessorPath, text);
+		if (buildTarget == BuildTarget.iOS) {
+        	string preprocessorPath = path + "/Classes/Preprocessor.h";
+        	string text = File.ReadAllText(preprocessorPath);
+        	text = text.Replace("UNITY_USES_REMOTE_NOTIFICATIONS 0", "UNITY_USES_REMOTE_NOTIFICATIONS 1");
+        	File.WriteAllText(preprocessorPath, text);
+		}
     }
     #endif
 
@@ -70,7 +72,6 @@ public class PushwooshBuildManager : MonoBehaviour
             }
 
 			File.WriteAllText(projPath, proj.WriteToString());
-
 		}
 #endif
 

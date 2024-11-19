@@ -166,6 +166,11 @@ public class Pushwoosh : MonoBehaviour
 		Debug.Log ("[Pushwoosh] Error: SetUser is not supported on this platform");
 	}
 
+	public virtual void SetLanguage(string language)
+	{
+		Debug.Log ("[Pushwoosh] Error: SetLanguage is not supported on this platform");
+	}
+
 	public virtual void SetEmails(List<string> emails)
 	{
 		Debug.Log ("[Pushwoosh] Error: SetEmails is not supported on this platform");

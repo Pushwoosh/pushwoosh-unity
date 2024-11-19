@@ -66,6 +66,9 @@ public class PushNotificationsIOS : Pushwoosh
 	extern static private void pw_setUserId(string userId);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
+	extern static private void pw_setLanguage(string language);
+
+	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private void pw_setUser(string userId, string[] emails);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
@@ -149,6 +152,11 @@ public class PushNotificationsIOS : Pushwoosh
 	public override void SetUserId(string userId)
 	{
 		pw_setUserId(userId);
+	}
+
+	public override void SetLanguage(string language)
+	{
+		pw_setLanguage(language);
 	}
 
 	public override void SetUser(string userId, List<string> emails)

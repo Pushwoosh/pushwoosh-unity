@@ -39,6 +39,7 @@ public class PushNotificator : MonoBehaviour
 		Pushwoosh.Instance.SetStringTag ("UserName", "Alex");
 		Pushwoosh.Instance.SetIntTag ("Age", 42);
 		Pushwoosh.Instance.SetListTag ("Hobbies", new List<object> (new[] { "Football", "Tennis", "Fishing" }));
+		Pushwoosh.Instance.SetLanguage("es");
 
 		Pushwoosh.Instance.SetBadgeNumber (0);
 

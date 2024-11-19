@@ -121,6 +121,11 @@ public class PushNotificationsAndroid : Pushwoosh
 		pushwoosh.Call("setUserId", userId);
 	}
 
+    public override void SetLanguage(string language)
+    {
+        pushwoosh.Call("setLanguage", language);
+    }
+
 	public override void SetUser(string userId, List<string> emails) 
 	{
 		pushwoosh.Call("setUser", userId, emails);
