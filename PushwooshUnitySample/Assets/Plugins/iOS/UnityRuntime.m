@@ -6,10 +6,10 @@
 
 #import <UserNotifications/UserNotifications.h>
 #import <objc/runtime.h>
-#import <Pushwoosh/PushNotificationManager.h>
-#import <Pushwoosh/Pushwoosh.h>
-#import <Pushwoosh/PWInAppManager.h>
-#import <Pushwoosh/PWGDPRManager.h>
+#import <PushwooshFramework/PushNotificationManager.h>
+#import <PushwooshFramework/PushwooshFramework.h>
+#import <PushwooshFramework/PWInAppManager.h>
+#import <PushwooshFramework/PWGDPRManager.h>
 #import "PWMUserNotificationCenterDelegateProxy.h"
 
 static char * g_pw_tokenStr = 0;
@@ -69,6 +69,11 @@ void *pw_getRemoteNotificationStatus() {
 void pw_setUserId(char *userId) {
     NSString *userIdStr = [[NSString alloc] initWithUTF8String:userId];
     [[PWInAppManager sharedManager] setUserId:userIdStr];
+}
+
+void pw_setLanguage(char *language) {
+    NSString *languageStr = [[NSString alloc] initWithUTF8String:language];
+    [[Pushwoosh sharedInstance] setLanguage:languageStr];
 }
 
 void pw_setUser(char *userId, char **emails) {

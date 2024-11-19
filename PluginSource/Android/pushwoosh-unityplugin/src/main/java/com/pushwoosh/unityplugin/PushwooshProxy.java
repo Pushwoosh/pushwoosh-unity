@@ -342,6 +342,10 @@ public class PushwooshProxy {
 		PushwooshInApp.getInstance().setUserId(userId);
 	}
 
+	public void setLanguage(String language) {
+		Pushwoosh.getInstance().setLanguage(language);
+	}
+
 	public void setUser(String userId, List<String> emails) {
 		Pushwoosh.getInstance().setUser(userId, emails);
 	}

@@ -1,4 +1,4 @@
-﻿
+
 <dependencies>
     <androidPackages>
         <androidPackage spec="com.pushwoosh:pushwoosh:6.7.10"/>
@@ -11,8 +11,8 @@
     </androidPackages>
    
     <iosPods>
-    	<iosPod name="Pushwoosh" version="6.5.14"/>
-    	<!-- <iosPod name="Pushwoosh/Geozones"/> -->
+    	<iosPod name="PushwooshXCFramework" version="6.7.9" addToAllTargets="true"/>
+    	<!-- <iosPod name="PushwooshXCFramework/Geozones"/> -->
   	</iosPods>
 </dependencies>
 
