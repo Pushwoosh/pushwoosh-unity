@@ -126,14 +126,31 @@ public class PushNotificationsAndroid : Pushwoosh
         pushwoosh.Call("setLanguage", language);
     }
 
-	public override void SetUser(string userId, List<string> emails) 
+	public override void SetUser(string userId, List<string> emails)
 	{
-		pushwoosh.Call("setUser", userId, emails);
+	#if UNITY_ANDROID && !UNITY_EDITOR
+	    using (var javaEmails = new AndroidJavaObject("java.util.ArrayList"))
+	    {
+	        foreach (var email in emails)
+	        {
+	            javaEmails.Call<bool>("add", email);
+	        }
+	        pushwoosh.Call("setUser", userId, javaEmails);
+	    }
+	#endif
 	}
-
-	public override void SetEmails(List<string> emails) 
+		public override void SetEmails(List<string> emails)
 	{
-		pushwoosh.Call("setEmails", emails);
+	#if UNITY_ANDROID && !UNITY_EDITOR
+	    using (var javaEmails = new AndroidJavaObject("java.util.ArrayList"))
+	    {
+	        foreach (var email in emails)
+	        {
+	            javaEmails.Call<bool>("add", email);
+	        }
+	        pushwoosh.Call("setEmails", javaEmails);
+	    }
+	#endif
 	}
 
 	public override void SetEmail(string email)
