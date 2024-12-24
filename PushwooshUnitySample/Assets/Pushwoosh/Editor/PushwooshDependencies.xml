@@ -6,7 +6,7 @@
         <androidPackage spec="com.pushwoosh:pushwoosh-amazon:6.7.12"/>
         <androidPackage spec="com.pushwoosh:pushwoosh-badge:6.7.12"/>
         
-        <androidPackage spec="com.google.firebase:firebase-messaging:19.0.0"/>
+        <androidPackage spec="com.google.firebase:firebase-messaging:24.1.0"/>
 <!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:6.7.10"/>-->
     </androidPackages>
    

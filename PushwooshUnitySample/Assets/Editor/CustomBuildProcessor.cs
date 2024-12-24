@@ -6,7 +6,7 @@ using MiniJSON;
 using UnityEditor;
 using UnityEditor.Build;
 
-class MyCustomBuildProcessor : IPreprocessBuild
+class CustomBuildProcessor : IPreprocessBuild
 {
     public int callbackOrder { get { return 0; } }
     public void OnPreprocessBuild(BuildTarget target, string path)
@@ -28,6 +28,7 @@ class MyCustomBuildProcessor : IPreprocessBuild
             var dict = Json.Deserialize(json) as Dictionary<string, object>;
             var projectInfo = dict["project_info"] as Dictionary<string, object>;
             var projectNumber = projectInfo["project_number"] as string;
+            var projectId = projectInfo["project_id"] as string;
 
             var client = dict["client"] as List<object>;
             var element = client[0] as Dictionary<string, object>;
@@ -37,8 +38,13 @@ class MyCustomBuildProcessor : IPreprocessBuild
 
             var clientInfo = element["client_info"] as Dictionary<string, object>;
             var appId = clientInfo["mobilesdk_app_id"];
+            
+            var apiKey = element["api_key"] as List<object>;
+            var elementApiKey = apiKey[0] as Dictionary<string, object>;
+            var googleApiKey = elementApiKey["current_key"] as string;
 
-            var xml = CreateXml(projectNumber, clientId, appId);
+
+            var xml = CreateXml(projectNumber, clientId, appId, projectId, googleApiKey);
             WriteFile(xml, destinationPath);
         }
 
@@ -71,12 +77,14 @@ class MyCustomBuildProcessor : IPreprocessBuild
         writer.Close();
     }
 
-    private string CreateXml(string projectNumber, string clientId, object appId)
+    private string CreateXml(string projectNumber, string clientId, object appId, object projectId, object googleApiKey)
     {
-        return "<?xml version='1.0' encoding='utf-8'?>\n<resources tools:keep=\"@string/gcm_defaultSenderId,@string/project_id,@string/default_web_client_id,@string/google_app_id\" xmlns:tools=\"http://schemas.android.com/tools\">\n "
+        return "<?xml version='1.0' encoding='utf-8'?>\n<resources tools:keep=\"@string/gcm_defaultSenderId,@string/project_id,@string/google_api_key,@string/default_web_client_id,@string/google_app_id\" xmlns:tools=\"http://schemas.android.com/tools\">\n "
             + "<string name=\"gcm_defaultSenderId\" translatable=\"false\">" + projectNumber + "</string>\n"
             + "<string name=\"default_web_client_id\" translatable=\"false\">" + clientId + "</string>\n"
             + "<string name=\"google_app_id\" translatable=\"false\">" + appId + "</string>\n"
+            + "<string name=\"project_id\" translatable=\"false\">" + projectId + "</string>\n"
+            + "<string name=\"google_api_key\" translatable=\"false\">" + googleApiKey + "</string>\n"
             + "</resources>";
     }
 }
