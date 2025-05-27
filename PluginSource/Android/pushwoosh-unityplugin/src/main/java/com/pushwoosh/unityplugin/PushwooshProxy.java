@@ -1,12 +1,17 @@
 package com.pushwoosh.unityplugin;
 
+import android.content.Context;
+import android.content.SharedPreferences;
+import android.content.pm.ApplicationInfo;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
+import android.preference.PreferenceManager;
+
 import androidx.annotation.NonNull;
 import androidx.core.app.NotificationManagerCompat;
 
-import com.pushwoosh.GDPRManager;
 import com.pushwoosh.Pushwoosh;
 import com.pushwoosh.RegisterForPushNotificationsResultData;
 import com.pushwoosh.badge.PushwooshBadge;
@@ -403,52 +408,39 @@ public class PushwooshProxy {
 		}
 	}
 
-	public void showGDPRConsentUI(){
-		GDPRManager.getInstance().showGDPRConsentUI();
-	}
-
-	public void showGDPRDeletionUI(){
-		GDPRManager.getInstance().showGDPRDeletionUI();
-	}
-
 	public boolean isCommunicationEnabled(){
-		return GDPRManager.getInstance().isCommunicationEnabled();
+		Context context = UnityPlayer.currentActivity.getApplicationContext();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+    	final String KEY_IS_SERVER_COMMUNICATION_ENABLED = "Server_communication_enabled";
+
+    	if (prefs.contains(KEY_IS_SERVER_COMMUNICATION_ENABLED)) {
+        	return prefs.getBoolean(KEY_IS_SERVER_COMMUNICATION_ENABLED, true);
+    	} else {
+        	try {
+            	ApplicationInfo appInfo = context.getPackageManager().getApplicationInfo(context.getPackageName(), PackageManager.GET_META_DATA);
+            	Bundle metaData = appInfo.metaData;
+            	if (metaData != null && metaData.containsKey("com.pushwoosh.allow_server_communication")) {
+                	return metaData.getBoolean("com.pushwoosh.allow_server_communication", true);
+            	}
+        	} catch (PackageManager.NameNotFoundException e) {
+            	e.printStackTrace();
+        	}
+        	return true; 
+    	}
 	}
 
-	public boolean isDeviceDataRemoved(){
-		return GDPRManager.getInstance().isDeviceDataRemoved();
-	}
+	public void setCommunicationEnabled(boolean enabled) {
+		Context context = UnityPlayer.currentActivity.getApplicationContext();
+		SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(context);
+		prefs.edit().putBoolean("Server_communication_enabled", enabled).apply(); 
 
-	public boolean isAvailable(){
-		return GDPRManager.getInstance().isAvailable();
-	}
-
-	public void setCommunicationEnabled(boolean enable) {
-		 GDPRManager.getInstance().setCommunicationEnabled(enable, new Callback<Void, PushwooshException>() {
-			@Override
-			public void process(@NonNull Result<Void, PushwooshException> result) {
-				if(listenerName==null) return;
-				if (result.isSuccess()) {
-					UnityPlayer.UnitySendMessage(listenerName, "OnSetCommunicationEnabled", "success");
-				} else if (result.getException() != null) {
-					UnityPlayer.UnitySendMessage(listenerName, "OnFailedSetCommunicationEnabled", result.getException().getMessage());
-				}
-			}
-		});
-	}
-
-	public void removeAllDeviceData() {
-		GDPRManager.getInstance().removeAllDeviceData(new Callback<Void, PushwooshException>() {
-			@Override
-			public void process(@NonNull Result<Void, PushwooshException> result) {
-				if(listenerName==null) return;
-				if (result.isSuccess()) {
-					UnityPlayer.UnitySendMessage(listenerName, "OnRemoveAllDeviceData", "success");
-				} else if (result.getException() != null) {
-					UnityPlayer.UnitySendMessage(listenerName, "OnFailedRemoveAllDeviceData", result.getException().getMessage());
-				}
-			}
-		});
+		if (enabled) {
+			Pushwoosh.getInstance().startServerCommunication();
+			UnityPlayer.UnitySendMessage(listenerName, "OnSetCommunicationEnabled", "true");
+		} else {
+			Pushwoosh.getInstance().stopServerCommunication();
+			UnityPlayer.UnitySendMessage(listenerName, "OnSetCommunicationEnabled", "false");
+		}
 	}
 
 	public void setNotificationChannelDelegate(NotificationChannelDelegate delegate) {

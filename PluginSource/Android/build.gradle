@@ -7,7 +7,7 @@ buildscript {
     }
     dependencies {
         //noinspection GradleDependency
-        classpath 'com.android.tools.build:gradle:7.4.2'
+        classpath 'com.android.tools.build:gradle:8.1.1'
 
         // NOTE: Do not place your application dependencies here; they belong
         // in the individual module build.gradle files
@@ -26,6 +26,6 @@ allprojects {
 ext {
     global_minSdk = 21
     global_targetSdk = 34
-    global_versionName = "6.2.2"
-    pushwoosh = "6.7.10"
+    global_versionName = ""
+    pushwoosh = "6.7.25"
 }

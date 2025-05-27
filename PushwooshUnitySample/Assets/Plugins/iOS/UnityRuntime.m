@@ -9,7 +9,6 @@
 #import <PushwooshFramework/PushNotificationManager.h>
 #import <PushwooshFramework/PushwooshFramework.h>
 #import <PushwooshFramework/PWInAppManager.h>
-#import <PushwooshFramework/PWGDPRManager.h>
 #import "PWMUserNotificationCenterDelegateProxy.h"
 
 static char * g_pw_tokenStr = 0;
@@ -17,6 +16,9 @@ static char * g_pw_registerErrStr = 0;
 static char * g_pw_pushMessageStr = 0;
 static char * g_pw_listenerName = 0;
 static NSString * g_pw_launchNotification = nil;
+
+BOOL _isServerCommunicationEnabled;
+static NSString *const KeyIsServerCommunicationEnabled = @"Server_communication_enabled";
 
 void pw_registerForRemoteNotifications() {
     [[PushNotificationManager pushManager] registerForPushNotifications];
@@ -284,44 +286,27 @@ void pw_addBadgeNumber(int deltaBadge) {
     pw_setBadgeNumber(badge);
 }
 
-bool pw_gdprAvailable () {
-    return [PWGDPRManager sharedManager].isAvailable;
-}
-
 bool pw_isCommunicationEnabled () {
-    return [PWGDPRManager sharedManager].isCommunicationEnabled;
-}
-
-bool pw_isDeviceDataRemoved () {
-    return [PWGDPRManager sharedManager].isDeviceDataRemoved;
+    if ([[NSUserDefaults standardUserDefaults] objectForKey:KeyIsServerCommunicationEnabled]) {
+        _isServerCommunicationEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:KeyIsServerCommunicationEnabled];
+    } else {
+        _isServerCommunicationEnabled = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"Pushwoosh_ALLOW_SERVER_COMMUNICATION"] boolValue];
+    }
+    return _isServerCommunicationEnabled;
 }
 
 void pw_setCommunicationEnabled(bool enabled) {
-    [[PWGDPRManager sharedManager] setCommunicationEnabled:enabled completion:^(NSError *error) {
-        if (!error) {
-            UnitySendMessage(g_pw_listenerName, "onSetCommunicationEnabled", [@"success" UTF8String]);
-        } else {
-            UnitySendMessage(g_pw_listenerName, "onFailSetCommunicationEnabled", [[error description] UTF8String]);
-        }
-    }];
-}
+    NSString *result = enabled ? @"true" : @"false";
 
-void pw_removeAllDeviceData() {
-    [[PWGDPRManager sharedManager] removeAllDeviceDataWithCompletion:^(NSError *error) {
-        if (!error) {
-            UnitySendMessage(g_pw_listenerName, "onRemoveAllDeviceData",  [@"success" UTF8String]);
-        } else {
-            UnitySendMessage(g_pw_listenerName, "onFailRemoveAllDeviceData", [[error description] UTF8String]);
-        }
-    }];
-}
-
-void pw_showGDPRConsentUI() {
-    [[PWGDPRManager sharedManager] showGDPRConsentUI];
-}
-
-void pw_showGDPRDeletionUI() {
-    [[PWGDPRManager sharedManager] showGDPRDeletionUI];
+    if (enabled) {
+        [[Pushwoosh sharedInstance] startServerCommunication];
+        [[NSUserDefaults standardUserDefaults] setBool:YES forKey:KeyIsServerCommunicationEnabled];
+        UnitySendMessage(g_pw_listenerName, "onSetCommunicationEnabled", [result UTF8String]);
+    } else {
+        [[Pushwoosh sharedInstance] stopServerCommunication];
+        [[NSUserDefaults standardUserDefaults] setBool:NO forKey:KeyIsServerCommunicationEnabled];
+        UnitySendMessage(g_pw_listenerName, "onSetCommunicationEnabled", [result UTF8String]);
+    }
 }
 
 @implementation UIApplication(InternalPushRuntime)

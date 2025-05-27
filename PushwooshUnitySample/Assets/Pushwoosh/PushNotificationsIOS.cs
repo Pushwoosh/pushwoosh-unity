@@ -78,25 +78,10 @@ public class PushNotificationsIOS : Pushwoosh
 	extern static private void pw_setEmail(string email);
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static private bool pw_gdprAvailable();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private bool pw_isCommunicationEnabled();
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static private bool pw_isDeviceDataRemoved();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
 	extern static private void pw_setCommunicationEnabled(bool enabled);
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static private void pw_removeAllDeviceData();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static private void pw_showGDPRConsentUI();
-
-	[System.Runtime.InteropServices.DllImport("__Internal")]
-	extern static private void pw_showGDPRDeletionUI();
 
 
 	[System.Runtime.InteropServices.DllImport("__Internal")]
@@ -259,56 +244,18 @@ public class PushNotificationsIOS : Pushwoosh
 		pw_sendPurchase(productId, price, currency);
 	}
 
-	public override bool IsGDPRAvailable ()
-	{
-		return pw_gdprAvailable();
-	}
-
 	public override bool IsCommunicationEnabled ()
 	{
 		return pw_isCommunicationEnabled();
 	}
 
-	public override bool isDeviceDataRemoved ()
-	{
-		return pw_isDeviceDataRemoved();
-	}
-
-	public override void SetCommunicationEnabled(bool enable) {
+	public override void SetCommunicationEnabled(bool enabled) {
 		pw_setCommunicationEnabled(enabled);
 	}
 
-	public override void RemoveAllDeviceData() {
-		pw_removeAllDeviceData();
-	}
-
-	public override void ShowGDPRConsentUI ()
+	void onSetCommunicationEnabled(string enabled)
 	{
-		pw_showGDPRConsentUI();
-	}
-
-	public override void ShowGDPRDeletionUI ()
-	{
-		pw_showGDPRDeletionUI();
-	}
-
-	void onSetCommunicationEnabled(string sucess)
-	{
-		SetCommunicationEnableCallBack();
-	}
-
-	void onFailSetCommunicationEnabled(string error) {
-		FailedSetCommunicationEnableCallback(error);
-	}
-
-	void onRemoveAllDeviceData(string sucess)
-	{
-		RemoveAllDataCallBack();
-	}
-
-	void onFailRemoveAllDeviceData(string error)
-	{
-		FailedRemoveAllDataCallback(error);
+		SetCommunicationEnableCallBack(enabled);
 	}
 
 	void onRegisteredForPushNotifications(string token)

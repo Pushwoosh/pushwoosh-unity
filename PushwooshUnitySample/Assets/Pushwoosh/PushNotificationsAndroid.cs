@@ -225,60 +225,19 @@ public class PushNotificationsAndroid : Pushwoosh
 		}
 	}
 
-    //GDPR
-
-    public override void ShowGDPRConsentUI()
-    {
-        pushwoosh.Call("showGDPRConsentUI");
-    }
-
-    public override void ShowGDPRDeletionUI()
-    {
-        pushwoosh.Call("showGDPRDeletionUI");
-    }
-
     public override bool IsCommunicationEnabled()
     {
         return pushwoosh.Call<Boolean>("isCommunicationEnabled"); 
     }
 
-    public override bool isDeviceDataRemoved()
+    public override void SetCommunicationEnabled(bool enabled)
     {
-        return pushwoosh.Call<Boolean>("isDeviceDataRemoved");
+    pushwoosh.Call("setCommunicationEnabled", enabled);
     }
 
-    public override bool IsGDPRAvailable()
+    void OnSetCommunicationEnabled(string enabled)
     {
-        return pushwoosh.Call<Boolean>("isAvailable");
-    }
-
-    public override void SetCommunicationEnabled(bool enable)
-    {
-    pushwoosh.Call("setCommunicationEnabled", enable);
-    }
-
-    void OnSetCommunicationEnabled(string success)
-    {
-        SetCommunicationEnableCallBack();
-    }
-
-    void OnFailedSetCommunicationEnabled(string error){
-        FailedSetCommunicationEnableCallback(error);
-    }
-
-    public override void RemoveAllDeviceData()
-    {
-        pushwoosh.Call("removeAllDeviceData");
-    }
-
-    void OnRemoveAllDeviceData(string success)
-    {
-        RemoveAllDataCallBack();
-    }
-
-    void OnFailedRemoveAllDeviceData(string error)
-    {
-        FailedRemoveAllDataCallback(error);
+        SetCommunicationEnableCallBack(enabled);
     }
 
     private string ReturnStringFromNative(string fromNative) 
