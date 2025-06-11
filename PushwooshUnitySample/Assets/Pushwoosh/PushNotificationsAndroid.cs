@@ -28,6 +28,11 @@ public class PushNotificationsAndroid : Pushwoosh
 		pushwoosh.Call("registerForPushNotifications");
 	}
 
+	public override void RegisterExistingToken(string token)
+	{
+		pushwoosh.Call("registerExistingToken", token);
+	}
+
 	public override void UnregisterForPushNotifications()
 	{
 		pushwoosh.Call("unregisterFromPushNotifications");

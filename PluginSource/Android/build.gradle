@@ -27,5 +27,5 @@ ext {
     global_minSdk = 21
     global_targetSdk = 34
     global_versionName = ""
-    pushwoosh = "6.7.25"
+    pushwoosh = "6.7.26"
 }

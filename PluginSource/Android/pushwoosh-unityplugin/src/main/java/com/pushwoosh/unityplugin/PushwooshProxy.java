@@ -110,6 +110,23 @@ public class PushwooshProxy {
 		Pushwoosh.getInstance().unregisterForPushNotifications();
 	}
 
+	public void registerExistingToken(String token) {
+		Pushwoosh.getInstance().registerExistingToken(token, new Callback<RegisterForPushNotificationsResultData, RegisterForPushNotificationsException>() {
+			@Override
+			public void process(@NonNull Result<RegisterForPushNotificationsResultData, RegisterForPushNotificationsException> result) {
+				if (result.isSuccess()) {
+					if (result.getData() != null) {
+						onRegisterEvent(result.getData().getToken());
+					} else {
+						onRegisterErrorEvent("Failed to get push token from registration callback");
+					}
+				} else if (result.getException() != null) {
+					onRegisterErrorEvent(result.getException().getLocalizedMessage());
+				}
+			}
+		});
+	}
+
 	public void setListenerName(String name) {
 		PWLog.debug(TAG, "Listener name: " + name);
 		listenerName = name;

@@ -97,7 +97,12 @@ public class Pushwoosh : MonoBehaviour
 		Debug.Log ("[Pushwoosh] Error: UnregisterForPushNotifications is not supported on this platform");
 	}
 
-	public virtual void StartTrackingGeoPushes()
+	public virtual void RegisterExistingToken(string token)
+	{
+        Debug.Log("[Pushwoosh] Error: RegisterExistingToken is not supported on this platform");
+    }
+
+    public virtual void StartTrackingGeoPushes()
 	{
 		Debug.Log ("[Pushwoosh] Error: StartTrackingGeoPushes is not supported on this platform");
 	}
