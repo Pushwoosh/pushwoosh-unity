@@ -33,8 +33,8 @@ class CustomBuildProcessor : IPreprocessBuild
             var client = dict["client"] as List<object>;
             var element = client[0] as Dictionary<string, object>;
             var oauthClient = element["oauth_client"] as List<object>;
-            var elementOathClient = oauthClient[0] as Dictionary<string, object>;
-            var clientId = elementOathClient["client_id"] as string;
+            var elementOathClient = oauthClient.Count > 0 ? oauthClient[0] as Dictionary<string, object> : null;
+            var clientId = elementOathClient != null ? elementOathClient["client_id"] as string : "";
 
             var clientInfo = element["client_info"] as Dictionary<string, object>;
             var appId = clientInfo["mobilesdk_app_id"];
