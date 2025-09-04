@@ -286,11 +286,18 @@ void pw_addBadgeNumber(int deltaBadge) {
     pw_setBadgeNumber(badge);
 }
 
-bool pw_isCommunicationEnabled () {
+bool pw_isCommunicationEnabled() {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:KeyIsServerCommunicationEnabled]) {
         _isServerCommunicationEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:KeyIsServerCommunicationEnabled];
     } else {
-        _isServerCommunicationEnabled = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"Pushwoosh_ALLOW_SERVER_COMMUNICATION"] boolValue];
+        NSString *key = @"Pushwoosh_ALLOW_SERVER_COMMUNICATION";
+        id value = [[NSBundle mainBundle] objectForInfoDictionaryKey:key];
+        
+        if (value && ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]])) {
+            _isServerCommunicationEnabled = [value boolValue];
+        } else {
+            _isServerCommunicationEnabled = YES;
+        }
     }
     return _isServerCommunicationEnabled;
 }
