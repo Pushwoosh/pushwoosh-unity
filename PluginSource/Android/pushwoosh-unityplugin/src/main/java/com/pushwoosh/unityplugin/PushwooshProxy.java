@@ -16,11 +16,10 @@ import com.pushwoosh.Pushwoosh;
 import com.pushwoosh.RegisterForPushNotificationsResultData;
 import com.pushwoosh.badge.PushwooshBadge;
 import com.pushwoosh.exception.GetTagsException;
-import com.pushwoosh.exception.PushwooshException;
 import com.pushwoosh.exception.RegisterForPushNotificationsException;
 import com.pushwoosh.function.Callback;
 import com.pushwoosh.function.Result;
-import com.pushwoosh.inapp.PushwooshInApp;
+import com.pushwoosh.inapp.InAppManager;
 import com.pushwoosh.internal.utils.PWLog;
 import com.pushwoosh.location.PushwooshLocation;
 import com.pushwoosh.notification.LocalNotification;
@@ -361,7 +360,7 @@ public class PushwooshProxy {
 	}
 
 	public void setUserId(String userId) {
-		PushwooshInApp.getInstance().setUserId(userId);
+		Pushwoosh.getInstance().setUserId(userId);
 	}
 
 	public void setLanguage(String language) {
@@ -383,11 +382,11 @@ public class PushwooshProxy {
 	public void postEvent(String event, String attributesStr) {
 		try {
 			if (attributesStr.isEmpty()) {
-				PushwooshInApp.getInstance().postEvent(event);
+				InAppManager.getInstance().postEvent(event);
 				return;
 			}
 
-			PushwooshInApp.getInstance().postEvent(event, Tags.fromJson(new JSONObject(attributesStr)));
+			InAppManager.getInstance().postEvent(event, Tags.fromJson(new JSONObject(attributesStr)));
 		} catch (JSONException e) {
 			PWLog.exception(e);
 		}
