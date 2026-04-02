@@ -11,6 +11,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Android SDK: 6.7.60
 - iOS SDK: 7.0.33
 
+## [6.2.7] - 2026-04-02
+
+### Native SDK Updates
+- Android SDK: 6.7.60
+- iOS SDK: 7.0.33
+
 ## [6.2.7]
 
 ### Native SDK Updates
