@@ -140,7 +140,7 @@ public class PushwooshExample : MonoBehaviour
 
 ## Support
 
-- [Documentation](https://www.pushwoosh.com/platform-docs/pushwoosh-sdk/cross-platform-frameworks/unity)
+- [Documentation]([https://www.pushwoosh.com/platform-docs/pushwoosh-sdk/cross-platform-frameworks/unity](https://docs.pushwoosh.com/developer/pushwoosh-sdk/cross-platform-frameworks/unity/))
 - [GitHub Issues](https://github.com/Pushwoosh/pushwoosh-unity/issues)
 
 ## License
