@@ -1,0 +1,6 @@
+<linker>
+  <assembly fullname="Pushwoosh.Core.Runtime" preserve="all" />
+  <assembly fullname="Pushwoosh.Android.Runtime" preserve="all" />
+  <assembly fullname="Pushwoosh.iOS.Runtime" preserve="all" />
+  <assembly fullname="Pushwoosh.Windows.Runtime" preserve="all" />
+</linker>

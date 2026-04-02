@@ -1,0 +1,22 @@
+{
+  "name": "com.pushwoosh.unity.core",
+  "version": "6.2.7",
+  "displayName": "Pushwoosh SDK",
+  "description": "Pushwoosh push notification SDK for Unity. Core package with cross-platform API.",
+  "unity": "2021.3",
+  "author": {
+    "name": "Pushwoosh",
+    "url": "https://www.pushwoosh.com"
+  },
+  "license": "MIT",
+  "keywords": [
+    "pushwoosh",
+    "push",
+    "notifications",
+    "sdk"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Pushwoosh/pushwoosh-unity.git"
+  }
+}

@@ -1,0 +1,6 @@
+<dependencies>
+    <iosPods>
+    	<iosPod name="PushwooshXCFramework" version="7.0.33" addToAllTargets="true"/>
+    	<!-- <iosPod name="PushwooshXCFramework/Geozones"/> -->
+  	</iosPods>
+</dependencies>

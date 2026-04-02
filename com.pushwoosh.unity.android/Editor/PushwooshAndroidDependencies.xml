@@ -1,0 +1,11 @@
+<dependencies>
+    <androidPackages>
+        <androidPackage spec="com.pushwoosh:pushwoosh:6.7.60"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-firebase:6.7.60"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-amazon:6.7.60"/>
+        <androidPackage spec="com.pushwoosh:pushwoosh-badge:6.7.60"/>
+
+        <androidPackage spec="com.google.firebase:firebase-messaging:24.1.0"/>
+<!--        <androidPackage spec="com.pushwoosh:pushwoosh-location:6.7.60"/>-->
+    </androidPackages>
+</dependencies>

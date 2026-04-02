@@ -1,3 +1,0 @@
-include ':app', ':pushwoosh-unityplugin', ':unity'
-
-rootProject.name = 'Unity'

@@ -1,0 +1,18 @@
+{
+  "name": "Pushwoosh.Windows.Runtime",
+  "rootNamespace": "",
+  "references": [
+    "Pushwoosh.Core.Runtime"
+  ],
+  "includePlatforms": [
+    "WSA"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": false,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

@@ -1,0 +1,19 @@
+{
+  "name": "Pushwoosh.Android.Editor",
+  "rootNamespace": "",
+  "references": [
+    "Pushwoosh.Core.Runtime",
+    "Pushwoosh.Android.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}

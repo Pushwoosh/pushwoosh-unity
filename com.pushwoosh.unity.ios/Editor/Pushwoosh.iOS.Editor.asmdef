@@ -1,0 +1,19 @@
+{
+  "name": "Pushwoosh.iOS.Editor",
+  "rootNamespace": "",
+  "references": [
+    "Pushwoosh.Core.Runtime",
+    "Pushwoosh.iOS.Runtime"
+  ],
+  "includePlatforms": [
+    "Editor"
+  ],
+  "excludePlatforms": [],
+  "allowUnsafeCode": false,
+  "overrideReferences": false,
+  "precompiledReferences": [],
+  "autoReferenced": true,
+  "defineConstraints": [],
+  "versionDefines": [],
+  "noEngineReferences": false
+}
