@@ -2,8 +2,6 @@
   <img src="pushwoosh.png" alt="Pushwoosh Unity SDK">
 </p>
 
-<h1 align="center">Pushwoosh Unity SDK</h1>
-
 <p align="center">
   <a href="https://github.com/Pushwoosh/pushwoosh-unity/releases"><img src="https://img.shields.io/github/release/Pushwoosh/pushwoosh-unity.svg?style=flat-square" alt="GitHub release"></a>
   <a href="https://unity.com"><img src="https://img.shields.io/badge/Unity-2021.3+-black.svg?style=flat-square&logo=unity" alt="Unity"></a>
