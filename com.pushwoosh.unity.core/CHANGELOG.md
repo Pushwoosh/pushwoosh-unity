@@ -5,6 +5,54 @@ All notable changes to Pushwoosh Unity SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [6.2.8] - 2026-04-13
+
+### Native SDK Updates
+- Android SDK: 6.7.62
+- iOS SDK: 7.0.34
+
+### Changes
+- Fix Rich Media not displaying in foreground on Android
+- Wire Send Event button at runtime and bump Sample minSdk to 23
+- Add EDM4U to Sample so Pushwoosh native SDK actually lands in the APK
+- Track meta for Sample/Assets/Pushwoosh folder
+- Add link.xml to Sample so IL2CPP keeps platform Pushwoosh assemblies
+- Track Unity-generated meta for google-services.json
+- Add Firebase google-services.json for Sample, exclude from public mirror
+- Replace Sample scene with classic Pushwoosh demo
+- Track Sample .meta files so the project clones cleanly
+- Set up Sample project: add MainScene and Android build settings
+- Wrap Sample BuildScript in #if UNITY_EDITOR
+- Expose ScheduleLocalNotification on base Pushwoosh class
+- Update logo PNG
+- Replace logo SVG with PNG to match other Pushwoosh SDK READMEs
+- Add Setup Wizard step for ApplicationCode via PushwooshSettings asset
+- Deprecate FcmProjectNumber — Firebase config now from google-services.json
+- Fix documentation URL
+
+## 6.2.8
+
+### Native SDK Updates
+- Android SDK: 6.7.62
+- iOS SDK: 7.0.34
+
+### New Features
+- Added `PushwooshSettings` ScriptableObject and a Setup Wizard step for configuring the Application Code from the Unity Editor. Set the Application Code via `Window → Pushwoosh SDK Setup` — no code changes required.
+
+### Bug Fixes
+- Rich Media popups now display correctly when the push arrives while the app is in the foreground on Android.
+
+### Improvements
+- `ScheduleLocalNotification` is now available on the base `Pushwoosh` class on all platforms, no platform cast required:
+  ```csharp
+  Pushwoosh.Instance.ScheduleLocalNotification("Hello", 5);
+  ```
+
+### Breaking Changes
+- `Pushwoosh.FcmProjectNumber` is deprecated. The Firebase project is now read from `google-services.json` automatically — remove any assignments to this property.
+
+---
+
 ## [6.2.7] - 2026-04-02
 
 ### Native SDK Updates

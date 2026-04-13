@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="pushwoosh.svg" alt="Pushwoosh" width="300">
+  <img src="pushwoosh.png" alt="Pushwoosh Unity SDK">
 </p>
 
 <h1 align="center">Pushwoosh Unity SDK</h1>
@@ -31,7 +31,7 @@
 
 ## Documentation
 
-[Pushwoosh Unity SDK Documentation](https://www.pushwoosh.com/platform-docs/pushwoosh-sdk/cross-platform-frameworks/unity)
+[Pushwoosh Unity SDK Documentation](https://docs.pushwoosh.com/developer/pushwoosh-sdk/cross-platform-frameworks/unity/)
 
 ## Features
 
@@ -69,7 +69,7 @@ https://github.com/Pushwoosh/pushwoosh-unity.git?path=com.pushwoosh.unity.window
 To pin a specific version, append `#X.Y.Z`:
 
 ```
-https://github.com/Pushwoosh/pushwoosh-unity.git?path=com.pushwoosh.unity.core#6.2.7
+https://github.com/Pushwoosh/pushwoosh-unity.git?path=com.pushwoosh.unity.core#6.2.8
 ```
 
 ### UPM via npm
@@ -79,9 +79,9 @@ Add to your `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.pushwoosh.unity.core": "6.2.7",
-    "com.pushwoosh.unity.android": "6.2.7",
-    "com.pushwoosh.unity.ios": "6.2.7"
+    "com.pushwoosh.unity.core": "6.2.8",
+    "com.pushwoosh.unity.android": "6.2.8",
+    "com.pushwoosh.unity.ios": "6.2.8"
   },
   "scopedRegistries": [
     {
@@ -107,7 +107,6 @@ public class PushwooshExample : MonoBehaviour
     void Start()
     {
         Pushwoosh.ApplicationCode = "XXXXX-XXXXX";
-        Pushwoosh.FcmProjectNumber = "YOUR_FCM_NUMBER";
 
         Pushwoosh.Instance.OnRegisteredForPushNotifications += (token) => {
             Debug.Log("Push token: " + token);

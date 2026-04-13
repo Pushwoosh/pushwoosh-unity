@@ -1,6 +1,6 @@
 {
   "name": "com.pushwoosh.unity.android",
-  "version": "6.2.7",
+  "version": "6.2.8",
   "displayName": "Pushwoosh SDK - Android",
   "description": "Android platform support for Pushwoosh Unity SDK.",
   "unity": "2021.3",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "com.pushwoosh.unity.core": "6.2.7"
+    "com.pushwoosh.unity.core": "6.2.8"
   },
   "keywords": [
     "pushwoosh",

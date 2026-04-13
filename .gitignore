@@ -16,3 +16,6 @@
 
 .DS_Store
 *.swp
+
+# Firebase config — kept in GitLab (internal), excluded from public GitHub mirror
+google-services.json

@@ -10,7 +10,7 @@ Main SDK interface. Singleton accessed via `Pushwoosh.Instance`.
 
 **Properties:**
 - `Pushwoosh.ApplicationCode` — Pushwoosh app code (e.g. `"XXXXX-XXXXX"`)
-- `Pushwoosh.FcmProjectNumber` — Firebase Cloud Messaging sender ID (Android)
+- `Pushwoosh.FcmProjectNumber` — *(deprecated)* Firebase Cloud Messaging sender ID (Android). No longer required — Firebase project is determined from `google-services.json`
 - `Pushwoosh.Instance.HWID` — Hardware ID
 - `Pushwoosh.Instance.PushToken` — Push token
 

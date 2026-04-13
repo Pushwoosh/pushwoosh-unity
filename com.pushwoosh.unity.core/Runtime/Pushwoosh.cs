@@ -5,13 +5,36 @@ using System.Linq;
 
 public class Pushwoosh : MonoBehaviour
 {
-	public static string ApplicationCode { get; set; }
+	public static string ApplicationCode
+	{
+		get
+		{
+			if (!string.IsNullOrEmpty(_applicationCode))
+				return _applicationCode;
 
-	public static string FcmProjectNumber { get; set; }
+			var settings = PushwooshSettings.Instance;
+			if (settings != null)
+				return settings.ApplicationCode;
 
+			return null;
+		}
+		set { _applicationCode = value; }
+	}
+
+	private static string _applicationCode;
+
+	private static string _fcmProjectNumber;
+
+	[System.Obsolete("FcmProjectNumber is no longer required. Firebase project is determined from google-services.json.")]
+	public static string FcmProjectNumber {
+		get { return _fcmProjectNumber; }
+		set { _fcmProjectNumber = value; }
+	}
+
+    [System.Obsolete("GcmProjectNumber is no longer required. Use google-services.json for Firebase configuration.")]
     public static string GcmProjectNumber {
-        get { return FcmProjectNumber; }
-        set { FcmProjectNumber = value; }
+        get { return _fcmProjectNumber; }
+        set { _fcmProjectNumber = value; }
     }
 
 	public delegate void RegistrationSuccessHandler(string token);
@@ -220,6 +243,30 @@ public class Pushwoosh : MonoBehaviour
     public virtual void SetNotificationChannelDelegate(NotificationChannelDelegate notificationChannelDelegate)
     {
         Debug.Log("[Pushwoosh] Error: SetNotificationChannelDelegate is not supported on this platform");
+    }
+
+    public virtual int ScheduleLocalNotification(string message, int seconds)
+    {
+        Debug.Log("[Pushwoosh] Error: ScheduleLocalNotification is not supported on this platform");
+        return 0;
+    }
+
+    public virtual int ScheduleLocalNotification(string message, int seconds, string userdata)
+    {
+        Debug.Log("[Pushwoosh] Error: ScheduleLocalNotification is not supported on this platform");
+        return 0;
+    }
+
+    public virtual int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters)
+    {
+        Debug.Log("[Pushwoosh] Error: ScheduleLocalNotification is not supported on this platform");
+        return 0;
+    }
+
+    public virtual int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters, string largeIcon)
+    {
+        Debug.Log("[Pushwoosh] Error: ScheduleLocalNotification is not supported on this platform");
+        return 0;
     }
 
     public virtual string GetLaunchNotification()

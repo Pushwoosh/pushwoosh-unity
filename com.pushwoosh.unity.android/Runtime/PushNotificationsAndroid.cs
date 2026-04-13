@@ -16,7 +16,7 @@ public class PushNotificationsAndroid : Pushwoosh
 			return;
 
 		using(var pluginClass = new AndroidJavaClass("com.pushwoosh.unityplugin.PushwooshProxy")) {
-			pluginClass.CallStatic("initialize", Pushwoosh.ApplicationCode, Pushwoosh.FcmProjectNumber);
+			pluginClass.CallStatic("initialize", Pushwoosh.ApplicationCode, Pushwoosh.FcmProjectNumber ?? "");
 			pushwoosh = pluginClass.CallStatic<AndroidJavaObject>("instance");
 		}
 
@@ -313,24 +313,24 @@ public class PushNotificationsAndroid : Pushwoosh
 #endif
     }
 
-    public int ScheduleLocalNotification(string message, int seconds)
+    public override int ScheduleLocalNotification(string message, int seconds)
     {
         return ScheduleLocalNotification(message, seconds, null, null);
     }
 
-    public int ScheduleLocalNotification(string message, int seconds, string userdata)
+    public override int ScheduleLocalNotification(string message, int seconds, string userdata)
     {
         IDictionary<string, string> parameters = new Dictionary<string, string>();
         parameters.Add("u", userdata);
         return ScheduleLocalNotification(message, seconds, parameters, null);
     }
 
-    public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters)
+    public override int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters)
     {
         return ScheduleLocalNotification(message, seconds, parameters, null);
     }
 
-    public int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters, string largeIcon)
+    public override int ScheduleLocalNotification(string message, int seconds, IDictionary<string, string> parameters, string largeIcon)
     {
 #if UNITY_ANDROID && !UNITY_EDITOR
         AndroidJavaObject extras = null;
