@@ -301,9 +301,22 @@ public class Pushwoosh : MonoBehaviour
 			if (!assembly.FullName.Contains("Pushwoosh"))
 				continue;
 
-			foreach (var type in assembly.GetTypes())
+			Type[] types;
+			try
 			{
-				if (type != baseType && baseType.IsAssignableFrom(type))
+				types = assembly.GetTypes();
+			}
+			catch (System.Reflection.ReflectionTypeLoadException ex)
+			{
+				Debug.LogWarning("[Pushwoosh] Could not load types from " + assembly.FullName + ": " + ex.Message);
+				types = ex.Types;
+			}
+
+			foreach (var type in types)
+			{
+				if (type == null || type == baseType)
+					continue;
+				if (baseType.IsAssignableFrom(type))
 					return type;
 			}
 		}

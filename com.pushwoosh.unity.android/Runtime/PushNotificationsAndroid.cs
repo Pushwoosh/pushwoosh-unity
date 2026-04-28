@@ -1,8 +1,10 @@
 using UnityEngine;
+using UnityEngine.Scripting;
 using System;
 using System.Collections;
 using System.Collections.Generic;
 
+[Preserve]
 public class PushNotificationsAndroid : Pushwoosh
 {
 #if UNITY_ANDROID && !UNITY_EDITOR

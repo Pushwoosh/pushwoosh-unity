@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Scripting;
 using System.Collections.Generic;
 
 #if (UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0) && !UNITY_EDITOR
@@ -7,6 +8,7 @@ using PushwooshPlugin = PushwooshForWindows;
 using PushwooshPlugin = PushwooshForWindowsPhone;
 #endif
 
+[Preserve]
 public class PushNotificationsWindows: Pushwoosh
 {
 #if (UNITY_WP8 || UNITY_WP8_1 || UNITY_WSA || UNITY_WSA_8_0 || UNITY_WSA_8_1 || UNITY_WSA_10_0) && !UNITY_EDITOR

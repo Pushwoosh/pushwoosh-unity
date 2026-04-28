@@ -1,9 +1,11 @@
 using UnityEngine;
+using UnityEngine.Scripting;
 using System;
 using System.Collections;
 using System.Runtime.InteropServices;
 using System.Collections.Generic;
 
+[Preserve]
 public class PushNotificationsIOS : Pushwoosh
 {
 #if UNITY_IPHONE && !UNITY_EDITOR

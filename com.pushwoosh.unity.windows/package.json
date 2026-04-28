@@ -1,6 +1,6 @@
 {
   "name": "com.pushwoosh.unity.windows",
-  "version": "6.2.8",
+  "version": "6.2.9",
   "displayName": "Pushwoosh SDK - Windows",
   "description": "Windows (UWP/WSA) platform support for Pushwoosh Unity SDK.",
   "unity": "2021.3",
@@ -10,7 +10,7 @@
   },
   "license": "MIT",
   "dependencies": {
-    "com.pushwoosh.unity.core": "6.2.8"
+    "com.pushwoosh.unity.core": "6.2.9"
   },
   "keywords": [
     "pushwoosh",

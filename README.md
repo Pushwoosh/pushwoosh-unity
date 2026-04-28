@@ -67,7 +67,7 @@ https://github.com/Pushwoosh/pushwoosh-unity.git?path=com.pushwoosh.unity.window
 To pin a specific version, append `#X.Y.Z`:
 
 ```
-https://github.com/Pushwoosh/pushwoosh-unity.git?path=com.pushwoosh.unity.core#6.2.8
+https://github.com/Pushwoosh/pushwoosh-unity.git?path=com.pushwoosh.unity.core#6.2.9
 ```
 
 ### UPM via npm
@@ -77,9 +77,9 @@ Add to your `Packages/manifest.json`:
 ```json
 {
   "dependencies": {
-    "com.pushwoosh.unity.core": "6.2.8",
-    "com.pushwoosh.unity.android": "6.2.8",
-    "com.pushwoosh.unity.ios": "6.2.8"
+    "com.pushwoosh.unity.core": "6.2.9",
+    "com.pushwoosh.unity.android": "6.2.9",
+    "com.pushwoosh.unity.ios": "6.2.9"
   },
   "scopedRegistries": [
     {
