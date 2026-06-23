@@ -5,6 +5,13 @@ All notable changes to Pushwoosh Unity SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 6.2.11
+
+### Bug Fixes
+- Fixed `Pushwoosh.Instance.IsCommunicationEnabled()` returning `false` by default on iOS when `Pushwoosh_ALLOW_SERVER_COMMUNICATION` was not set in `Info.plist` (the default for most integrations). The value came from an Objective-C `nil`-to-`boolValue` evaluation, which disagreed with the native iOS SDK and the Android bridge where server communication is enabled by default. It now defaults to `true` when the key is absent or invalid.
+
+---
+
 ## 6.2.10
 
 ### Bug Fixes

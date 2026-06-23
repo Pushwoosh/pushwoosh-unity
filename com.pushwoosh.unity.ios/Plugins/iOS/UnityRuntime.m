@@ -290,7 +290,12 @@ bool pw_isCommunicationEnabled () {
     if ([[NSUserDefaults standardUserDefaults] objectForKey:KeyIsServerCommunicationEnabled]) {
         _isServerCommunicationEnabled = [[NSUserDefaults standardUserDefaults] boolForKey:KeyIsServerCommunicationEnabled];
     } else {
-        _isServerCommunicationEnabled = [[[NSBundle mainBundle] objectForInfoDictionaryKey:@"Pushwoosh_ALLOW_SERVER_COMMUNICATION"] boolValue];
+        id value = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"Pushwoosh_ALLOW_SERVER_COMMUNICATION"];
+        if (value && ([value isKindOfClass:[NSNumber class]] || [value isKindOfClass:[NSString class]])) {
+            _isServerCommunicationEnabled = [value boolValue];
+        } else {
+            _isServerCommunicationEnabled = YES;
+        }
     }
     return _isServerCommunicationEnabled;
 }
