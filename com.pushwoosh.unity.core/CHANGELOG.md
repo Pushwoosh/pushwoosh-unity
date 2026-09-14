@@ -5,6 +5,39 @@ All notable changes to Pushwoosh Unity SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 6.2.12
+
+### Breaking Changes
+- iOS: a link from a push notification opens in the app only when its domain is listed in the app's Associated Domains; every other link opens in the browser. Set `Pushwoosh_DISABLE_URL_FALLBACK` to `true` in `Info.plist` to keep the previous behaviour
+
+### New Features
+- Android: Rich Media now renders its light or dark variant according to a color scheme reported by the SDK, so HTML built with the `prefers-color-scheme` CSS media query follows the app. Configure it declaratively in `AndroidManifest.xml`
+  ```xml
+  <meta-data android:name="com.pushwoosh.rich_media_color_scheme" android:value="dark"/>
+  ```
+
+### Bug Fixes
+- The Editor now compiles in projects without the iOS Build Support module: iOS post-processing scripts are scoped to the iOS build target instead of the host OS, so building for Android or Standalone on a Mac no longer fails the whole project with `CS0234`
+- iOS: `SetEmail`, `SetEmails` and `SetUser` register the email on the device
+- iOS: purchases reported through `SendPurchase` are tracked again
+- iOS: a link from a push notification always opens — in the app or in the browser
+- Android: a deep link from an opened notification reaches the activity that is already running: `singleTop`, `singleTask` and `singleInstance` activities receive it in `onNewIntent()`, a `standard` activity in `onCreate()`
+- Android: date tags produce the same machine-readable format on every device locale, including locales that display non-Latin digits
+
+### Improvements
+- iOS: modal Rich Media closes on its auto-close timer on every presentation and releases its memory on dismissal
+- Android: Rich Media of an incoming push is prefetched in the background, already downloaded content is reused, and downloads have network timeouts
+- Android: `androidx.core` and `androidx.webkit` come in as transitive dependencies, and apps pinning `androidx.work:work-runtime` below 2.9.0 keep building
+- Hardened both native SDKs against a range of rare crashes in push handling, Rich Media, tags, registration and badge updates
+
+### Native SDK Updates
+- Android SDK: 6.13.0 (was 6.9.2)
+- iOS SDK: 7.2.6 (was 7.1.2)
+- Full Android release notes: https://github.com/Pushwoosh/pushwoosh-android-sdk/releases
+- Full iOS release notes: https://github.com/Pushwoosh/pushwoosh-ios-sdk/releases
+
+---
+
 ## 6.2.11
 
 ### Bug Fixes

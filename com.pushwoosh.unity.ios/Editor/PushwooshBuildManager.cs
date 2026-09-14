@@ -1,24 +1,4 @@
-﻿
-#define UNITY_3_PLUS
-#define UNITY_4_PLUS
-#define UNITY_5_PLUS
-#if UNITY_2_6
-#define UNITY_2_X
-#undef UNITY_3_PLUS
-#undef UNITY_4_PLUS
-#undef UNITY_5_PLUS
-#elif UNITY_3_0 || UNITY_3_1 || UNITY_3_2 || UNITY_3_3 || UNITY_3_4 || UNITY_3_5
-#define UNITY_3_X
-#undef UNITY_4_PLUS
-#undef UNITY_5_PLUS
-#elif UNITY_4_0 || UNITY_4_1 || UNITY_4_2 || UNITY_4_3 || UNITY_4_4 || UNITY_4_5 || UNITY_4_6 || UNITY_4_7 || UNITY_4_8 || UNITY_4_9
-#define UNITY_4_X
-#undef UNITY_5_PLUS
-#elif UNITY_5_0 || UNITY_5_1 || UNITY_5_2 || UNITY_5_3 || UNITY_5_4 || UNITY_5_5 || UNITY_5_6 || UNITY_5_7 || UNITY_5_8 || UNITY_5_9
-#define UNITY_5_X
-#endif
-
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEditor;
 using UnityEditor.Callbacks;
 using System.Collections;
@@ -27,7 +7,7 @@ using System.Diagnostics;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-#if UNITY_EDITOR_OSX && UNITY_5_PLUS
+#if UNITY_IOS
 using UnityEditor.iOS.Xcode;
 #endif
 
@@ -49,7 +29,7 @@ public class PushwooshBuildManager
 
 	[PostProcessBuild]
 	private static void onPostProcessBuildPlayer(BuildTarget target, string pathToBuiltProject) {
-#if UNITY_EDITOR_OSX && UNITY_5_PLUS
+#if UNITY_IOS
 		if (target == BuildTarget.iOS) {
 			UnityEngine.Debug.Log ("Path to built project: " + pathToBuiltProject);
 
