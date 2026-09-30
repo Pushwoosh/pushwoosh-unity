@@ -27,6 +27,14 @@ public class AddNotificationServiceExtensioniOS
         return null;
     }
 
+    private static string DeploymentTarget(string exported, string playerSettings)
+    {
+        Version version;
+        if (!Version.TryParse(exported, out version) && !Version.TryParse(playerSettings, out version))
+            return "15.0";
+        return version < new Version(15, 0) ? "15.0" : version.ToString();
+    }
+
     [PostProcessBuild]
     private static void PostProcessBuild_iOS(BuildTarget target, string buildPath)
     {
@@ -123,7 +131,8 @@ public class AddNotificationServiceExtensioniOS
         proj.AddFileToBuild(newTarget, proj.AddFile(buildPath + "/NotificationService/NotificationService.h", "NotificationService/NotificationService.h"));
         proj.AddFileToBuild(newTarget, proj.AddFile(buildPath + "/NotificationService/NotificationService.m", "NotificationService/NotificationService.m"));
 
-        proj.SetBuildProperty(newTarget, "IPHONEOS_DEPLOYMENT_TARGET", "13.0");
+        string deploymentTarget = DeploymentTarget(proj.GetBuildPropertyForAnyConfig(mainTarget, "IPHONEOS_DEPLOYMENT_TARGET"), PlayerSettings.iOS.targetOSVersionString);
+        proj.SetBuildProperty(newTarget, "IPHONEOS_DEPLOYMENT_TARGET", deploymentTarget);
         if (!string.IsNullOrEmpty(archs))
             proj.SetBuildProperty(newTarget, "ARCHS", archs);
 

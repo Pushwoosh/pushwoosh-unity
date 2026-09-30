@@ -5,6 +5,20 @@ All notable changes to Pushwoosh Unity SDK will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## 6.2.13
+
+### Bug Fixes
+- iOS: the Notification Service Extension and the generated Podfile take the deployment target of the exported project (15.0 at least)
+- iOS: a push without an attachment is shown right away instead of after the Notification Service Extension times out
+
+### Native SDK Updates
+- Android SDK: 6.15.0 (was 6.13.0)
+- iOS SDK: 7.2.8 (was 7.2.6)
+- Full Android release notes: https://github.com/Pushwoosh/pushwoosh-android-sdk/releases
+- Full iOS release notes: https://github.com/Pushwoosh/pushwoosh-ios-sdk/releases
+
+---
+
 ## 6.2.12
 
 ### Breaking Changes

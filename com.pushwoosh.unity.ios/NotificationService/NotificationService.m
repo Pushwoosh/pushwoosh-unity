@@ -22,12 +22,16 @@
 	self.bestAttemptContent = [request.content mutableCopy];
 	NSString *attachmentUrlString = [request.content.userInfo objectForKey:@"attachment"];
 	
-	if (![attachmentUrlString isKindOfClass:[NSString class]])
+	if (![attachmentUrlString isKindOfClass:[NSString class]]) {
+		contentHandler(self.bestAttemptContent);
 		return;
+	}
 
 	NSURL *url = [NSURL URLWithString:attachmentUrlString];
-	if (!url)
+	if (!url) {
+		contentHandler(self.bestAttemptContent);
 		return;
+	}
 
 	[[[NSURLSession sharedSession] downloadTaskWithURL:url completionHandler:^(NSURL * _Nullable location, NSURLResponse * _Nullable response, NSError * _Nullable error) {
 		if (!error) {

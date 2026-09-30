@@ -75,7 +75,7 @@ public class PushwooshBuildManager
 				bgModes.AddString("remote-notification");
 			plist.WriteToFile(plistPath);
 
-			GeneratePodfile(pathToBuiltProject);
+			GeneratePodfile(pathToBuiltProject, proj.GetBuildPropertyForAnyConfig(projTarget, "IPHONEOS_DEPLOYMENT_TARGET"));
 			RunPodInstall(pathToBuiltProject);
 		}
 #endif
@@ -124,7 +124,14 @@ public class PushwooshBuildManager
 		return null;
 	}
 
-	private static void GeneratePodfile(string path) {
+	private static string DeploymentTarget(string exported, string playerSettings) {
+		System.Version version;
+		if (!System.Version.TryParse(exported, out version) && !System.Version.TryParse(playerSettings, out version))
+			return "15.0";
+		return version < new System.Version(15, 0) ? "15.0" : version.ToString();
+	}
+
+	private static void GeneratePodfile(string path, string deploymentTarget) {
 		if (IsEDM4UInstalled()) {
 			UnityEngine.Debug.Log("Pushwoosh: EDM4U detected, skipping Podfile generation");
 			return;
@@ -147,7 +154,7 @@ public class PushwooshBuildManager
 
 		string podfileContent =
 			"source 'https://cdn.cocoapods.org/'\n" +
-			"platform :ios, '13.0'\n\n" +
+			"platform :ios, '" + DeploymentTarget(deploymentTarget, PlayerSettings.iOS.targetOSVersionString) + "'\n\n" +
 			"target 'UnityFramework' do\n" +
 			"  pod 'PushwooshXCFramework', '" + iosVersion + "'\n" +
 			"end\n\n" +
